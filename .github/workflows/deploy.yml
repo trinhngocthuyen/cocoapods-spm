@@ -1,0 +1,18 @@
+name: deploy
+on:
+  workflow_dispatch:
+    inputs:
+      deploy-rc:
+        description: Deploy a RC version
+        type: boolean
+      deploy-stable:
+        description: Deploy a stable version
+        type: boolean
+
+jobs:
+  deploy:
+    uses: trinhngocthuyen/gh-actions/.github/workflows/rb-deploy.yml@main
+    with:
+      deploy-rc: ${{ inputs.deploy-rc }}
+      deploy-stable: ${{ inputs.deploy-stable }}
+    secrets: inherit

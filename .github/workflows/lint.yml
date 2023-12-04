@@ -1,0 +1,7 @@
+name: lint
+on:
+  - pull_request
+
+jobs:
+  lint:
+    uses: trinhngocthuyen/gh-actions/.github/workflows/rb-lint.yml@main
