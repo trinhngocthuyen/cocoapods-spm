@@ -1,5 +1,8 @@
 # cocoapods-spm
 
+[![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat&color=blue)](https://github.com/trinhngocthuyen/cocoapods-spm/blob/main/LICENSE.txt)
+[![Gem](https://img.shields.io/gem/v/cocoapods-spm.svg?style=flat&color=blue)](https://rubygems.org/gems/cocoapods-spm)
+
 A CocoaPods plugin to add SPM dependencies to CocoaPods targets.
 
 ## Installation
