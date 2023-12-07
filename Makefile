@@ -1,8 +1,10 @@
 install:
+	which pre-commit &> /dev/null || brew install pre-commit
+	pre-commit install
 	bundle install
 
-lint:
-	bundle exec rubocop
+format:
+	pre-commit run --all-files
 
 test:
 	bundle exec rspec
