@@ -9,8 +9,12 @@ module Pod
         @raw = raw
       end
 
-      def self.load(path)
+      def self.from_file(path)
         new(JSON.parse(File.read(path)))
+      end
+
+      def self.for_pod(name)
+        from_file(Config.instance.macro_root_dir / name / "metadata.json")
       end
 
       def targets
