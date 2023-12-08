@@ -1,5 +1,5 @@
-require_relative "../metadata"
 require_relative "../macro/pod_installer"
+require_relative "../macro/settings_updater"
 
 module Pod
   class Installer
@@ -19,6 +19,15 @@ module Pod
       else
         origin_create_pod_installer(pod_name)
       end
+    end
+
+    alias origin_integrate integrate
+    def integrate
+      SPM::MacroSettingsUpdater.new(
+        pod_targets: pod_targets,
+        aggregate_targets: aggregate_targets
+      ).run
+      origin_integrate
     end
   end
 end
