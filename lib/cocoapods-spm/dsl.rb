@@ -1,4 +1,4 @@
-require "cocoapods-spm/config"
+require_relative "config"
 
 module Pod
   class Podfile

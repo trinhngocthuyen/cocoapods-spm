@@ -1,6 +1,6 @@
-require "cocoapods-spm/config"
-require "cocoapods-spm/dsl"
-require "cocoapods-spm/specification"
+require_relative "../config"
+require_relative "../dsl"
+require_relative "../specification"
 
 module Pod
   module SPM
