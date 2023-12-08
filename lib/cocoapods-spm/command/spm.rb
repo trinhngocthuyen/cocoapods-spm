@@ -4,7 +4,7 @@ require_relative "fetch"
 module Pod
   class Command
     class Spm < Command
-      include Pod::SPM::Config::Mixin
+      include SPM::Config::Mixin
 
       self.summary = "Working with SPM"
       self.abstract_command = true

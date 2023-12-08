@@ -5,7 +5,7 @@ require "cocoapods-spm/specification"
 module Pod
   module SPM
     class Hook
-      include Pod::SPM::Config::Mixin
+      include Config::Mixin
 
       def initialize(context)
         @context = context

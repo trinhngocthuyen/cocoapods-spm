@@ -7,7 +7,7 @@ module Pod
     module DSL
       alias origin_pod pod
       def config_cocoapods_spm(options)
-        Pod::SPM::Config.instance.dsl_config = options
+        SPM::Config.instance.dsl_config = options
       end
 
       def pod(name = nil, *requirements)
