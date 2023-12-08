@@ -42,7 +42,7 @@ module Pod
       end
 
       def all_macros
-        @all_macros ||= macro_root_dir.glob("*/*.podspec").map { |f| File.basename(f, ".*") }
+        @all_macros ||= Pod::Config.instance.podfile.macro_pods.keys
       end
 
       def macros
