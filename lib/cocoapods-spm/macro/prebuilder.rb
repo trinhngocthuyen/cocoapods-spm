@@ -5,8 +5,8 @@ module Pod
 
       attr_reader :name
 
-      def initialize(name)
-        @name = name
+      def initialize(options = {})
+        @name = options[:name]
       end
 
       def run
