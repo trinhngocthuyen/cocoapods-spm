@@ -2,21 +2,22 @@ require_relative "config"
 
 module Pod
   class Podfile
-    attr_reader :macro_pods
-
     module DSL
       alias origin_pod pod
       def config_cocoapods_spm(options)
         SPM::Config.instance.dsl_config = options
       end
 
-      def pod(name = nil, *requirements)
+      def macro_pods
         @macro_pods ||= {}
+      end
+
+      def pod(name = nil, *requirements)
         macro = requirements[0].delete(:macro) if requirements.first.is_a?(Hash)
         macro ||= {}
         unless macro.empty?
           requirements[0][:path] = prepare_macro_pod_dir(name, macro)
-          @macro_pods[name] = macro
+          macro_pods[name] = macro
         end
         origin_pod(name, *requirements)
       end
