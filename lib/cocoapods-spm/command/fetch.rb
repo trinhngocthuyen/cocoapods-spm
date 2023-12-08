@@ -22,7 +22,7 @@ module Pod
 
         def run
           spm_config.macros.each do |name|
-            Pod::SPM::MacroFetcher.new(name: name, can_cache: true).run
+            SPM::MacroFetcher.new(name: name, can_cache: true).run
           end
         end
       end

@@ -1,7 +1,7 @@
 module Pod
   module SPM
     class MacroFetcher
-      include Pod::SPM::Config::Mixin
+      include Config::Mixin
 
       attr_reader :name
 

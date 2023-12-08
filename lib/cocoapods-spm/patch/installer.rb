@@ -3,7 +3,7 @@ require_relative "../macro/pod_installer"
 
 module Pod
   class Installer
-    include Pod::SPM::Config::Mixin
+    include SPM::Config::Mixin
 
     alias origin_create_pod_installer create_pod_installer
     def create_pod_installer(pod_name)

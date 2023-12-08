@@ -1,7 +1,7 @@
 module Pod
   module SPM
     class MacroPrebuilder
-      include Pod::SPM::Config::Mixin
+      include Config::Mixin
 
       attr_reader :name
 
@@ -39,7 +39,7 @@ module Pod
           "&& swift package dump-package " \
           "> #{metadata_path.relative_path_from(macro_downloaded_dir)}"
         `#{cmd}`
-        @metadata = Pod::SPM::Metadata.load(metadata_path)
+        @metadata = Metadata.load(metadata_path)
       end
 
       def prebuild_macro_impl

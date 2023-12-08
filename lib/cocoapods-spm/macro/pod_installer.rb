@@ -5,7 +5,7 @@ require_relative "prebuilder"
 module Pod
   class Installer
     class MacroPodInstaller < PodSourceInstaller
-      include Pod::SPM::Config::Mixin
+      include SPM::Config::Mixin
 
       def install!
         install_macro_pod!
@@ -15,7 +15,7 @@ module Pod
       private
 
       def fetcher
-        @fetcher ||= Pod::SPM::MacroFetcher.new(
+        @fetcher ||= SPM::MacroFetcher.new(
           name: name,
           specs_by_platform: specs_by_platform,
           can_cache: can_cache?
@@ -23,7 +23,7 @@ module Pod
       end
 
       def prebuilder
-        @prebuilder ||= Pod::SPM::MacroPrebuilder.new(name: name)
+        @prebuilder ||= SPM::MacroPrebuilder.new(name: name)
       end
 
       def install_macro_pod!

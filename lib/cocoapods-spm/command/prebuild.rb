@@ -26,7 +26,7 @@ module Pod
 
         def run
           spm_config.macros.each do |name|
-            Pod::SPM::MacroPrebuilder.new(name: name).run
+            SPM::MacroPrebuilder.new(name: name).run
           end
         end
       end
