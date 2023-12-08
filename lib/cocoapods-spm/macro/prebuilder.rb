@@ -39,7 +39,7 @@ module Pod
           "&& swift package dump-package " \
           "> #{metadata_path.relative_path_from(macro_downloaded_dir)}"
         `#{cmd}`
-        @metadata = Metadata.load(metadata_path)
+        @metadata = Metadata.from_file(metadata_path)
       end
 
       def prebuild_macro_impl

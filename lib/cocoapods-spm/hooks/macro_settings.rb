@@ -12,7 +12,8 @@ module Pod
         project.build_configurations.each do |config|
           flags = config.build_settings["OTHER_SWIFT_FLAGS"] || "$(inherited)"
           macro_pods.each_key do |name|
-            impl_module_name = "#{name}Impl"
+            metadata = Metadata.for_pod(name)
+            impl_module_name = metadata.macro_impl_name
             plugin_executable_path =
               "#{path_prefix}/.spm.pods/#{name}/.prebuilt/#{config.to_s.downcase}/" \
               "#{impl_module_name}##{impl_module_name}"
