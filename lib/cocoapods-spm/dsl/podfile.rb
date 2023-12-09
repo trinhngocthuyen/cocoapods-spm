@@ -1,4 +1,4 @@
-require_relative "config"
+require_relative "../config"
 
 module Pod
   class Podfile
@@ -12,6 +12,10 @@ module Pod
         @macro_pods ||= {}
       end
 
+      def spm_pkgs
+        @spm_pkgs ||= {}
+      end
+
       def pod(name = nil, *requirements)
         macro = requirements[0].delete(:macro) if requirements.first.is_a?(Hash)
         macro ||= {}
@@ -20,6 +24,10 @@ module Pod
           macro_pods[name] = macro
         end
         origin_pod(name, *requirements)
+      end
+
+      def spm_pkg(name, options)
+        spm_pkgs[name] = options
       end
 
       private

@@ -4,11 +4,12 @@ module Pod
   module SPM
     class SpmDependenciesHook < Hook
       def run
-        all_specs.each do |spec|
-          if spec.spm_dependencies
-            target = pods_project.targets.find { |t| t.name == spec.name }
-            add_spm_dependencies(target, spec.spm_dependencies)
-          end
+        specs_with_spm_dependencies = all_specs.select(&:spm_dependencies)
+        return unless specs_with_spm_dependencies
+
+        specs_with_spm_dependencies.each do |spec|
+          target = pods_project.targets.find { |t| t.name == spec.name }
+          add_spm_dependencies(target, spec.spm_dependencies)
         end
         update_import_paths
         pods_project.save
@@ -16,10 +17,14 @@ module Pod
 
       private
 
+      def podfile
+        Pod::Config.instance.podfile
+      end
+
       def add_spm_dependencies(target, dependencies)
-        dependencies.each do |data|
-          pkg = pkg_from_data(data)
-          data[:products].each do |product|
+        dependencies.each do |name, products|
+          pkg = pkg_for(name)
+          products.each do |product|
             ref = pods_project.new(Xcodeproj::Project::Object::XCSwiftPackageProductDependency)
             ref.package = pkg
             ref.product_name = product
@@ -40,7 +45,13 @@ module Pod
         end
       end
 
-      def pkg_from_data(data)
+      def pkg_for(name)
+        data = podfile.spm_pkgs[name]
+        if data.nil?
+          raise "SPM package `#{name}` was not declared in Podfile. " \
+                "Use method `spm_pakage` to declare such a package"
+        end
+
         if data[:requirement]
           pkg = pods_project.new(Xcodeproj::Project::Object::XCRemoteSwiftPackageReference)
           pkg.repositoryURL = data[:url]

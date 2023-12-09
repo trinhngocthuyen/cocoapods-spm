@@ -1,4 +1,4 @@
-require_relative "../specification"
+require_relative "../dsl/spec"
 require_relative "fetcher"
 require_relative "prebuilder"
 

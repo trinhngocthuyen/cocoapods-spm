@@ -1,6 +1,6 @@
 require_relative "../config"
-require_relative "../dsl"
-require_relative "../specification"
+require_relative "../dsl/podfile"
+require_relative "../dsl/spec"
 
 module Pod
   module SPM
