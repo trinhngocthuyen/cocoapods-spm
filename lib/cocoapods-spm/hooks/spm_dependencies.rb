@@ -45,20 +45,34 @@ module Pod
         end
       end
 
+      def requirement_from(options)
+        if options[:requirement]
+          options[:requirement]
+        elsif (version = options.delete(:version))
+          { :kind => "exactVersion", :version => version }
+        elsif (branch = options.delete(:branch))
+          { :kind => "branch", :branch => branch }
+        elsif (revision = options.delete(:commit))
+          { :kind => "revision", :revision => revision }
+        end
+      end
+
       def pkg_for(name)
-        data = podfile.spm_pkgs[name]
-        if data.nil?
+        options = podfile.spm_pkgs[name]
+        if options.nil?
           raise "SPM package `#{name}` was not declared in Podfile. " \
                 "Use method `spm_pakage` to declare such a package"
         end
 
-        if data[:requirement]
+        if (requirement = requirement_from(options))
           pkg = pods_project.new(Xcodeproj::Project::Object::XCRemoteSwiftPackageReference)
-          pkg.repositoryURL = data[:url]
-          pkg.requirement = data[:requirement]
-        else
+          pkg.repositoryURL = options[:url]
+          pkg.requirement = requirement
+        elsif options[:relative_path]
           pkg = pods_project.new(Xcodeproj::Project::Object::XCLocalSwiftPackageReference)
-          pkg.relative_path = data[:relative_path]
+          pkg.relative_path = options[:relative_path]
+        else
+          raise "No requirement was declared for package `#{name}`"
         end
         pkg
       end
