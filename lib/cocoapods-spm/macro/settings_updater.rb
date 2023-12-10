@@ -1,4 +1,4 @@
-require_relative "../metadata"
+require "cocoapods-spm/metadata"
 
 module Pod
   module SPM

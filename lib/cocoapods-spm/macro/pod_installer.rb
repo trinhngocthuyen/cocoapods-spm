@@ -1,6 +1,6 @@
-require_relative "../dsl/spec"
-require_relative "fetcher"
-require_relative "prebuilder"
+require "cocoapods-spm/dsl/spec"
+require "cocoapods-spm/macro/fetcher"
+require "cocoapods-spm/macro/prebuilder"
 
 module Pod
   class Installer

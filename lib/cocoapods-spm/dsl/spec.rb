@@ -1,4 +1,4 @@
-require_relative "../config"
+require "cocoapods-spm/config"
 
 module Pod
   class Specification

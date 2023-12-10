@@ -1,4 +1,4 @@
-require_relative "../macro/prebuilder"
+require "cocoapods-spm/macro/prebuilder"
 
 module Pod
   class Command

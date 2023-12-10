@@ -1,5 +1,5 @@
-require_relative "prebuild"
-require_relative "fetch"
+require "cocoapods-spm/command/prebuild"
+require "cocoapods-spm/command/fetch"
 
 module Pod
   class Command

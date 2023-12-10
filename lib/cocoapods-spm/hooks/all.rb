@@ -1,4 +1,4 @@
-Dir["#{__dir__}/*.rb"].each { |f| require_relative File.basename(f) }
+Dir["#{__dir__}/*.rb"].sort.each { |f| require f }
 
 module Pod
   module SPM

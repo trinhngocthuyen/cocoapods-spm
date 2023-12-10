@@ -1,4 +1,4 @@
-require_relative "base"
+require "cocoapods-spm/hooks/base"
 
 module Pod
   module SPM

@@ -1,5 +1,5 @@
-require_relative "../macro/pod_installer"
-require_relative "../macro/settings_updater"
+require "cocoapods-spm/macro/pod_installer"
+require "cocoapods-spm/macro/settings_updater"
 
 module Pod
   class Installer

@@ -1,4 +1,4 @@
-require_relative "../macro/fetcher"
+require "cocoapods-spm/macro/fetcher"
 
 module Pod
   class Command
