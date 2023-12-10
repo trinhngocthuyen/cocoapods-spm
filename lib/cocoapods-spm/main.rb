@@ -1,5 +1,5 @@
-require "cocoapods-spm/dsl/podfile"
-require "cocoapods-spm/dsl/spec"
+require "cocoapods-spm/def/podfile"
+require "cocoapods-spm/def/spec"
 require "cocoapods-spm/hooks/all"
 require "cocoapods-spm/patch/installer"
 require "cocoapods-spm/command/spm"

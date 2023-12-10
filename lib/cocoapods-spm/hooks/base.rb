@@ -1,6 +1,6 @@
 require "cocoapods-spm/config"
-require "cocoapods-spm/dsl/podfile"
-require "cocoapods-spm/dsl/spec"
+require "cocoapods-spm/def/podfile"
+require "cocoapods-spm/def/spec"
 
 module Pod
   module SPM

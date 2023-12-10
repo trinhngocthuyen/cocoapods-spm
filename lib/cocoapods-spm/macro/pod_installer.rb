@@ -1,4 +1,4 @@
-require "cocoapods-spm/dsl/spec"
+require "cocoapods-spm/def/spec"
 require "cocoapods-spm/macro/fetcher"
 require "cocoapods-spm/macro/prebuilder"
 
