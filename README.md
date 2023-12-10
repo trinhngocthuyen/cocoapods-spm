@@ -11,21 +11,33 @@ A CocoaPods plugin to add SPM dependencies to CocoaPods targets.
 
 ## Usage
 
-### Declaring dependencies in podspecs
+### Declaring SPM packages
 
-Use method `spm_dependency` to declare SPM dependencies to a podspec.
+#### In a podspec
+
+In the podspec of a pod, use `spm_dependency` to specify the SPM package that the pod depends on, in the following format:
+```rb
+s.spm_dependency "<package-name>/<ProductName>"
+```
+For example, if a pod depends on the `Orcam` library of this package https://github.com/trinhngocthuyen/orcam, we declare this depenency in the podspec as follows:
 
 ```rb
 Pod::Spec.new do |s|
   s.name = "Foo"
-
-  s.spm_dependency(
-    url: "https://github.com/trinhngocthuyen/orcam.git",
-    requirement: {
-      kind: "branch",
-      branch: "main",
-    },
-    products: ["Orcam"]
-  )
+  s.spm_dependency "Orcam/Orcam" # <--- HERE
 end
 ```
+
+NOTE: Like pod dependencies, the SPM depenency in a podspec should not state its source. Rather, the source of an SPM package (ex. its repo, which branch, commit...) should be declared in Podfile.
+
+#### In Podfile
+
+The `spm_pkg` method to declare the package being used. This method's usage is pretty much similar to the `pod` method.
+
+```rb
+spm_pkg "Orcam", :git => "https://github.com/trinhngocthuyen/orcam.git", :branch => "main"
+```
+
+### Using Swift Macros with cocoapods-spm
+
+TBU
