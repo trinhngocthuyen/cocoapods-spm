@@ -1,18 +1,14 @@
 require "cocoapods-spm/config"
+require "cocoapods-spm/def/spm_dependency"
 
 module Pod
   class Specification
     def spm_dependencies
-      @spm_dependencies ||= {}
+      @spm_dependencies ||= []
     end
 
-    def spm_dependency(dependency)
-      cmps = dependency.split("/")
-      raise "SPM dependency must be declared as follows: `s.spm_dependency '<Package>/<Product>'`" if cmps.count != 2
-
-      pkg, product = cmps
-      spm_dependencies[pkg] ||= []
-      spm_dependencies[pkg] << product
+    def spm_dependency(name, options = {})
+      spm_dependencies << SPM::Dependency.new(name, options)
     end
 
     def with

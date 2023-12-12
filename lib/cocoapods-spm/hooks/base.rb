@@ -23,10 +23,6 @@ module Pod
         Config.instance
       end
 
-      def all_specs
-        @all_specs ||= @context.umbrella_targets.flat_map(&:specs).uniq
-      end
-
       def run; end
     end
   end

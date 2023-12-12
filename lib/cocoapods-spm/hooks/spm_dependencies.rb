@@ -1,37 +1,53 @@
 require "cocoapods-spm/hooks/base"
+require "cocoapods-spm/dependencies_resolver"
 
 module Pod
   module SPM
     class SpmDependenciesHook < Hook
       def run
-        specs_with_spm_dependencies = all_specs.select(&:spm_dependencies)
-        return unless specs_with_spm_dependencies
+        resolver.resolve
+        return unless resolver.spm_pkgs
 
-        specs_with_spm_dependencies.each do |spec|
-          target = pods_project.targets.find { |t| t.name == spec.name }
-          add_spm_dependencies(target, spec.spm_dependencies)
-        end
+        add_spm_pkg_refs_to_project
+        add_spm_products_to_targets
         update_import_paths
         pods_project.save
       end
 
       private
 
-      def podfile
-        Pod::Config.instance.podfile
+      def resolver
+        @resolver ||= DependenciesResolver.new(podfile, @context.umbrella_targets)
       end
 
-      def add_spm_dependencies(target, dependencies)
-        dependencies.each do |name, products|
-          pkg = pkg_for(name)
-          products.each do |product|
-            ref = pods_project.new(Xcodeproj::Project::Object::XCSwiftPackageProductDependency)
-            ref.package = pkg
-            ref.product_name = product
-            target.package_product_dependencies << ref
-          end
-          pods_project.root_object.package_references << pkg
+      def spm_pkg_refs
+        @spm_pkg_refs ||= {}
+      end
+
+      def add_spm_pkg_refs_to_project
+        @spm_pkg_refs = resolver.spm_pkgs.to_h do |pkg|
+          pkg_ref = pkg.create_pkg_ref(pods_project)
+          pods_project.root_object.package_references << pkg_ref
+          [pkg.name, pkg_ref]
         end
+      end
+
+      def spm_pkgs_by_target
+        @spm_pkgs_by_target ||= {}
+      end
+
+      def add_spm_products_to_targets
+        pods_project.targets.each do |target|
+          resolver.spm_dependencies_by_target[target.name].to_a.each do |dep|
+            pkg_ref = spm_pkg_refs[dep.pkg.name]
+            product_ref = pkg_ref.create_pkg_product_dependency_ref(dep.product)
+            target.package_product_dependencies << product_ref
+          end
+        end
+      end
+
+      def podfile
+        Pod::Config.instance.podfile
       end
 
       def update_import_paths
@@ -43,38 +59,6 @@ module Pod
           import_paths << to_add unless import_paths.include?(to_add)
           config.build_settings['SWIFT_INCLUDE_PATHS'] = import_paths
         end
-      end
-
-      def requirement_from(options)
-        if options[:requirement]
-          options[:requirement]
-        elsif (version = options.delete(:version))
-          { :kind => "exactVersion", :version => version }
-        elsif (branch = options.delete(:branch))
-          { :kind => "branch", :branch => branch }
-        elsif (revision = options.delete(:commit))
-          { :kind => "revision", :revision => revision }
-        end
-      end
-
-      def pkg_for(name)
-        options = podfile.spm_pkgs[name]
-        if options.nil?
-          raise "SPM package `#{name}` was not declared in Podfile. " \
-                "Use method `spm_pakage` to declare such a package"
-        end
-
-        if (requirement = requirement_from(options))
-          pkg = pods_project.new(Xcodeproj::Project::Object::XCRemoteSwiftPackageReference)
-          pkg.repositoryURL = options[:url]
-          pkg.requirement = requirement
-        elsif options[:relative_path]
-          pkg = pods_project.new(Xcodeproj::Project::Object::XCLocalSwiftPackageReference)
-          pkg.relative_path = options[:relative_path]
-        else
-          raise "No requirement was declared for package `#{name}`"
-        end
-        pkg
       end
     end
   end

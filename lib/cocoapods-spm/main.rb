@@ -1,3 +1,4 @@
+require "cocoapods-spm/def/target_definition"
 require "cocoapods-spm/def/podfile"
 require "cocoapods-spm/def/spec"
 require "cocoapods-spm/hooks/all"
