@@ -35,7 +35,7 @@ NOTE: Like pod dependencies, the SPM depenency in a podspec should not state its
 The `spm_pkg` method to declare the package being used. This method's usage is pretty much similar to the `pod` method.
 
 ```rb
-spm_pkg "Orcam", :git => "https://github.com/trinhngocthuyen/orcam.git", :branch => "main"
+spm_pkg "Orcam", :url => "https://github.com/trinhngocthuyen/orcam.git", :branch => "main"
 ```
 
 ### Using Swift Macros with cocoapods-spm

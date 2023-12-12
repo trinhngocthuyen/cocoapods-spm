@@ -12,10 +12,6 @@ module Pod
         @macro_pods ||= {}
       end
 
-      def spm_pkgs
-        @spm_pkgs ||= {}
-      end
-
       def pod(name = nil, *requirements)
         macro = requirements[0].delete(:macro) if requirements.first.is_a?(Hash)
         macro ||= {}
@@ -27,7 +23,7 @@ module Pod
       end
 
       def spm_pkg(name, options)
-        spm_pkgs[name] = options
+        current_target_definition.store_spm_pkg(name, options)
       end
 
       private
