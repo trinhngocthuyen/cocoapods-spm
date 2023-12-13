@@ -4,9 +4,13 @@ require "cocoapods-spm/metadata"
 module Pod
   module SPM
     class Hook
-      class UpdateMacroSettings < Hook
+      class UpdateSettings < Hook
         def run
+          return if @spm_analyzer.spm_pkgs
+
           update_other_swift_flags
+          update_swift_include_paths
+          update_linker_flags
         end
 
         private
@@ -30,9 +34,30 @@ module Pod
         end
 
         def update_other_swift_flags
+          # For prebuilt macros
           perform_settings_update(
             update_targets: lambda do |_, _, config|
               { "OTHER_SWIFT_FLAGS" => other_swift_flags_by_config[config] }
+            end
+          )
+        end
+
+        def update_linker_flags
+          # For packages to work in the main target
+          perform_settings_update(
+            update_aggregate_targets: lambda do |target, _, _|
+              spm_deps = @spm_analyzer.spm_dependencies_by_target[target.to_s].to_a
+              flags = spm_deps.map { |d| "-l\"#{d.product}.o\"" }
+              { "OTHER_LDFLAGS" => flags }
+            end
+          )
+        end
+
+        def update_swift_include_paths
+          # For macro packages
+          perform_settings_update(
+            update_targets: lambda do |_, _, _|
+              { "SWIFT_INCLUDE_PATHS" => "${SYMROOT}/${CONFIGURATION}${EFFECTIVE_PLATFORM_NAME}" }
             end
           )
         end

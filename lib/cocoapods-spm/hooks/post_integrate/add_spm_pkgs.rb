@@ -4,14 +4,13 @@ require "cocoapods-spm/installer/analyzer"
 module Pod
   module SPM
     class Hook
-      class UpdateSpmDependencies < Hook
+      class AddSpmPkgs < Hook
         def run
           @spm_analyzer.analyze
           return unless @spm_analyzer.spm_pkgs
 
           add_spm_pkg_refs_to_project
           add_spm_products_to_targets
-          update_import_paths
           pods_project.save
         end
 
@@ -45,17 +44,6 @@ module Pod
 
         def podfile
           Pod::Config.instance.podfile
-        end
-
-        def update_import_paths
-          # Workaround: Currently, update the swift import paths of the base/Pods project
-          # to make it effective across all pod targets
-          pods_project.build_configurations.each do |config|
-            to_add = '${SYMROOT}/${CONFIGURATION}${EFFECTIVE_PLATFORM_NAME}'
-            import_paths = config.build_settings['SWIFT_INCLUDE_PATHS'] || ['$(inherited)']
-            import_paths << to_add unless import_paths.include?(to_add)
-            config.build_settings['SWIFT_INCLUDE_PATHS'] = import_paths
-          end
         end
       end
     end
