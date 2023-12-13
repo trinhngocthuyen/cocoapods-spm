@@ -1,3 +1,5 @@
+require "cocoapods-spm/metadata"
+
 module Pod
   module SPM
     class MacroPrebuilder
