@@ -8,3 +8,6 @@ format:
 
 test:
 	bundle exec rspec
+
+ex.install:
+	cd ../ios-demos/cocoapods-spm && bundle exec pod install --verbose
