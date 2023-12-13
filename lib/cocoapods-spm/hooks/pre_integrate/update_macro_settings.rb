@@ -30,23 +30,11 @@ module Pod
         end
 
         def update_other_swift_flags
-          update_setting = lambda do |setting, config|
-            if (flags = other_swift_flags_by_config[config])
-              update_setting!(setting, "OTHER_SWIFT_FLAGS" => flags)
+          perform_settings_update(
+            update_targets: lambda do |_, _, config|
+              { "OTHER_SWIFT_FLAGS" => other_swift_flags_by_config[config] }
             end
-          end
-
-          pod_targets.each do |target|
-            target.build_settings.each do |config, setting|
-              update_setting.call(setting, config)
-            end
-          end
-          aggregate_targets.each do |target|
-            target.user_build_configurations.each_key do |config|
-              setting = target.build_settings(config)
-              update_setting.call(setting, config)
-            end
-          end
+          )
         end
       end
     end

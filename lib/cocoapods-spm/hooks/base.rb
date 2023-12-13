@@ -50,9 +50,33 @@ module Pod
         end
       end
 
-      def update_setting!(setting, updated)
-        setting.xcconfig.merge!(updated)
-        setting.generate.merge!(updated)
+      def perform_settings_update(
+        update_targets: nil,
+        update_pod_targets: nil,
+        update_aggregate_targets: nil
+      )
+        proc = lambda do |update, target, setting, config|
+          return if update.nil?
+
+          hash = update.call(target, setting, config)
+          setting.xcconfig.merge!(hash)
+          setting.generate.merge!(hash)
+        end
+
+        pod_targets.each do |target|
+          target.build_settings.each do |config, setting|
+            proc.call(update_targets, target, setting, config)
+            proc.call(update_pod_targets, target, setting, config)
+          end
+        end
+
+        aggregate_targets.each do |target|
+          target.user_build_configurations.each_key do |config|
+            setting = target.build_settings(config)
+            proc.call(update_targets, target, setting, config)
+            proc.call(update_aggregate_targets, target, setting, config)
+          end
+        end
       end
     end
   end
