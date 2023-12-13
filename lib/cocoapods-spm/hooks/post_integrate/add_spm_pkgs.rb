@@ -6,7 +6,6 @@ module Pod
     class Hook
       class AddSpmPkgs < Hook
         def run
-          @spm_analyzer.analyze
           return unless @spm_analyzer.spm_pkgs
 
           add_spm_pkg_refs_to_project
