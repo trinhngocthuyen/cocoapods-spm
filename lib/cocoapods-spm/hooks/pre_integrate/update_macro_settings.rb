@@ -31,8 +31,9 @@ module Pod
 
         def update_other_swift_flags
           update_setting = lambda do |setting, config|
-            setting.xcconfig.merge!("OTHER_SWIFT_FLAGS" => other_swift_flags_by_config[config])
-            setting.generate.merge!("OTHER_SWIFT_FLAGS" => other_swift_flags_by_config[config])
+            if (flags = other_swift_flags_by_config[config])
+              update_setting!(setting, "OTHER_SWIFT_FLAGS" => flags)
+            end
           end
 
           pod_targets.each do |target|
