@@ -1,6 +1,5 @@
 require "cocoapods-spm/installer/analyzer"
 require "cocoapods-spm/macro/pod_installer"
-require "cocoapods-spm/macro/settings_updater"
 require "cocoapods-spm/hooks/base"
 
 module Pod

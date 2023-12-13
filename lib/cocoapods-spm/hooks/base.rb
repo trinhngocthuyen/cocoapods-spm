@@ -22,6 +22,18 @@ module Pod
         @context.pods_project
       end
 
+      def pod_targets
+        @analysis_result.pod_targets
+      end
+
+      def aggregate_targets
+        @analysis_result.targets
+      end
+
+      def user_build_configurations
+        @user_build_configurations ||= (pod_targets + aggregate_targets)[0].user_build_configurations
+      end
+
       def config
         Config.instance
       end
