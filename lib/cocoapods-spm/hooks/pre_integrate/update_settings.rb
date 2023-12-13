@@ -6,8 +6,6 @@ module Pod
     class Hook
       class UpdateSettings < Hook
         def run
-          return if @spm_analyzer.spm_pkgs
-
           update_other_swift_flags
           update_swift_include_paths
           update_linker_flags
@@ -34,6 +32,8 @@ module Pod
         end
 
         def update_other_swift_flags
+          return unless spm_config.macros
+
           # For prebuilt macros
           perform_settings_update(
             update_targets: lambda do |_, _, config|
@@ -43,6 +43,8 @@ module Pod
         end
 
         def update_linker_flags
+          return unless @spm_analyzer.spm_pkgs
+
           # For packages to work in the main target
           perform_settings_update(
             update_aggregate_targets: lambda do |target, _, _|
@@ -54,6 +56,8 @@ module Pod
         end
 
         def update_swift_include_paths
+          return unless @spm_analyzer.spm_pkgs
+
           # For macro packages
           perform_settings_update(
             update_targets: lambda do |_, _, _|
