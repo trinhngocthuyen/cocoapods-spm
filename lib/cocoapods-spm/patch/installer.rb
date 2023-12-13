@@ -1,6 +1,7 @@
 require "cocoapods-spm/installer/analyzer"
 require "cocoapods-spm/macro/pod_installer"
 require "cocoapods-spm/macro/settings_updater"
+require "cocoapods-spm/hooks/base"
 
 module Pod
   class Installer
@@ -37,16 +38,21 @@ module Pod
 
     private
 
+    def hook_options
+      {
+        :spm_analyzer => @spm_analyzer,
+        :analysis_result => @analysis_result
+      }
+    end
+
     def run_spm_pre_integrate_hooks
-      SPM::MacroSettingsUpdater.new(
-        pod_targets: pod_targets,
-        aggregate_targets: aggregate_targets
-      ).run
+      context = PreIntegrateHooksContext.generate(sandbox, pods_project, pod_target_subprojects, aggregate_targets)
+      SPM::Hook.run_hooks(:pre_integrate, context, hook_options)
     end
 
     def run_spm_post_integrate_hooks
       context = PostIntegrateHooksContext.generate(sandbox, pods_project, pod_target_subprojects, aggregate_targets)
-      SPM::Hook::All.new(context).run
+      SPM::Hook.run_hooks(:post_integrate, context, hook_options)
     end
 
     def resolve_spm_dependencies
