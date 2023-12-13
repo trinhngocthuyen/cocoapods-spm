@@ -20,7 +20,7 @@ module Pod
                 plugin_executable_path =
                   "${PODS_ROOT}/../.spm.pods/#{name}/.prebuilt/#{config.to_s.downcase}/" \
                   "#{impl_module_name}##{impl_module_name}"
-                "-load-plugin-executable #{plugin_executable_path}"
+                "-load-plugin-executable \"#{plugin_executable_path}\""
               end.join(" ")
               [config, flags]
             end
