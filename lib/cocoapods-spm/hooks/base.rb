@@ -49,6 +49,11 @@ module Pod
           cls_name.constantize.new(context, options).run
         end
       end
+
+      def update_setting!(setting, updated)
+        setting.xcconfig.merge!(updated)
+        setting.generate.merge!(updated)
+      end
     end
   end
 end
