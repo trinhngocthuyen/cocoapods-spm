@@ -1,6 +1,6 @@
 module Pod
-  module SPM
-    class DependenciesResolver
+  class Installer
+    class SPMAnalyzer
       attr_reader :spm_pkgs, :spm_dependencies_by_target
 
       def initialize(podfile, umbrella_targets)
@@ -10,34 +10,34 @@ module Pod
         @spm_dependencies_by_target = {}
       end
 
-      def resolve
-        resolve_spm_pkgs
-        resolve_spm_dependencies_by_target
+      def analyze
+        analyze_spm_pkgs
+        analyze_spm_dependencies_by_target
       end
 
       private
 
-      def resolve_spm_pkgs
+      def analyze_spm_pkgs
         @spm_pkgs = @podfile.target_definition_list.flat_map(&:spm_pkgs).uniq
       end
 
-      def resolve_spm_dependencies_by_target
-        resolve_dependencies_for_targets
-        resolve_dependencies_for_umbrella_targets
+      def analyze_spm_dependencies_by_target
+        analyze_dependencies_for_targets
+        analyze_dependencies_for_umbrella_targets
         @spm_dependencies_by_target.values.flatten.each { |d| d.pkg = spm_pkg_for(d.name) }
       end
 
-      def resolve_dependencies_for_targets
+      def analyze_dependencies_for_targets
         specs = @umbrella_targets.flat_map(&:specs).uniq
         specs.each do |spec|
           @spm_dependencies_by_target[spec.name] = spec.spm_dependencies
         end
       end
 
-      def resolve_dependencies_for_umbrella_targets
+      def analyze_dependencies_for_umbrella_targets
         @umbrella_targets.each do |target|
           spm_dependencies = target.specs.flat_map(&:spm_dependencies)
-          @spm_dependencies_by_target[target.cocoapods_target_label] = merge_spm_dependencies(spm_dependencies)
+          @spm_dependencies_by_target[target.to_s] = merge_spm_dependencies(spm_dependencies)
         end
 
         common_spm_pkgs = @podfile.root_target_definitions.flat_map(&:spm_pkgs)
