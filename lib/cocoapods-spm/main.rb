@@ -1,5 +1,6 @@
 require "cocoapods-spm/def/target_definition"
 require "cocoapods-spm/def/podfile"
 require "cocoapods-spm/def/spec"
+require "cocoapods-spm/patch/aggregate_target"
 require "cocoapods-spm/patch/installer"
 require "cocoapods-spm/command/spm"

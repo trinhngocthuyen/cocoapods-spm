@@ -21,7 +21,7 @@ module Pod
               # --------------------------------------------------------
               # Added by `cocoapods-spm` to embed SPM package frameworks
               # --------------------------------------------------------
-              if [[ -d "${BUILT_PRODUCTS_DIR}/PackageFrameworks" ]]; then
+              if (ls "${BUILT_PRODUCTS_DIR}/PackageFrameworks/"*.framework &> /dev/null); then
                 for framework_path in "${BUILT_PRODUCTS_DIR}/PackageFrameworks/"*.framework; do
                   install_framework "${framework_path}"
                 done
@@ -33,7 +33,7 @@ module Pod
 
         def update_embed_frameworks_script_input_files_path(target, config)
           target.embed_frameworks_script_input_files_path(config).open("a") do |f|
-            f << "\n" << "${BUILT_PRODUCTS_DIR}/PackgeFrameworks"
+            f << "\n" << "${BUILT_PRODUCTS_DIR}/PackageFrameworks"
           end
         end
       end
