@@ -14,6 +14,15 @@ module Pod
         @pkg = pkg
       end
 
+      def linkage
+        # TODO: How to detect the linkage of an SPM library?
+        @pkg.linkage.is_a?(Hash) ? @pkg.linkage[@product] : @pkg.linkage
+      end
+
+      def dynamic?
+        linkage == :dynamic
+      end
+
       def inspect
         "#<#{self.class} name=#{name} product=#{product} pkg=#{pkg}>"
       end

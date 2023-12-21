@@ -4,7 +4,7 @@ require "cocoapods-spm/def/spm_dependency"
 module Pod
   module SPM
     class Package
-      attr_reader :name, :requirement, :url, :relative_path
+      attr_reader :name, :requirement, :url, :relative_path, :linkage
 
       def initialize(name, options = {})
         @name = name
@@ -12,6 +12,7 @@ module Pod
         @requirement = requirement_from(options)
         @url = options[:url]
         @relative_path = options[:relative_path]
+        @linkage = options[:linkage]
       end
 
       def inspect

@@ -55,9 +55,11 @@ module Pod
 
         def linker_flags_for(target)
           spm_deps = @spm_analyzer.spm_dependencies_by_target[target.to_s].to_a
-          flags = spm_deps.map { |d| "-l\"#{d.product}.o\"" }
-          flags << '-L"${PODS_CONFIGURATION_BUILD_DIR}"' unless flags.empty?
-          flags
+          framework_flags = spm_deps.select(&:dynamic?).map { |d| "-framework \"#{d.product}\"" }
+          framework_flags << '-F"${PODS_CONFIGURATION_BUILD_DIR}/PackageFrameworks"' unless framework_flags.empty?
+          library_flags = spm_deps.reject(&:dynamic?).map { |d| "-l\"#{d.product}.o\"" }
+          library_flags << '-L"${PODS_CONFIGURATION_BUILD_DIR}"' unless library_flags.empty?
+          framework_flags + library_flags
         end
 
         def update_swift_include_paths
