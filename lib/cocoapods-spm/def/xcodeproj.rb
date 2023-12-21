@@ -12,6 +12,13 @@ module Pod
           ref.product_name = product
           ref
         end
+
+        def create_target_dependency_ref(product)
+          ref = project.new(BaseObject::PBXTargetDependency)
+          ref.name = product
+          ref.product_ref = create_pkg_product_dependency_ref(product)
+          ref
+        end
       end
 
       BaseObject = Xcodeproj::Project::Object

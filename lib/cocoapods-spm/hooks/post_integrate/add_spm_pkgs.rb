@@ -35,8 +35,13 @@ module Pod
           pods_project.targets.each do |target|
             @spm_analyzer.spm_dependencies_by_target[target.name].to_a.each do |dep|
               pkg_ref = spm_pkg_refs[dep.pkg.name]
-              product_ref = pkg_ref.create_pkg_product_dependency_ref(dep.product)
-              target.package_product_dependencies << product_ref
+              target_dep_ref = pkg_ref.create_target_dependency_ref(dep.product)
+              target.dependencies << target_dep_ref
+
+              # TODO: Don't add to `package_product_dependencies`.
+              # Otherwise, the product will be statically linked to the target.
+              # Let it be linked according to settings in `xcconfig` files.
+              target.package_product_dependencies << target_dep_ref.product_ref
             end
           end
         end
