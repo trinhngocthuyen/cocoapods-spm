@@ -47,12 +47,17 @@ module Pod
 
           # For packages to work in the main target
           perform_settings_update(
-            update_aggregate_targets: lambda do |target, _, _|
-              spm_deps = @spm_analyzer.spm_dependencies_by_target[target.to_s].to_a
-              flags = spm_deps.map { |d| "-l\"#{d.product}.o\"" }
-              { "OTHER_LDFLAGS" => flags }
+            update_targets: lambda do |target, _, _|
+              { "OTHER_LDFLAGS" => linker_flags_for(target) }
             end
           )
+        end
+
+        def linker_flags_for(target)
+          spm_deps = @spm_analyzer.spm_dependencies_by_target[target.to_s].to_a
+          flags = spm_deps.map { |d| "-l\"#{d.product}.o\"" }
+          flags << '-L"${PODS_CONFIGURATION_BUILD_DIR}"' unless flags.empty?
+          flags
         end
 
         def update_swift_include_paths
