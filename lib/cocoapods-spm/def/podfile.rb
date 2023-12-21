@@ -26,6 +26,19 @@ module Pod
         current_target_definition.store_spm_pkg(name, options)
       end
 
+      def spm_pkgs_for(target)
+        spm_pkgs_by_aggregate_target[target.to_s]
+      end
+
+      def spm_pkgs_by_aggregate_target
+        @spm_pkgs_by_aggregate_target ||= begin
+          common_spm_pkgs = root_target_definitions.flat_map(&:spm_pkgs)
+          target_definition_list.reject(&:abstract?).to_h do |target|
+            [target.to_s, (common_spm_pkgs + target.spm_pkgs).uniq(&:name)]
+          end
+        end
+      end
+
       private
 
       def prepare_macro_pod_dir(name, requirement)

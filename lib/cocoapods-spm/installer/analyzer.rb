@@ -40,11 +40,10 @@ module Pod
           @spm_dependencies_by_target[target.to_s] = merge_spm_dependencies(spm_dependencies)
         end
 
-        common_spm_pkgs = @podfile.root_target_definitions.flat_map(&:spm_pkgs)
-        @podfile.target_definition_list.reject(&:abstract?).each do |target|
-          existing = @spm_dependencies_by_target[target.label].to_a
-          spm_dependencies = (common_spm_pkgs + target.spm_pkgs).flat_map(&:to_dependencies)
-          @spm_dependencies_by_target[target.label] = merge_spm_dependencies(existing + spm_dependencies)
+        @podfile.spm_pkgs_by_aggregate_target.each do |target, pkgs|
+          existing = @spm_dependencies_by_target[target].to_a
+          spm_dependencies = pkgs.flat_map(&:to_dependencies)
+          @spm_dependencies_by_target[target] = merge_spm_dependencies(existing + spm_dependencies)
         end
       end
 
