@@ -37,11 +37,6 @@ module Pod
               pkg_ref = spm_pkg_refs[dep.pkg.name]
               target_dep_ref = pkg_ref.create_target_dependency_ref(dep.product)
               target.dependencies << target_dep_ref
-
-              # TODO: Don't add to `package_product_dependencies`.
-              # Otherwise, the product will be statically linked to the target.
-              # Let it be linked according to settings in `xcconfig` files.
-              target.package_product_dependencies << target_dep_ref.product_ref
             end
           end
         end
