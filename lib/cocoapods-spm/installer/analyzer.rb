@@ -15,6 +15,10 @@ module Pod
         analyze_spm_dependencies_by_target
       end
 
+      def spm_dependencies_for(target)
+        @spm_dependencies_by_target[target.to_s]
+      end
+
       private
 
       def analyze_spm_pkgs
