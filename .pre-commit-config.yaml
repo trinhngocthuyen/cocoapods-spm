@@ -10,3 +10,8 @@ repos:
     rev: v1.58.0
     hooks:
       - id: rubocop
+  - repo: https://github.com/nicklockwood/SwiftFormat
+    rev: 0.52.11
+    hooks:
+      - id: swiftformat
+        files: examples

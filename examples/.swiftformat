@@ -1,0 +1,8 @@
+--swiftversion 5.9
+--indent 2
+--disable redundantSelf
+--disable sortedImports
+--disable unusedArguments
+--ifdef no-indent
+--header strip
+--exclude */**/Pods # Note: The excluded paths are relative to the config file
