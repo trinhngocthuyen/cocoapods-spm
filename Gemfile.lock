@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    cocoapods-spm (0.0.3)
+    cocoapods-spm (0.0.4)
       xcodeproj (>= 1.23.0)
 
 GEM

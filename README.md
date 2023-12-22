@@ -21,7 +21,7 @@ $ gem install cocoapods-spm
 
 ## Usage
 
-Check out the demo at: [ios-demos/cocoapods-spm](https://github.com/trinhngocthuyen/ios-demos/tree/main/cocoapods-spm).
+Check out the demo at: [examples](/examples).
 
 ### Declaring SPM packages
 
