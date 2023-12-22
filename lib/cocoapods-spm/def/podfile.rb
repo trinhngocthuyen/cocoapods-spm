@@ -3,6 +3,8 @@ require "cocoapods-spm/config"
 module Pod
   class Podfile
     module DSL
+      attr_accessor :spm_analyzer
+
       alias origin_pod pod
       def config_cocoapods_spm(options)
         SPM::Config.instance.dsl_config = options
