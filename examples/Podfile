@@ -1,0 +1,49 @@
+platform :ios, "16.0"
+use_frameworks!
+
+@checksum = "dummy-checksum-to-prevent-merge-conflicts"
+
+plugin "cocoapods-spm"
+
+config_compact_spec(
+  extra: ->(s) { s.ios.deployment_target = "16.0" }
+)
+
+config_cocoapods_spm(
+  dont_prebuild_macros: true,
+  default_macro_config: "debug"
+)
+
+target "EX" do
+  pod "Logger", :path => "LocalPods/Logger"
+  pod "CommonUI", :path => "LocalPods/CommonUI"
+  pod "Services", :path => "LocalPods/Services"
+  pod "Orcam", :macro => {
+    :git => "https://github.com/trinhngocthuyen/orcam.git",
+    :branch => "main"
+  }
+  pod "MacroCodableKit", :macro => {
+    :git => "https://github.com/mikhailmaslo/macro-codable-kit",
+    :tag => "0.3.0"
+  }
+
+  spm_pkg "SnapKit",
+          :url => "https://github.com/SnapKit/SnapKit.git",
+          :version => "5.6.0",
+          :products => ["SnapKit-Dynamic"],
+          :linkage => :dynamic
+  spm_pkg "SwiftUIX",
+          :url => "https://github.com/SwiftUIX/SwiftUIX.git",
+          :version => "0.1.9"
+  spm_pkg "SwiftyBeaver",
+          :url => "https://github.com/SwiftyBeaver/SwiftyBeaver.git",
+          :version => "2.0.0"
+end
+
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      config.build_settings.delete "IPHONEOS_DEPLOYMENT_TARGET"
+    end
+  end
+end
