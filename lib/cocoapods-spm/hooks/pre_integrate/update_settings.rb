@@ -48,7 +48,11 @@ module Pod
           # For packages to work in the main target
           perform_settings_update(
             update_targets: lambda do |target, _, _|
-              { "OTHER_LDFLAGS" => linker_flags_for(target) }
+              {
+                "OTHER_LDFLAGS" => linker_flags_for(target),
+                "FRAMEWORK_SEARCH_PATHS" => "\"${PODS_CONFIGURATION_BUILD_DIR}/PackageFrameworks\"",
+                "LIBRARY_SEARCH_PATHS" => "\"${PODS_CONFIGURATION_BUILD_DIR}\""
+              }
             end
           )
         end
@@ -56,9 +60,7 @@ module Pod
         def linker_flags_for(target)
           spm_deps = @spm_analyzer.spm_dependencies_by_target[target.to_s].to_a
           framework_flags = spm_deps.select(&:dynamic?).map { |d| "-framework \"#{d.product}\"" }
-          framework_flags << '-F"${PODS_CONFIGURATION_BUILD_DIR}/PackageFrameworks"' unless framework_flags.empty?
           library_flags = spm_deps.reject(&:dynamic?).map { |d| "-l\"#{d.product}.o\"" }
-          library_flags << '-L"${PODS_CONFIGURATION_BUILD_DIR}"' unless library_flags.empty?
           framework_flags + library_flags
         end
 
