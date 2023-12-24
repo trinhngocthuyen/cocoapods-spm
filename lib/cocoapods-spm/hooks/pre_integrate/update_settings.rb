@@ -68,7 +68,7 @@ module Pod
           # For macro packages
           perform_settings_update(
             update_targets: lambda do |_, _, _|
-              { "SWIFT_INCLUDE_PATHS" => "${SYMROOT}/${CONFIGURATION}${EFFECTIVE_PLATFORM_NAME}" }
+              { "SWIFT_INCLUDE_PATHS" => "$(PODS_CONFIGURATION_BUILD_DIR)" }
             end
           )
         end
