@@ -10,7 +10,7 @@ module Pod
         @name = name
         @options = options
         @requirement = requirement_from(options)
-        @url = options[:url]
+        @url = options[:url] || options[:git]
         @relative_path = options[:relative_path]
         @linkage = options[:linkage]
       end
@@ -49,7 +49,7 @@ module Pod
       def requirement_from(options)
         if options[:requirement]
           options[:requirement]
-        elsif (version = options.delete(:version))
+        elsif (version = options.delete(:version) || options.delete(:tag))
           { :kind => "exactVersion", :version => version }
         elsif (branch = options.delete(:branch))
           { :kind => "branch", :branch => branch }

@@ -32,12 +32,8 @@ target "EX" do
           :version => "5.6.0",
           :products => ["SnapKit-Dynamic"],
           :linkage => :dynamic
-  spm_pkg "SwiftUIX",
-          :url => "https://github.com/SwiftUIX/SwiftUIX.git",
-          :version => "0.1.9"
-  spm_pkg "SwiftyBeaver",
-          :url => "https://github.com/SwiftyBeaver/SwiftyBeaver.git",
-          :version => "2.0.0"
+  spm_pkg "SwiftUIX", :git => "https://github.com/SwiftUIX/SwiftUIX.git", :tag => "0.1.9"
+  spm_pkg "SwiftyBeaver", :git => "https://github.com/SwiftyBeaver/SwiftyBeaver.git", :tag => "2.0.0"
 end
 
 post_install do |installer|
