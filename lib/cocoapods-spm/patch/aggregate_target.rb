@@ -7,7 +7,7 @@ module Pod
     end
 
     def includes_dynamic_spm_dependencies?
-      podfile.spm_analyzer.spm_dependencies_for(self).any?(&:dynamic)
+      podfile.spm_analyzer.spm_dependencies_for(self).any?(&:dynamic?)
     end
   end
 end
