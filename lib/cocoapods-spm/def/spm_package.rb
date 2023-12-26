@@ -8,11 +8,28 @@ module Pod
 
       def initialize(name, options = {})
         @name = name
-        @options = options
-        @requirement = requirement_from(options)
+        @_options = options
+        @relative_path = nil
+        @linkage = nil
+        @url = nil
+        @requirement = nil
+        parse_options(options)
+      end
+
+      def parse_options(options)
         @url = options[:url] || options[:git]
-        @relative_path = options[:relative_path]
         @linkage = options[:linkage]
+        @relative_path = relative_path_from(options)
+        @requirement = requirement_from(options)
+      end
+
+      def relative_path_from(options)
+        if (relative_path = options[:relative_path])
+          relative_path
+        elsif (path = options[:path])
+          path = Pathname(path).expand_path
+          path.relative_path_from(File.absolute_path("Pods")).to_s
+        end
       end
 
       def inspect
@@ -24,7 +41,7 @@ module Pod
       end
 
       def to_dependencies
-        if (products = @options[:products])
+        if (products = @_options[:products])
           products.map { |product| Dependency.new(@name, product: product, pkg: self) }
         else
           [Dependency.new(@name, pkg: self)]
@@ -47,16 +64,16 @@ module Pod
       private
 
       def requirement_from(options)
-        if options[:requirement]
-          options[:requirement]
+        return if @relative_path
+
+        if (requirement = options[:requirement])
+          requirement
         elsif (version = options.delete(:version) || options.delete(:tag))
           { :kind => "exactVersion", :version => version }
         elsif (branch = options.delete(:branch))
           { :kind => "branch", :branch => branch }
         elsif (revision = options.delete(:commit))
           { :kind => "revision", :revision => revision }
-        elsif options[:relative_path]
-          nil
         else
           raise "Missing requirement for SPM package: #{name}"
         end
