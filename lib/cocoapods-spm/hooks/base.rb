@@ -45,8 +45,9 @@ module Pod
           require f
           id = File.basename(f, ".*")
           cls_name = "Pod::SPM::Hook::#{id.camelize}"
-          UI.message "Running hook: #{cls_name}"
-          cls_name.constantize.new(context, options).run
+          UI.message "- Running hook: #{cls_name}" do
+            cls_name.constantize.new(context, options).run
+          end
         end
       end
 

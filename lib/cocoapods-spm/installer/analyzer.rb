@@ -3,9 +3,9 @@ module Pod
     class SPMAnalyzer
       attr_reader :spm_pkgs, :spm_dependencies_by_target
 
-      def initialize(podfile, umbrella_targets)
+      def initialize(podfile, aggregate_targets)
         @podfile = podfile
-        @umbrella_targets = umbrella_targets
+        @aggregate_targets = aggregate_targets
         @spm_pkgs = []
         @spm_dependencies_by_target = {}
       end
@@ -27,19 +27,19 @@ module Pod
 
       def analyze_spm_dependencies_by_target
         analyze_dependencies_for_targets
-        analyze_dependencies_for_umbrella_targets
+        analyze_dependencies_for_aggregate_targets
         @spm_dependencies_by_target.values.flatten.each { |d| d.pkg = spm_pkg_for(d.name) }
       end
 
       def analyze_dependencies_for_targets
-        specs = @umbrella_targets.flat_map(&:specs).uniq
+        specs = @aggregate_targets.flat_map(&:specs).uniq
         specs.each do |spec|
           @spm_dependencies_by_target[spec.name] = spec.spm_dependencies
         end
       end
 
-      def analyze_dependencies_for_umbrella_targets
-        @umbrella_targets.each do |target|
+      def analyze_dependencies_for_aggregate_targets
+        @aggregate_targets.each do |target|
           spm_dependencies = target.specs.flat_map(&:spm_dependencies)
           @spm_dependencies_by_target[target.to_s] = merge_spm_dependencies(spm_dependencies)
         end

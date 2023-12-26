@@ -55,7 +55,6 @@ module Pod
     end
 
     def resolve_spm_dependencies
-      # TODO: convert aggregate_targets to umbrella_targets?
       UI.section "Analyzing SPM dependencies" do
         @spm_analyzer ||= Pod::Installer::SPMAnalyzer.new(podfile, aggregate_targets)
         @spm_analyzer.analyze
