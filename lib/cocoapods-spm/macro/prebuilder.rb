@@ -52,7 +52,7 @@ module Pod
         return if spm_config.dont_prebuild_macros_if_exist? && (macro_prebuilt_dir / config / impl_module_name).exist?
 
         UI.puts "Building macro implementation: #{impl_module_name} (#{config})...".green
-        `cd #{macro_downloaded_dir} && swift build -c #{config}`
+        `cd #{macro_downloaded_dir} && swift build -c #{config} --product #{impl_module_name}`
         (macro_prebuilt_dir / config).mkpath
         FileUtils.copy_entry(
           macro_downloaded_dir / ".build" / config / impl_module_name,
