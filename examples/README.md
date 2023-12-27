@@ -2,7 +2,7 @@
 
 ## Highlights
 
-- Declare SPM packages in Podfile: [Podfile#L30-L40](/examples/Podfile#L30-L40)
+- Declare SPM packages in Podfile: [Podfile#L30-L36](/examples/Podfile#L30-L36)
 - Declare SPM dependencies in podspecs: [LocalPods/CommonUI/CommonUI.podspec#L4](/examples/LocalPods/CommonUI/CommonUI.podspec#L4)
 - Declare prebuilt macro in Podfile: [Podfile#L21-L24](/examples/Podfile#L21-L24).\
 Then, other pods can depend on it just like normal: [LocalPods/CommonUI/CommonUI.podspec#L3](/examples/LocalPods/CommonUI/CommonUI.podspec#L3)
