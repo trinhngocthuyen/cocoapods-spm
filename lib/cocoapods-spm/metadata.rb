@@ -9,8 +9,12 @@ module Pod
         @raw = raw
       end
 
+      def self.from_s(str)
+        new(JSON.parse(str))
+      end
+
       def self.from_file(path)
-        new(JSON.parse(File.read(path)))
+        from_s(File.read(path))
       end
 
       def self.for_pod(name)
