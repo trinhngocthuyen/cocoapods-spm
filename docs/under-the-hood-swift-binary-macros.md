@@ -1,8 +1,10 @@
-# Swift Binary Macros Under The Hood
+[< Documentation](README.md)
+
+# Under the Hood: Swift Binary Macros
 
 This technique was inspired by the approach mentioned in [this blog post](https://www.polpiella.dev/binary-swift-macros).
 
-## Overview
+### Overview
 
 The process of turning a package into a pod can be summarized in the following steps:
 - Step (1): Prepare a dedicated pod dir: `.spm.pods/<Package>`

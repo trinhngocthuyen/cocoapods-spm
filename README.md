@@ -75,7 +75,7 @@ pod "MacroCodableKit", :macro => {
 
 When running pod install, the plugin prebuilds the declared macros (if not prebuilt before) from their sources.
 
-Wanna know more about its under-the-hood? Check out [this doc](/docs/swift_binary_macros_under_the_hood.md).
+Wanna know more about its under-the-hood? Check out [this doc](/docs/under-the-hood-swift-binary-macros.md).
 
 Alternatively, you can prebuild macros with the CLI. Check the [subsequent section](#using-the-cli) for details.
 
