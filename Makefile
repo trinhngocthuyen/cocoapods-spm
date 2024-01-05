@@ -1,5 +1,5 @@
 install:
-	which pre-commit &> /dev/null || brew install pre-commit
+	which pre-commit &> /dev/null || pip install pre-commit
 	pre-commit install
 	bundle install
 
