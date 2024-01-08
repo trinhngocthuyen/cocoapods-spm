@@ -1,9 +1,11 @@
-install:
-	which pre-commit &> /dev/null || brew install pre-commit
+ensure.pre-commit:
+	which pre-commit &> /dev/null || pip install pre-commit
+
+install: ensure.pre-commit
 	pre-commit install
 	bundle install
 
-format:
+format: ensure.pre-commit
 	pre-commit run --all-files
 
 test:

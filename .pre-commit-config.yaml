@@ -14,4 +14,3 @@ repos:
     rev: 0.52.11
     hooks:
       - id: swiftformat
-        files: examples
