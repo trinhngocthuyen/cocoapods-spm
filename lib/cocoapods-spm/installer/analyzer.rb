@@ -1,3 +1,5 @@
+require "cocoapods-spm/installer/validator"
+
 module Pod
   class Installer
     class SPMAnalyzer
@@ -13,6 +15,7 @@ module Pod
       def analyze
         analyze_spm_pkgs
         analyze_spm_dependencies_by_target
+        validate!
       end
 
       def spm_dependencies_for(target)
@@ -63,6 +66,11 @@ module Pod
       def spm_pkg_for(name)
         @_spm_pkgs_by_name ||= @spm_pkgs.to_h { |pkg| [pkg.name, pkg] }
         @_spm_pkgs_by_name[name]
+      end
+
+      def validate!
+        validator = SPMValidator.new(@aggregate_targets, @spm_pkgs, @spm_dependencies_by_target)
+        validator.validate!
       end
     end
   end
