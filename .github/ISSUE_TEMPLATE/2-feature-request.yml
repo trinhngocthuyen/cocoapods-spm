@@ -1,0 +1,19 @@
+name: Feature Request
+description: Request a feature (if something can be improved, to make the plugin better)
+title: "[Feature Request] <title>"
+labels: ["feature request"]
+body:
+  - type: textarea
+    attributes:
+      label: Motivation
+      description: Share with us why we should have this change. What does it benefit the community?
+      placeholder: Tell us what you think!
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Summary
+      description: Share with us what are the expected behaviors with this request.
+      placeholder: Tell us what you think!
+    validations:
+      required: true
