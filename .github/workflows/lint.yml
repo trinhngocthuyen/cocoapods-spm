@@ -4,4 +4,4 @@ on:
 
 jobs:
   lint:
-    uses: trinhngocthuyen/gh-actions/.github/workflows/rb-lint.yml@main
+    uses: trinhngocthuyen/gh-actions/.github/workflows/pre-commit.yml@main
