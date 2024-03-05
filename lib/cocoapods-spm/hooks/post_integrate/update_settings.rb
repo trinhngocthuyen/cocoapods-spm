@@ -32,7 +32,7 @@ module Pod
         end
 
         def update_other_swift_flags
-          return unless spm_config.macros
+          return if spm_config.all_macros.empty?
 
           # For prebuilt macros
           perform_settings_update(
@@ -43,7 +43,7 @@ module Pod
         end
 
         def update_linker_flags
-          return unless @spm_analyzer.spm_pkgs
+          return if @spm_analyzer.spm_pkgs.empty?
 
           # For packages to work in the main target
           perform_settings_update(
@@ -65,7 +65,7 @@ module Pod
         end
 
         def update_swift_include_paths
-          return unless @spm_analyzer.spm_pkgs
+          return if @spm_analyzer.spm_pkgs.empty?
 
           # For macro packages
           perform_settings_update(

@@ -62,6 +62,9 @@ module Pod
           hash = update.call(target, setting, config)
           setting.xcconfig.merge!(hash)
           setting.generate.merge!(hash)
+          Installer::Xcode::PodsProjectGenerator::TargetInstallerHelper.update_changed_file(
+            setting, target.xcconfig_path(config)
+          )
         end
 
         pod_targets.each do |target|
