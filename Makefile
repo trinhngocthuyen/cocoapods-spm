@@ -13,3 +13,6 @@ test:
 
 ex.install:
 	cd examples && make install
+
+ex.test:
+	cd examples && make install test

@@ -19,6 +19,7 @@ Package.pins
 Package.resolved
 .swiftpm
 
+DerivedData/
 .build/
 Pods/
 *.xcworkspace
@@ -31,3 +32,4 @@ fastlane/screenshots/**/*.png
 fastlane/test_output
 
 .spm.pods/
+.logs/

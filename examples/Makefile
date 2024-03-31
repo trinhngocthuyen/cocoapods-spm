@@ -9,3 +9,9 @@ spm.fetch:
 
 spm.prebuild:
 	bundle exec pod spm prebuild --all --verbose
+
+build:
+	sh scripts/xcodebuild.sh
+
+test:
+	env XCODEBUILD_ACTION=test sh scripts/xcodebuild.sh
