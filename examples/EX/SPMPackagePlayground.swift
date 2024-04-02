@@ -19,3 +19,9 @@ private struct Foo_SwiftUIX: View {
     ScrollView {}.dismissDisabled(false)
   }
 }
+
+struct Foo_SwiftyBeaver {
+  init() {
+    print(SwiftyBeaver.self)
+  }
+}

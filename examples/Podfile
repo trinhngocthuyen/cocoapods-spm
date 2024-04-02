@@ -1,5 +1,7 @@
 platform :ios, "16.0"
-use_frameworks! :linkage => (ENV["LINKAGE"] || :dynamic).to_sym
+linkage = (ENV["LINKAGE"] || :dynamic).to_sym
+use_frameworks! :linkage => linkage
+puts "Using linkage: #{linkage}"
 
 @checksum = "dummy-checksum-to-prevent-merge-conflicts"
 
