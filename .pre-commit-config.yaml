@@ -10,10 +10,10 @@ repos:
       - id: end-of-file-fixer
       - id: trailing-whitespace
   - repo: https://github.com/rubocop/rubocop
-    rev: v1.58.0
+    rev: v1.62.1
     hooks:
       - id: rubocop
   - repo: https://github.com/nicklockwood/SwiftFormat
-    rev: 0.52.11
+    rev: 0.53.5
     hooks:
       - id: swiftformat
