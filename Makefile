@@ -15,4 +15,6 @@ ex.install:
 	cd examples && make install
 
 ex.test:
-	cd examples && make install test
+	cd examples && \
+		make install test LINKAGE=static && \
+		make install test LINKAGE=dynamic
