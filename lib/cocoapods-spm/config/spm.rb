@@ -73,6 +73,10 @@ module Pod
         pkg_root_dir / ".checkouts"
       end
 
+      def pkg_metadata_dir
+        @pkg_metadata_dir ||= prepare_dir(pkg_root_dir / "metadata")
+      end
+
       private
 
       def prepare_dir(dir)

@@ -1,3 +1,4 @@
+require "cocoapods-spm/executables"
 require "cocoapods-spm/hooks/base"
 require "cocoapods-spm/installer/analyzer"
 
@@ -10,6 +11,8 @@ module Pod
 
           xcodebuild_resolve_package_deps
           create_symlink_to_checkouts
+          generate_metadata
+          resolve_product_deps
         end
 
         private
@@ -29,6 +32,28 @@ module Pod
           dst_dir.delete if dst_dir.exist?
           UI.message "Create symlink: #{src_dir} -> #{dst_dir}"
           File.symlink(src_dir, dst_dir)
+        end
+
+        def generate_metadata
+          @metadata_cache ||= {}
+          @spm_analyzer.spm_pkgs.each do |pkg|
+            raw = Dir.chdir(spm_config.pkg_checkouts_dir / pkg.name) do
+              `swift package dump-package`
+            end
+            (spm_config.pkg_metadata_dir / "#{pkg.name}.json").write(raw)
+            @metadata_cache[pkg.name] = Metadata.from_s(raw)
+          end
+        end
+
+        def resolve_product_deps
+          @spm_analyzer.spm_dependencies_by_target.values.flatten.uniq(&:name).each do |dep|
+            # metadata = metadata_of(dep.name)
+            # TODO: Resolve product dependencies
+          end
+        end
+
+        def metadata_of(pkg)
+          @metadata_cache[pkg]
         end
       end
     end

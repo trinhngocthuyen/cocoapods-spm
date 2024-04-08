@@ -21,8 +21,16 @@ module Pod
         from_file(Config.instance.macro_root_dir / name / "metadata.json")
       end
 
+      def [](key)
+        raw[key]
+      end
+
       def targets
         raw["targets"]
+      end
+
+      def products
+        raw["products"]
       end
 
       def targets_of_type(type)
