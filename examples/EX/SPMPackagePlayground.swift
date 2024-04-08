@@ -1,27 +1,20 @@
 import MacroCodableKit
+
+// import OpenTelemetrySdk
 import Orcam
 import SnapKit
 import SwiftUIX
 import SwiftyBeaver
 
-@Init
-struct Foo_Orcam {
+@AllOfCodable // MacroCodableKit
+@Init // Orcam
+struct Foo {
   let x: Int
-}
 
-@AllOfCodable
-struct Foo_MacroCodableKit {
-  let x: Int
-}
-
-private struct Foo_SwiftUIX: View {
-  var body: some View {
-    ScrollView {}.dismissDisabled(false)
-  }
-}
-
-struct Foo_SwiftyBeaver {
-  init() {
-    print(SwiftyBeaver.self)
+  func check() {
+    print(AnyButtonStyle.self) // SwiftUIX
+    print(SwiftyBeaver.self) // SwiftyBeaver
+    print(Constraint.self) // SnapKit
+    // print(DoubleCounterSdk.self) // OpenTelemetrySdk
   }
 }
