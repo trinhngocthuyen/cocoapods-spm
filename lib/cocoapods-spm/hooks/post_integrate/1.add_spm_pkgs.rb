@@ -40,10 +40,6 @@ module Pod
             end
           end
         end
-
-        def podfile
-          Pod::Config.instance.podfile
-        end
       end
     end
   end

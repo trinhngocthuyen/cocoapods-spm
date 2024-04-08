@@ -38,12 +38,16 @@ module Pod
         Config.instance
       end
 
+      def podfile
+        Pod::Config.instance.podfile
+      end
+
       def run; end
 
       def self.run_hooks(phase, context, options)
         Dir["#{__dir__}/#{phase}/*.rb"].sort.each do |f|
           require f
-          id = File.basename(f, ".*")
+          id = File.basename(f, ".*").split(".").last
           cls_name = "Pod::SPM::Hook::#{id.camelize}"
           UI.message "- Running hook: #{cls_name}" do
             cls_name.constantize.new(context, options).run
