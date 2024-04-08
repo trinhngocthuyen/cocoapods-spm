@@ -39,7 +39,7 @@ module Pod
       end
 
       def podfile
-        Pod::Config.instance.podfile
+        pod_config.podfile
       end
 
       def run; end
