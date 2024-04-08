@@ -14,7 +14,13 @@ test:
 ex.install:
 	cd examples && make install
 
-ex.test:
+ex.test.%:
 	cd examples && \
-		make install test LINKAGE=static && \
-		make install test LINKAGE=dynamic
+		make install test LINKAGE=$$(echo $@ | cut -d. -f3)
+
+ex.test:
+	make ex.test.static # Default to static
+
+ex.test.all:
+	make ex.test.static
+	make ex.test.dynamic

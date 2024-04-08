@@ -1,0 +1,36 @@
+name: integration-test
+on:
+  issue_comment:
+    types: [created, edited, deleted]
+
+jobs:
+  integration-test-static:
+    runs-on: macos-14-large
+    if: >-
+      github.event.issue.pull_request && (
+        github.event.comment.body == '/integration-test' ||
+        github.event.comment.body == '/integration-test static' ||
+        github.event.comment.body == '/integration-test all'
+      )
+    steps:
+      - name: Install
+        uses: trinhngocthuyen/gh-actions/rb/install@main
+      - name: Makefile
+        uses: trinhngocthuyen/gh-actions/core/makefile@main
+        with:
+          targets: ex.test.static
+
+  integration-test-dynamic:
+    runs-on: macos-14-large
+    if: >-
+      github.event.issue.pull_request && (
+        github.event.comment.body == '/integration-test dynamic' ||
+        github.event.comment.body == '/integration-test all'
+      )
+    steps:
+      - name: Install
+        uses: trinhngocthuyen/gh-actions/rb/install@main
+      - name: Makefile
+        uses: trinhngocthuyen/gh-actions/core/makefile@main
+        with:
+          targets: ex.test.dynamic
