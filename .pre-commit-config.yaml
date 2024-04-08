@@ -13,6 +13,8 @@ repos:
     rev: v1.62.1
     hooks:
       - id: rubocop
+        args: ['--show-docs-url'] # Warm up rubocop (for it to fetch remote configs)
+      - id: rubocop
   - repo: https://github.com/nicklockwood/SwiftFormat
     rev: 0.53.5
     hooks:
