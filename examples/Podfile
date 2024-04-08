@@ -36,10 +36,10 @@ target "EX" do
           :linkage => :dynamic
   spm_pkg "SwiftUIX", :git => "https://github.com/SwiftUIX/SwiftUIX.git", :tag => "0.1.9"
   spm_pkg "SwiftyBeaver", :git => "https://github.com/SwiftyBeaver/SwiftyBeaver.git", :tag => "2.0.0"
-  spm_pkg "opentelemetry-swift",
-          :git => "https://github.com/open-telemetry/opentelemetry-swift.git",
-          :branch => "main",
-          :products => ["OpenTelemetrySdk"]
+  # spm_pkg "opentelemetry-swift",
+  #         :git => "https://github.com/open-telemetry/opentelemetry-swift.git",
+  #         :branch => "main",
+  #         :products => ["OpenTelemetrySdk"]
 end
 
 target "EXTests" do
