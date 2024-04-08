@@ -6,7 +6,7 @@ module Pod
     class Hook
       class AddSpmPkgs < Hook
         def run
-          return unless @spm_analyzer.spm_pkgs
+          return if @spm_analyzer.spm_pkgs.empty?
 
           add_spm_pkg_refs_to_project
           add_spm_products_to_targets
