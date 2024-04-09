@@ -1,18 +1,22 @@
 require "cocoapods-spm/installer/validator"
+require "cocoapods-spm/resolver/umbrella_package"
 
 module Pod
   class Installer
+    # To be renamed to Resolver
     class SPMAnalyzer
       attr_reader :spm_pkgs, :spm_dependencies_by_target
 
       def initialize(podfile, aggregate_targets)
         @podfile = podfile
         @aggregate_targets = aggregate_targets
+        @umbrella_pkg = nil
         @spm_pkgs = []
         @spm_dependencies_by_target = {}
       end
 
       def analyze
+        generate_umbrella_pkg
         analyze_spm_pkgs
         analyze_spm_dependencies_by_target
         validate!
@@ -23,6 +27,11 @@ module Pod
       end
 
       private
+
+      def generate_umbrella_pkg
+        @umbrella_pkg = Pod::SPM::UmbrellaPackage.new(@podfile)
+        @umbrella_pkg.prepare
+      end
 
       def analyze_spm_pkgs
         @spm_pkgs = @podfile.target_definition_list.flat_map(&:spm_pkgs).uniq
