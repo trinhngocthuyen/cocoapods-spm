@@ -7,7 +7,7 @@ module Pod
     class Hook
       class ResolvePkgDeps < Hook
         def run
-          return if @spm_resolver.spm_pkgs.empty?
+          return if @spm_resolver.result.spm_pkgs.empty?
 
           xcodebuild_resolve_package_deps
           generate_metadata
@@ -27,7 +27,7 @@ module Pod
 
         def generate_metadata
           @metadata_cache ||= {}
-          @spm_resolver.spm_pkgs.each do |pkg|
+          @spm_resolver.result.spm_pkgs.each do |pkg|
             raw = Dir.chdir(spm_config.pkg_checkouts_dir / pkg.name) do
               `swift package dump-package`
             end
@@ -37,7 +37,7 @@ module Pod
         end
 
         def resolve_product_deps
-          @spm_resolver.spm_dependencies_by_target.values.flatten.uniq(&:name).each do |dep|
+          @spm_resolver.result.spm_dependencies_by_target.values.flatten.uniq(&:name).each do |dep|
             # metadata = metadata_of(dep.name)
             # TODO: Resolve product dependencies
           end

@@ -11,6 +11,7 @@ module Pod
       def prepare
         generate_pkg_swift
         swift_pkg_resolve
+        self
       end
 
       private
