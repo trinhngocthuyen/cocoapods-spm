@@ -1,4 +1,4 @@
-require "cocoapods-spm/installer/analyzer"
+require "cocoapods-spm/resolver"
 require "cocoapods-spm/macro/pod_installer"
 require "cocoapods-spm/hooks/base"
 
@@ -39,7 +39,7 @@ module Pod
 
     def hook_options
       {
-        :spm_analyzer => @spm_analyzer,
+        :spm_resolver => @spm_resolver,
         :analysis_result => @analysis_result
       }
     end
@@ -55,10 +55,10 @@ module Pod
     end
 
     def resolve_spm_dependencies
-      UI.section "Analyzing SPM dependencies" do
-        @spm_analyzer ||= Pod::Installer::SPMAnalyzer.new(podfile, aggregate_targets)
-        @spm_analyzer.analyze
-        podfile.spm_analyzer = @spm_analyzer
+      UI.section "Resolving SPM dependencies" do
+        @spm_resolver ||= SPM::Resolver.new(podfile, aggregate_targets)
+        @spm_resolver.resolve
+        podfile.spm_resolver = @spm_resolver
       end
     end
   end

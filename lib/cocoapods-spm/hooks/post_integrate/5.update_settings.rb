@@ -43,7 +43,7 @@ module Pod
         end
 
         def update_linker_flags
-          return if @spm_analyzer.spm_pkgs.empty?
+          return if @spm_resolver.spm_pkgs.empty?
 
           # For packages to work in the main target
           perform_settings_update(
@@ -60,14 +60,14 @@ module Pod
         def linker_flags_for(target)
           return [] if !target.is_a?(Pod::AggregateTarget) && target.build_as_static?
 
-          spm_deps = @spm_analyzer.spm_dependencies_by_target[target.to_s].to_a
+          spm_deps = @spm_resolver.spm_dependencies_by_target[target.to_s].to_a
           framework_flags = spm_deps.select(&:dynamic?).map { |d| "-framework \"#{d.product}\"" }
           library_flags = spm_deps.reject(&:dynamic?).map { |d| "-l\"#{d.product}.o\"" }
           framework_flags + library_flags
         end
 
         def update_swift_include_paths
-          return if @spm_analyzer.spm_pkgs.empty?
+          return if @spm_resolver.spm_pkgs.empty?
 
           # For macro packages
           perform_settings_update(

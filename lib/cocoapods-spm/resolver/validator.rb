@@ -1,6 +1,6 @@
 module Pod
-  class Installer
-    class SPMValidator
+  module SPM
+    class Validator
       def initialize(aggregate_targets, spm_pkgs, spm_dependencies_by_target)
         @aggregate_targets = aggregate_targets
         @spm_pkgs = spm_pkgs

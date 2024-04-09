@@ -19,7 +19,7 @@ module Pod
 
         def framework_paths_for(target)
           @dynamic_deps_by_target ||=
-            @spm_analyzer
+            @spm_resolver
             .spm_dependencies_by_target
             .transform_values { |deps| deps.select(&:dynamic?) }
           @dynamic_deps_by_target[target.to_s].map do |d|
