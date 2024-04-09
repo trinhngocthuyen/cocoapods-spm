@@ -18,13 +18,8 @@ module Pod
         private
 
         def framework_paths_for(target)
-          @dynamic_deps_by_target ||=
-            @spm_resolver
-            .result
-            .spm_dependencies_by_target
-            .transform_values { |deps| deps.select(&:dynamic?) }
-          @dynamic_deps_by_target[target.to_s].map do |d|
-            "${BUILT_PRODUCTS_DIR}/PackageFrameworks/#{d.product}.framework"
+          @spm_resolver.result.spm_products_for(target).select(&:dynamic?).map do |p|
+            "${BUILT_PRODUCTS_DIR}/PackageFrameworks/#{p.name}.framework"
           end
         end
 
