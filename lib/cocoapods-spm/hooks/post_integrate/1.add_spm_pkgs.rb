@@ -6,7 +6,7 @@ module Pod
     class Hook
       class AddSpmPkgs < Hook
         def run
-          return if @spm_resolver.spm_pkgs.empty?
+          return if @spm_resolver.result.spm_pkgs.empty?
 
           add_spm_pkg_refs_to_project
           add_spm_products_to_targets
@@ -20,7 +20,7 @@ module Pod
         end
 
         def add_spm_pkg_refs_to_project
-          @spm_pkg_refs = @spm_resolver.spm_pkgs.to_h do |pkg|
+          @spm_pkg_refs = @spm_resolver.result.spm_pkgs.to_h do |pkg|
             pkg_ref = pkg.create_pkg_ref(pods_project)
             pods_project.root_object.package_references << pkg_ref
             [pkg.name, pkg_ref]
@@ -33,7 +33,7 @@ module Pod
 
         def add_spm_products_to_targets
           pods_project.targets.each do |target|
-            @spm_resolver.spm_dependencies_by_target[target.name].to_a.each do |dep|
+            @spm_resolver.result.spm_dependencies_by_target[target.name].to_a.each do |dep|
               pkg_ref = spm_pkg_refs[dep.pkg.name]
               target_dep_ref = pkg_ref.create_target_dependency_ref(dep.product)
               target.dependencies << target_dep_ref
