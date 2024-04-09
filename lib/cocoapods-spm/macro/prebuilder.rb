@@ -37,13 +37,9 @@ module Pod
         raise "Package.swift not exist in #{macro_downloaded_dir}" \
           unless (macro_downloaded_dir / "Package.swift").exist?
 
-        UI.message "Generating metadata at: #{metadata_path}" do
-          raw = Dir.chdir(macro_downloaded_dir) do
-            swift! ["package", "dump-package"]
-          end
-          metadata_path.write(raw)
-          @metadata = Metadata.from_s(raw)
-        end
+        raw = Dir.chdir(macro_downloaded_dir) { `swift package dump-package` }
+        metadata_path.write(raw)
+        @metadata = Metadata.from_s(raw)
       end
 
       def prebuild_macro_impl
