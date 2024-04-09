@@ -60,10 +60,9 @@ module Pod
         def linker_flags_for(target)
           return [] if !target.is_a?(Pod::AggregateTarget) && target.build_as_static?
 
-          spm_deps = @spm_resolver.result.spm_dependencies_by_target[target.to_s].to_a
-          framework_flags = spm_deps.select(&:dynamic?).map { |d| "-framework \"#{d.product}\"" }
-          library_flags = spm_deps.reject(&:dynamic?).map { |d| "-l\"#{d.product}.o\"" }
-          framework_flags + library_flags
+          @spm_resolver.result.spm_products_for(target).map do |p|
+            p.dynamic? ? "-framework \"#{p.name}\"" : "-l\"#{p.name}.o\""
+          end
         end
 
         def update_swift_include_paths

@@ -1,6 +1,6 @@
 import MacroCodableKit
 
-// import OpenTelemetrySdk
+import OpenTelemetrySdk
 import Orcam
 import SnapKit
 import SwiftUIX
@@ -15,6 +15,6 @@ struct Foo {
     print(AnyButtonStyle.self) // SwiftUIX
     print(SwiftyBeaver.self) // SwiftyBeaver
     print(Constraint.self) // SnapKit
-    // print(DoubleCounterSdk.self) // OpenTelemetrySdk
+    print(DoubleCounterSdk.self) // OpenTelemetrySdk
   }
 }
