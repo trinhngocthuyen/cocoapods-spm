@@ -2,7 +2,7 @@ require "cocoapods-spm/config"
 
 module Pod
   class Podfile
-    attr_accessor :spm_analyzer
+    attr_accessor :spm_resolver
 
     alias origin_pod pod
     def config_cocoapods_spm(options)

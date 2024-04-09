@@ -1,10 +1,9 @@
-require "cocoapods-spm/installer/validator"
+require "cocoapods-spm/resolver/validator"
 require "cocoapods-spm/resolver/umbrella_package"
 
 module Pod
-  class Installer
-    # To be renamed to Resolver
-    class SPMAnalyzer
+  module SPM
+    class Resolver
       attr_reader :spm_pkgs, :spm_dependencies_by_target
 
       def initialize(podfile, aggregate_targets)
@@ -15,10 +14,10 @@ module Pod
         @spm_dependencies_by_target = {}
       end
 
-      def analyze
+      def resolve
         generate_umbrella_pkg
-        analyze_spm_pkgs
-        analyze_spm_dependencies_by_target
+        resolve_spm_pkgs
+        resolve_spm_dependencies_by_target
         validate!
       end
 
@@ -33,24 +32,24 @@ module Pod
         @umbrella_pkg.prepare
       end
 
-      def analyze_spm_pkgs
+      def resolve_spm_pkgs
         @spm_pkgs = @podfile.target_definition_list.flat_map(&:spm_pkgs).uniq
       end
 
-      def analyze_spm_dependencies_by_target
-        analyze_dependencies_for_targets
-        analyze_dependencies_for_aggregate_targets
+      def resolve_spm_dependencies_by_target
+        resolve_dependencies_for_targets
+        resolve_dependencies_for_aggregate_targets
         @spm_dependencies_by_target.values.flatten.each { |d| d.pkg = spm_pkg_for(d.name) }
       end
 
-      def analyze_dependencies_for_targets
+      def resolve_dependencies_for_targets
         specs = @aggregate_targets.flat_map(&:specs).uniq
         specs.each do |spec|
           @spm_dependencies_by_target[spec.name] = spec.spm_dependencies
         end
       end
 
-      def analyze_dependencies_for_aggregate_targets
+      def resolve_dependencies_for_aggregate_targets
         @aggregate_targets.each do |target|
           spm_dependencies = target.specs.flat_map(&:spm_dependencies)
           @spm_dependencies_by_target[target.to_s] = merge_spm_dependencies(spm_dependencies)
@@ -78,7 +77,7 @@ module Pod
       end
 
       def validate!
-        validator = SPMValidator.new(@aggregate_targets, @spm_pkgs, @spm_dependencies_by_target)
+        validator = Validator.new(@aggregate_targets, @spm_pkgs, @spm_dependencies_by_target)
         validator.validate!
       end
     end

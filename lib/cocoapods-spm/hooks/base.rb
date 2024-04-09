@@ -10,7 +10,7 @@ module Pod
       def initialize(context, options = {})
         @context = context
         @options = options
-        @spm_analyzer = options[:spm_analyzer]
+        @spm_resolver = options[:spm_resolver]
         @analysis_result = options[:analysis_result]
       end
 
