@@ -69,8 +69,12 @@ module Pod
         @macro_downloaded_sandbox ||= Sandbox.new(macro_downloaded_root_dir)
       end
 
+      def pkg_umbrella_dir
+        @pkg_umbrella_dir ||= prepare_dir(root_dir / ".umbrella")
+      end
+
       def pkg_checkouts_dir
-        pkg_root_dir / ".checkouts"
+        pkg_umbrella_dir / ".build" / "checkouts"
       end
 
       def pkg_metadata_dir
