@@ -30,9 +30,16 @@ module Pod
 
         def resolve_product_deps
           @result.spm_dependencies_by_target.values.flatten.uniq(&:name).each do |dep|
+            verify_product_exists_in_pkg(dep.pkg.name, dep.product)
             product = create_product(dep.pkg.name, dep.product)
             recursive_products_of(product)
           end
+        end
+
+        def verify_product_exists_in_pkg(pkg, name)
+          return unless @result.metadata_of(pkg).products.find { |h| h["name"] == name }.nil?
+
+          raise Informative, "Package `#{pkg}` does not contain product named `#{name}`"
         end
 
         def recursive_products_of(product)
@@ -44,7 +51,7 @@ module Pod
         end
 
         def direct_products_of(product)
-          metadata = @result.metadata_cache[product.pkg]
+          metadata = @result.metadata_of(product.pkg)
           metadata
             .products
             .find { |h| h["name"] == product.name }
@@ -80,7 +87,7 @@ module Pod
 
           @cache_linkage[name] =
             if @result
-               .metadata_cache[pkg]
+               .metadata_of(pkg)
                .products
                .find { |h| h["name"] == name }
                .fetch("type", {})
