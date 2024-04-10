@@ -24,6 +24,12 @@ module Pod
           @metadata_cache = options[:metadata_cache] || {}
         end
 
+        def metadata_of(name)
+          return @metadata_cache[name] if @metadata_cache.key?(name)
+
+          raise Informative, "Metadata of `#{name}` does not exist"
+        end
+
         def spm_dependencies_for(target)
           @spm_dependencies_by_target[target.to_s]
         end
