@@ -1,7 +1,7 @@
 name: integration-test
 on:
   issue_comment:
-    types: [created, edited, deleted]
+    types: [created, edited]
 
 jobs:
   integration-test-static:
