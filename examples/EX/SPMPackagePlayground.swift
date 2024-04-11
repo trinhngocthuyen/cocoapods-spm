@@ -1,5 +1,6 @@
 import MacroCodableKit
 
+import DebugKit
 import OpenTelemetrySdk
 import Orcam
 import SnapKit
@@ -16,5 +17,6 @@ struct Foo {
     print(SwiftyBeaver.self) // SwiftyBeaver
     print(Constraint.self) // SnapKit
     print(DoubleCounterSdk.self) // OpenTelemetrySdk
+    print(DebugKit.self) // DebugKit
   }
 }

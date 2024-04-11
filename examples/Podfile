@@ -39,6 +39,7 @@ target "EX" do
           :git => "https://github.com/open-telemetry/opentelemetry-swift.git",
           :branch => "main",
           :products => ["OpenTelemetrySdk"]
+  spm_pkg "DebugKit", :path => "LocalPackages/debug-kit"
 end
 
 target "EXTests" do

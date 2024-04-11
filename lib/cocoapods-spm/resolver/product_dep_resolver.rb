@@ -20,7 +20,7 @@ module Pod
 
         def generate_metadata
           @result.spm_pkgs.each do |pkg|
-            raw = Dir.chdir(spm_config.pkg_checkouts_dir / pkg.name) do
+            raw = Dir.chdir(spm_config.pkg_checkouts_dir / pkg.slug) do
               `swift package dump-package`
             end
             (spm_config.pkg_metadata_dir / "#{pkg.name}.json").write(raw)
