@@ -27,6 +27,8 @@ jobs:
         with:
           checkout: false
           ruby-version: '3.0'
+        # How to speed up the following?
+        # - `swift package resolve`
       - name: Exec
         uses: trinhngocthuyen/gh-actions/gh/pr/with_check@main
         with:
