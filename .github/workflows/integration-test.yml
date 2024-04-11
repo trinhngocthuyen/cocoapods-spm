@@ -13,12 +13,19 @@ jobs:
         github.event.comment.body == '/integration-test all'
       )
     steps:
-      - name: Install
-        uses: trinhngocthuyen/gh-actions/rb/install@main
-      - name: Makefile
-        uses: trinhngocthuyen/gh-actions/core/makefile@main
+      - name: Checkout PR
+        uses: trinhngocthuyen/gh-actions/gh/pr/comment/checkout@main
+        id: pr_checkout
+      - name: Install languages
+        uses: trinhngocthuyen/gh-actions/mono/install@main
         with:
-          targets: ex.test.static
+          checkout: false
+          ruby-version: '3.0'
+      - name: Exec
+        uses: trinhngocthuyen/gh-actions/gh/pr/with_check@main
+        with:
+          sha: ${{ steps.pr_checkout.outputs.head_sha }}
+          exec: make ex.test.static
 
   integration-test-dynamic:
     runs-on: macos-14-large
@@ -28,9 +35,16 @@ jobs:
         github.event.comment.body == '/integration-test all'
       )
     steps:
-      - name: Install
-        uses: trinhngocthuyen/gh-actions/rb/install@main
-      - name: Makefile
-        uses: trinhngocthuyen/gh-actions/core/makefile@main
+      - name: Checkout PR
+        uses: trinhngocthuyen/gh-actions/gh/pr/comment/checkout@main
+        id: pr_checkout
+      - name: Install languages
+        uses: trinhngocthuyen/gh-actions/mono/install@main
         with:
-          targets: ex.test.dynamic
+          checkout: false
+          ruby-version: '3.0'
+      - name: Exec
+        uses: trinhngocthuyen/gh-actions/gh/pr/with_check@main
+        with:
+          sha: ${{ steps.pr_checkout.outputs.head_sha }}
+          exec: make ex.test.dynamic
