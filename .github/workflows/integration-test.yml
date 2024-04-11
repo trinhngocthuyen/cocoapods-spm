@@ -34,7 +34,7 @@ jobs:
           exec: make ci.install ex.test.static
 
   integration-test-dynamic:
-    runs-on: macos-14-large
+    runs-on: macos-14
     if: >-
       github.event.issue.pull_request && (
         github.event.comment.body == '/integration-test dynamic' ||
