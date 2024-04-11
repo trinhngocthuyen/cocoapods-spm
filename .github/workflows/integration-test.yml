@@ -31,7 +31,7 @@ jobs:
         uses: trinhngocthuyen/gh-actions/gh/pr/with_check@main
         with:
           sha: ${{ steps.pr_checkout.outputs.head_sha }}
-          exec: make ex.test.static
+          exec: make ci.install ex.test.static
 
   integration-test-dynamic:
     runs-on: macos-14-large
@@ -53,4 +53,4 @@ jobs:
         uses: trinhngocthuyen/gh-actions/gh/pr/with_check@main
         with:
           sha: ${{ steps.pr_checkout.outputs.head_sha }}
-          exec: make ex.test.dynamic
+          exec: make ci.install ex.test.dynamic

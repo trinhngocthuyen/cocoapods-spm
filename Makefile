@@ -11,6 +11,9 @@ format: ensure.pre-commit
 test:
 	bundle exec rspec
 
+ci.install:
+	bundle install
+
 ex.install:
 	cd examples && make install
 
