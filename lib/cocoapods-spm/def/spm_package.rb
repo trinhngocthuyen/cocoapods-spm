@@ -22,6 +22,14 @@ module Pod
         @requirement = requirement_from(options)
       end
 
+      def slug
+        @slug ||= File.basename(@url || @relative_path, ".*")
+      end
+
+      def absolute_path
+        (Pathname("Pods") / relative_path).realpath.to_s
+      end
+
       def relative_path_from(options)
         if (relative_path = options[:relative_path])
           relative_path

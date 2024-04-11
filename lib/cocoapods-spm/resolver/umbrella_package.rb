@@ -11,6 +11,7 @@ module Pod
       def prepare
         generate_pkg_swift
         swift_pkg_resolve
+        create_symlinks_to_local_pkgs
         self
       end
 
@@ -20,6 +21,8 @@ module Pod
         swift_tools_version = "5.7"
         dependencies = @spm_pkgs.map do |pkg|
           # https://developer.apple.com/documentation/packagedescription/package/dependency
+          next ".package(path: \"#{pkg.absolute_path}\")" if pkg.local?
+
           tail = case pkg.requirement[:kind]
                  when "exactVersion"
                    "exact: \"#{pkg.requirement[:version]}\""
@@ -50,6 +53,14 @@ module Pod
 
       def swift_pkg_resolve
         Dir.chdir(spm_config.pkg_umbrella_dir) { `swift package resolve` }
+      end
+
+      def create_symlinks_to_local_pkgs
+        @spm_pkgs.select(&:local?).each do |pkg|
+          dst_dir = spm_config.pkg_checkouts_dir / pkg.slug
+          dst_dir.delete if dst_dir.exist?
+          File.symlink(pkg.absolute_path, dst_dir)
+        end
       end
     end
   end
