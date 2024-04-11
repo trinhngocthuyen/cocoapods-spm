@@ -3,6 +3,12 @@ on:
   issue_comment:
     types: [created, edited]
 
+permissions:
+  contents: read
+  issues: read
+  pull-requests: read
+  statuses: write
+
 jobs:
   integration-test-static:
     runs-on: macos-14
