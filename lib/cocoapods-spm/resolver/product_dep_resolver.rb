@@ -13,6 +13,8 @@ module Pod
 
         def resolve
           generate_metadata
+          resolve_dynamic_products
+          resolve_headers_path_by_target
           resolve_product_deps
         end
 
@@ -33,6 +35,29 @@ module Pod
             pkg_slug = dir.basename.to_s
             write_metadata.call(pkg_name)
             write_metadata.call(pkg_slug) unless pkg_name == pkg_slug
+          end
+        end
+
+        def resolve_dynamic_products
+          @dynamic_products ||= Set.new
+          @result.metadata_cache.each_value do |metadata|
+            metadata.products.each do |h|
+              library_types = h.fetch("type", {}).fetch("library", [])
+              @dynamic_products << h["name"] if library_types.include?("dynamic")
+            end
+          end
+        end
+
+        def resolve_headers_path_by_target
+          @headers_path_by_product ||= {}
+          @result.metadata_cache.each_value do |metadata|
+            metadata.targets.each do |h|
+              next unless h.key?("publicHeadersPath")
+
+              metadata.product_names_of_target(h["name"]).each do |name|
+                @headers_path_by_product[name] = h["publicHeadersPath"]
+              end
+            end
           end
         end
 
@@ -87,26 +112,12 @@ module Pod
         end
 
         def create_product(pkg, name)
-          Product.new(pkg: pkg, name: name, linkage: linkage_of(pkg, name))
-        end
-
-        def linkage_of(pkg, name)
-          @cache_linkage ||= {}
-          return @cache_linkage[name] if @cache_linkage.key?(name)
-
-          @cache_linkage[name] =
-            if @result
-               .metadata_of(pkg)
-               .products
-               .find { |h| h["name"] == name }
-               .to_h
-               .fetch("type", {})
-               .fetch("library", [])
-               .include?("dynamic")
-              :dynamic
-            else
-              :static
-            end
+          Product.new(
+            pkg: pkg,
+            name: name,
+            linkage: @dynamic_products.include?(name) ? :dynamic : :static,
+            headers_path: @headers_path_by_product[name]
+          )
         end
       end
     end
