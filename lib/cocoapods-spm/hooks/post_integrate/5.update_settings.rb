@@ -6,15 +6,16 @@ module Pod
     class Hook
       class UpdateSettings < Hook
         def run
-          update_other_swift_flags
+          update_macro_plugin_flags
+          update_modulemap_flags
           update_swift_include_paths
           update_linker_flags
         end
 
         private
 
-        def other_swift_flags_by_config
-          @other_swift_flags_by_config ||= begin
+        def macro_plugin_flag_by_config
+          @macro_plugin_flag_by_config ||= begin
             hash = user_build_configurations.keys.to_h do |config|
               flags = macro_pods.keys.map do |name|
                 metadata = Metadata.for_pod(name)
@@ -31,13 +32,23 @@ module Pod
           end
         end
 
-        def update_other_swift_flags
+        def update_macro_plugin_flags
           return if spm_config.all_macros.empty?
 
-          # For prebuilt macros
           perform_settings_update(
             update_targets: lambda do |_, _, config|
-              { "OTHER_SWIFT_FLAGS" => other_swift_flags_by_config[config] }
+              { "OTHER_SWIFT_FLAGS" => macro_plugin_flag_by_config[config] }
+            end
+          )
+        end
+
+        def update_modulemap_flags
+          perform_settings_update(
+            update_targets: lambda do |target, _, _|
+              {
+                "OTHER_SWIFT_FLAGS" => modulemap_args_for_target(target, prefix: "-Xcc"),
+                "OTHER_CFLAGS" => modulemap_args_for_target(target)
+              }
             end
           )
         end
@@ -66,14 +77,23 @@ module Pod
         end
 
         def update_swift_include_paths
-          return if @spm_resolver.result.spm_pkgs.empty?
+          return if @spm_resolver.result.spm_pkgs.empty? && spm_config.all_macros.empty?
 
-          # For macro packages
           perform_settings_update(
             update_targets: lambda do |_, _, _|
               { "SWIFT_INCLUDE_PATHS" => "$(PODS_CONFIGURATION_BUILD_DIR)" }
             end
           )
+        end
+
+        def modulemap_args_for_target(target, prefix: nil)
+          @spm_resolver
+            .result
+            .spm_products_for(target)
+            .reject { |p| p.headers_path.nil? }
+            .map { |p| "-fmodule-map-file=\"${GENERATED_MODULEMAP_DIR}/#{p.name}.modulemap\"" }
+            .map { |v| prefix.nil? ? v : "#{prefix} #{v}" }
+            .join(" ")
         end
       end
     end

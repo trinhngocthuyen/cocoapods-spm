@@ -33,6 +33,11 @@ module Pod
         raw["products"]
       end
 
+      def product_names_of_target(name)
+        names = products.select { |h| h["targets"].include?(name) }.map { |h| h["name"] }
+        names.empty? ? [name] : names
+      end
+
       def targets_of_type(type)
         targets.select { |t| t["type"] == type }
       end
