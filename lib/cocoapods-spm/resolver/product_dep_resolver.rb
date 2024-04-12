@@ -19,12 +19,20 @@ module Pod
         private
 
         def generate_metadata
-          @result.spm_pkgs.each do |pkg|
-            raw = Dir.chdir(spm_config.pkg_checkouts_dir / pkg.slug) do
-              `swift package dump-package`
+          spm_config.pkg_checkouts_dir.glob("*").each do |dir|
+            next if dir.glob("Package*.swift").empty?
+
+            raw = Dir.chdir(dir) { `swift package dump-package` }
+            metadata = Metadata.from_s(raw)
+            write_metadata = lambda do |name|
+              (spm_config.pkg_metadata_dir / "#{name}.json").write(raw)
+              @result.metadata_cache[name] = metadata
             end
-            (spm_config.pkg_metadata_dir / "#{pkg.name}.json").write(raw)
-            @result.metadata_cache[pkg.name] = Metadata.from_s(raw)
+
+            pkg_name = metadata["name"]
+            pkg_slug = dir.basename.to_s
+            write_metadata.call(pkg_name)
+            write_metadata.call(pkg_slug) unless pkg_name == pkg_slug
           end
         end
 
@@ -55,7 +63,8 @@ module Pod
           metadata
             .products
             .find { |h| h["name"] == product.name }
-            .fetch("targets", [])
+            .to_h
+            .fetch("targets", [product.name])
             .flat_map do |t|
               metadata
                 .targets
@@ -90,6 +99,7 @@ module Pod
                .metadata_of(pkg)
                .products
                .find { |h| h["name"] == name }
+               .to_h
                .fetch("type", {})
                .fetch("library", [])
                .include?("dynamic")
