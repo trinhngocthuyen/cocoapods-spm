@@ -14,6 +14,7 @@ module Pod
         def resolve
           generate_metadata
           resolve_dynamic_products
+          resolve_binary_targets
           resolve_headers_path_by_target
           resolve_product_deps
         end
@@ -44,6 +45,15 @@ module Pod
             metadata.products.each do |h|
               library_types = h.fetch("type", {}).fetch("library", [])
               @dynamic_products << h["name"] if library_types.include?("dynamic")
+            end
+          end
+        end
+
+        def resolve_binary_targets
+          @binary_targets ||= Set.new
+          @result.metadata_cache.each_value do |metadata|
+            metadata.targets.each do |h|
+              @binary_targets << h["name"] if h["type"] == "binary"
             end
           end
         end
@@ -112,7 +122,8 @@ module Pod
             pkg: pkg,
             name: name,
             linkage: @dynamic_products.include?(name) ? :dynamic : :static,
-            headers_path: @headers_path_by_product[name]
+            headers_path: @headers_path_by_product[name],
+            binary: @binary_targets.include?(name)
           )
         end
       end
