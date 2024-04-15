@@ -72,7 +72,7 @@ module Pod
           return [] if !target.is_a?(Pod::AggregateTarget) && target.build_as_static?
 
           @spm_resolver.result.spm_products_for(target).map do |p|
-            p.dynamic? ? "-framework \"#{p.name}\"" : "-l\"#{p.name}.o\""
+            p.linked_as_framework? ? "-framework \"#{p.name}\"" : "-l\"#{p.name}.o\""
           end
         end
 

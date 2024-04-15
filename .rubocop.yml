@@ -1,1 +1,4 @@
 inherit_from: https://raw.githubusercontent.com/trinhngocthuyen/templates/main/config/rubocop/default.yaml
+
+Metrics/ClassLength:
+  Max: 500
