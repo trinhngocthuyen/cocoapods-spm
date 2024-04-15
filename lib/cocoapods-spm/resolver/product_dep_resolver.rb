@@ -62,7 +62,7 @@ module Pod
         end
 
         def resolve_product_deps
-          @result.spm_dependencies_by_target.values.flatten.uniq(&:name).each do |dep|
+          @result.spm_dependencies_by_target.values.flatten.uniq(&:product).each do |dep|
             verify_product_exists_in_pkg(dep.pkg.name, dep.product)
             product = create_product(dep.pkg.name, dep.product)
             recursive_products_of(product)
@@ -100,14 +100,10 @@ module Pod
         end
 
         def product_from_hash(hash, metadata)
-          if hash.key?("byName")
-            name = hash["byName"][0]
-            pkg = metadata["name"]
-          elsif hash.key?("product")
-            name, pkg = hash["product"]
-          elsif hash.key?("target")
-            # TODO: Handle this
-          end
+          type = ["byName", "target", "product"].find { |k| hash.key?(k) }
+          name = hash[type][0] unless type.nil?
+          pkg = metadata["name"]
+          pkg = hash["product"][1] if hash.key?("product")
           create_product(pkg, name)
         end
 
