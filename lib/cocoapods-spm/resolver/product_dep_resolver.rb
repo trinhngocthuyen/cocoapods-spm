@@ -78,7 +78,7 @@ module Pod
         def recursive_products_of(product)
           products = [product] + direct_products_of(product).flat_map do |child|
             [child] + recursive_products_of(child)
-          end
+          end.uniq(&:name)
           @result.spm_products[product.name] = products
           products
         end
