@@ -41,11 +41,19 @@ module Pod
           output_paths = input_paths.map do |p|
             "${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/#{File.basename(p)}"
           end
-          target.embed_frameworks_script_input_files_path(config).open("a") do |f|
-            input_paths.each { |p| f << "\n" << p }
+          target.embed_frameworks_script_input_files_path(config).open("a+") do |file|
+            input_paths.each do |line|
+              unless file.include?(line)
+                file << "\n" << line
+              end
+            end
           end
-          target.embed_frameworks_script_output_files_path(config).open("a") do |f|
-            output_paths.each { |p| f << "\n" << p }
+          target.embed_frameworks_script_output_files_path(config).open("a+") do |file|
+            output_paths.each do |line|
+              unless file.include?(line)
+                file << "\n" << line
+              end
+            end
           end
         end
       end
