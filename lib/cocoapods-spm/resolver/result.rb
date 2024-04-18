@@ -35,7 +35,15 @@ module Pod
         end
 
         def spm_products_for(target)
-          spm_dependencies_for(target).flat_map { |d| @spm_products[d.product] }.uniq(&:name)
+          spm_dependencies_for(target).flat_map { |d| @spm_products[d.product].to_a }.uniq(&:name)
+        end
+
+        def linker_flags_for(target)
+          flags = spm_dependencies_for(target).flat_map { |d| d.pkg.linker_flags }
+          flags += spm_products_for(target).map do |p|
+            p.linked_as_framework? ? "-framework \"#{p.name}\"" : "-l\"#{p.name}.o\""
+          end
+          flags.uniq
         end
       end
     end

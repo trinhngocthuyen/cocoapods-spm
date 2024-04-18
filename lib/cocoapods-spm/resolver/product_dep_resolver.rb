@@ -73,6 +73,8 @@ module Pod
 
         def resolve_product_deps
           @result.spm_dependencies_by_target.values.flatten.uniq(&:product).each do |dep|
+            next if dep.pkg.use_default_xcode_linking?
+
             verify_product_exists_in_pkg(dep.pkg.name, dep.product)
             product = create_product(dep.pkg.name, dep.product)
             recursive_products_of(product)
