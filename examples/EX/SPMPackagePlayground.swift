@@ -1,6 +1,7 @@
 import MacroCodableKit
 
 import DebugKit
+import GoogleMaps
 import OpenTelemetrySdk
 import Orcam
 import SnapKit
@@ -18,5 +19,6 @@ struct Foo {
     print(Constraint.self) // SnapKit
     print(DoubleCounterSdk.self) // OpenTelemetrySdk
     print(DebugKit.self) // DebugKit
+    print(GMSAddress.self) // GoogleMaps
   }
 }

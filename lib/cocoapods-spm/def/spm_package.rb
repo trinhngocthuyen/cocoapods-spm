@@ -4,7 +4,7 @@ require "cocoapods-spm/def/spm_dependency"
 module Pod
   module SPM
     class Package
-      attr_reader :name, :requirement, :url, :relative_path
+      attr_reader :name, :requirement, :url, :relative_path, :linking_opts
 
       def initialize(name, options = {})
         @name = name
@@ -13,6 +13,7 @@ module Pod
         @linkage = nil
         @url = nil
         @requirement = nil
+        @linking_opts = {}
         parse_options(options)
       end
 
@@ -20,6 +21,7 @@ module Pod
         @url = options[:url] || options[:git]
         @relative_path = relative_path_from(options)
         @requirement = requirement_from(options)
+        @linking_opts = options[:linking] || {}
       end
 
       def slug
@@ -45,6 +47,14 @@ module Pod
 
       def local?
         @relative_path != nil
+      end
+
+      def use_default_xcode_linking?
+        @linking_opts.fetch(:use_default_xcode_linking, false)
+      end
+
+      def linker_flags
+        @linking_opts[:linker_flags] || []
       end
 
       def to_dependencies
