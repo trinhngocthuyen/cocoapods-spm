@@ -31,7 +31,7 @@ module Pod
         end
 
         def spm_dependencies_for(target)
-          @spm_dependencies_by_target[target.to_s]
+          @spm_dependencies_by_target[target.to_s].to_a
         end
 
         def spm_products_for(target)

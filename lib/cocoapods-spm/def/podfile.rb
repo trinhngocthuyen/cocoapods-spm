@@ -33,10 +33,14 @@ module Pod
 
     def spm_pkgs_by_aggregate_target
       @spm_pkgs_by_aggregate_target ||= begin
-        common_spm_pkgs = root_target_definitions.flat_map(&:spm_pkgs)
-        target_definition_list.reject(&:abstract?).to_h do |target|
-          [target.to_s, (common_spm_pkgs + target.spm_pkgs).uniq(&:name)]
+        dict = {}
+        to_visit = root_target_definitions.map { |t| [t, []] }
+        until to_visit.empty?
+          target, acc = to_visit.pop
+          dict[target.to_s] = (target.spm_pkgs + acc).uniq
+          to_visit += target.children.map { |t| [t, dict[target.to_s]] }
         end
+        dict
       end
     end
 
