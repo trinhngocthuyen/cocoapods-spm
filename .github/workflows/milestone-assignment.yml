@@ -1,0 +1,17 @@
+on:
+  pull_request:
+    types: ["closed"]
+
+jobs:
+  milestone-assignment:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "version=$(cat VERSION)" >> "$GITHUB_OUTPUT"
+        id: calc_version
+        shell: bash
+      - uses: trinhngocthuyen/gh-actions/gh/pr/assign_milestone@main
+        with:
+          github-token: ${{ secrets.GH_TOKEN }}
+          title: ${{ steps.calc_version.outputs.version }}
