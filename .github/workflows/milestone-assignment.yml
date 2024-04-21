@@ -1,3 +1,4 @@
+name: milestone-assignment
 on:
   pull_request:
     types: ["closed"]
