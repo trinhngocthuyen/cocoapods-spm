@@ -1,0 +1,26 @@
+name: milestone-creation
+on:
+  release:
+    types: ["published"]
+
+jobs:
+  create-milestone:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Bump version
+        uses: trinhngocthuyen/gh-actions/core/bump_version@main
+        id: bump_version
+        with:
+          version-file: VERSION
+      - name: Create new milestone
+        uses: trinhngocthuyen/gh-actions/gh/milestone/create@main
+        with:
+          github-token: ${{ secrets.GH_TOKEN }}
+          title: ${{ steps.bump_version.outputs.version }}
+      - name: Close prev milestone
+        uses: trinhngocthuyen/gh-actions/gh/milestone/close@main
+        with:
+          github-token: ${{ secrets.GH_TOKEN }}
+          title: ${{ steps.bump_version.outputs.prev_version }}

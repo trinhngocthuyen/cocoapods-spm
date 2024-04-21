@@ -15,5 +15,4 @@ jobs:
     with:
       deploy-rc: ${{ inputs.deploy-rc }}
       deploy-stable: ${{ inputs.deploy-stable }}
-      create-milestone: true
     secrets: inherit
