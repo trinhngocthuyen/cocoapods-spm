@@ -102,6 +102,10 @@ bundle exec pod spm prebuild --all
 bundle exec pod spm prebuild --macros=Orcam --config=debug
 ```
 
+## Troublshooting
+
+Refer to the [troubleshooting guidelines](/docs/troubleshooting.md) for details.
+
 ## Contribution
 
 Refer to the [contributing guidelines](/CONTRIBUTING.md) for details.
