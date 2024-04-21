@@ -104,7 +104,7 @@ bundle exec pod spm prebuild --macros=Orcam --config=debug
 
 ## Contribution
 
-Feel free to report an issue for submit a PR to make changes in the codebase.
+Refer to the [contributing guidelines](/CONTRIBUTING.md) for details.
 
 ## License
 
