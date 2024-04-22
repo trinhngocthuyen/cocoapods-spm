@@ -42,13 +42,7 @@ target "EX" do
   spm_pkg "GoogleMaps",
           :git => "https://github.com/googlemaps/ios-maps-sdk.git",
           :version => "8.4.0",
-          :products => ["GoogleMaps", "GoogleMapsBase", "GoogleMapsCore"],
-          :linking => {
-            # Prefer adding products to the "Link Binary With Libraries" section
-            :use_default_xcode_linking => true,
-            # Fix duplicate symbols with the -Objc flag: https://forums.developer.apple.com/forums/thread/739396
-            :linker_flags => ["-ld_classic"],
-          }
+          :products => ["GoogleMaps", "GoogleMapsBase", "GoogleMapsCore"]
   spm_pkg "DebugKit", :path => "LocalPackages/debug-kit"
 end
 

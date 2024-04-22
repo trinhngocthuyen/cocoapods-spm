@@ -77,6 +77,10 @@ module Pod
         pkg_umbrella_dir / ".build" / "checkouts"
       end
 
+      def pkg_artifacts_dir
+        pkg_umbrella_dir / ".build" / "artifacts"
+      end
+
       def pkg_metadata_dir
         @pkg_metadata_dir ||= prepare_dir(pkg_root_dir / "metadata")
       end

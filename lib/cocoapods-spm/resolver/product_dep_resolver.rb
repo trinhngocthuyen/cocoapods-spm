@@ -50,10 +50,15 @@ module Pod
         end
 
         def resolve_binary_targets
-          @binary_targets ||= Set.new
+          @binary_basenames_by_target ||= {}
           @result.metadata_cache.each_value do |metadata|
             metadata.targets.each do |h|
-              @binary_targets << h["name"] if h["type"] == "binary"
+              next unless h["type"] == "binary"
+
+              target_name = h["name"]
+              @binary_basenames_by_target[target_name] = @result.binary_basename_of(
+                metadata.name, target_name
+              )
             end
           end
         end
@@ -62,24 +67,43 @@ module Pod
           @headers_path_by_product ||= {}
           @result.metadata_cache.each_value do |metadata|
             metadata.targets.each do |h|
-              next unless h.key?("publicHeadersPath")
-
-              metadata.product_names_of_target(h["name"]).each do |name|
-                @headers_path_by_product[name] = h["publicHeadersPath"]
-              end
+              @headers_path_by_product[h["name"]] = h["publicHeadersPath"] if h.key?("publicHeadersPath")
             end
           end
         end
 
+        # TODO: To be refactored
+        # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
         def resolve_product_deps
           @result.spm_dependencies_by_target.values.flatten.uniq(&:product).each do |dep|
             next if dep.pkg.use_default_xcode_linking?
 
             verify_product_exists_in_pkg(dep.pkg.name, dep.product)
-            product = create_product(dep.pkg.name, dep.product)
-            recursive_products_of(product)
+
+            to_visit =
+              target_names_of_product(
+                dep.product, @result.metadata_of(dep.pkg.name)
+              )
+              .map { |t| [t, dep.pkg.name] }
+            until to_visit.empty?
+              target_name, pkg_name = to_visit.pop
+              @result.spm_products[dep.product] ||= []
+              @result.spm_products[dep.product] << create_product(
+                pkg_name, target_name, dep.product
+              )
+
+              to_visit +=
+                @result
+                .metadata_of(dep.pkg.name)
+                .targets
+                .find { |h| h["name"] == target_name }
+                .to_h
+                .fetch("dependencies", [])
+                .flat_map { |h| dep_hash_to_target_names(h, pkg_name) }
+            end
           end
         end
+        # rubocop:enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
 
         def verify_product_exists_in_pkg(pkg, name)
           return unless @result.metadata_of(pkg).products.find { |h| h["name"] == name }.nil?
@@ -87,47 +111,42 @@ module Pod
           raise Informative, "Package `#{pkg}` does not contain product named `#{name}`"
         end
 
-        def recursive_products_of(product)
-          products = [product] + direct_products_of(product).flat_map do |child|
-            [child] + recursive_products_of(child)
-          end.uniq(&:name)
-          @result.spm_products[product.name] = products
-          products
-        end
-
-        def direct_products_of(product)
-          metadata = @result.metadata_of(product.pkg)
-          metadata
-            .products
-            .find { |h| h["name"] == product.name }
-            .to_h
-            .fetch("targets", [product.name])
-            .flat_map do |t|
-              metadata
-                .targets
-                .find { |h| h["name"] == t }
-                .fetch("dependencies", [])
-                .map { |h| product_from_hash(h, metadata) }
-            end
-        end
-
-        def product_from_hash(hash, metadata)
-          type = ["byName", "target", "product"].find { |k| hash.key?(k) }
-          name = hash[type][0] unless type.nil?
-          pkg = metadata["name"]
-          pkg = hash["product"][1] if hash.key?("product")
-          create_product(pkg, name)
-        end
-
-        def create_product(pkg, name)
+        def create_product(pkg, target_name, product_name)
+          linkage = @dynamic_products.include?(product_name) ? :dynamic : :static
           Product.new(
             pkg: pkg,
-            name: name,
-            linkage: @dynamic_products.include?(name) ? :dynamic : :static,
-            headers_path: @headers_path_by_product[name],
-            binary: @binary_targets.include?(name)
+            name: linkage == :dynamic ? product_name : target_name,
+            linkage: linkage,
+            headers_path: @headers_path_by_product[target_name],
+            binary_basename: @binary_basenames_by_target[target_name]
           )
         end
+
+        def target_names_of_product(name, metadata)
+          metadata
+            .products
+            .select { |h| h["name"] == name }
+            .flat_map { |h| h.fetch("targets", {}) }
+        end
+
+        # TODO: To be refactored
+        # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+        def dep_hash_to_target_names(hash, pkg_name)
+          type = ["byName", "target", "product"].find { |k| hash.key?(k) }
+          name = hash[type][0] unless type.nil?
+          pkg_name = hash["product"][1] if hash.key?("product")
+          return [[name, pkg_name]] if hash.key?("target")
+
+          metadata = @result.metadata_of(pkg_name)
+          return target_names_of_product(name, metadata).map { |t| [t, pkg_name] } if hash.key?("product")
+
+          return unless hash.key?("byName")
+          # Could be either a target or a product
+          return [[name, pkg_name]] if metadata.targets.any? { |h| h["name"] == name }
+
+          target_names_of_product(name, metadata).map { |t| [t, pkg_name] }
+        end
+        # rubocop:enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
       end
     end
   end

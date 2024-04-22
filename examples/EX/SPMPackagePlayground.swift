@@ -2,6 +2,7 @@ import MacroCodableKit
 
 import DebugKit
 import GoogleMaps
+import NetworkLogger
 import OpenTelemetrySdk
 import Orcam
 import SnapKit
@@ -20,5 +21,6 @@ struct Foo {
     print(DoubleCounterSdk.self) // OpenTelemetrySdk
     print(DebugKit.self) // DebugKit
     print(GMSAddress.self) // GoogleMaps
+    print(NetworkLogger.self) // NetworkLogger
   }
 }

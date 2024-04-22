@@ -25,6 +25,10 @@ module Pod
         raw[key]
       end
 
+      def name
+        raw["name"]
+      end
+
       def targets
         raw["targets"]
       end
