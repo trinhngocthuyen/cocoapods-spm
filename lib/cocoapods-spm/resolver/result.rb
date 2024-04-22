@@ -2,6 +2,8 @@ module Pod
   module SPM
     class Resolver
       class Result
+        include Config::Mixin
+
         ATTRS = {
           :spm_pkgs => [],
           :spm_dependencies_by_target => {},
@@ -31,6 +33,17 @@ module Pod
           raise Informative, "Metadata of `#{name}` does not exist"
         end
 
+        def binary_basename_of(pkg_name, target_name)
+          pkg_slug = @spm_pkgs.find { |pkg| pkg.name == pkg_name }.slug
+          dir = spm_config.pkg_artifacts_dir / pkg_slug / target_name
+          paths = dir.glob("*.xcframework/*/*.{a,framework}")
+          paths.empty? ? target_name : paths[0].basename.to_s
+        end
+
+        def spm_pkgs_for(target)
+          spm_dependencies_for(target).map(&:pkg).uniq(&:name)
+        end
+
         def spm_dependencies_for(target)
           @spm_dependencies_by_target[target.to_s].to_a
         end
@@ -40,11 +53,10 @@ module Pod
         end
 
         def linker_flags_for(target)
-          flags = spm_dependencies_for(target).flat_map { |d| d.pkg.linker_flags }
-          flags += spm_products_for(target).map do |p|
-            p.linked_as_framework? ? "-framework \"#{p.name}\"" : "-l\"#{p.name}.o\""
-          end
-          flags.uniq
+          (
+            spm_products_for(target).flat_map(&:linker_flags) +
+            spm_pkgs_for(target).flat_map(&:linker_flags)
+          ).uniq
         end
       end
     end

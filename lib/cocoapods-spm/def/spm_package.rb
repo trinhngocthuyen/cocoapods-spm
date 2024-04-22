@@ -42,8 +42,10 @@ module Pod
       end
 
       def inspect
-        "#<#{self.class} name=#{name}>"
+        "#<#{self.class} #{name}>"
       end
+
+      alias to_s inspect
 
       def local?
         @relative_path != nil
