@@ -47,7 +47,7 @@ module Pod
             update_targets: lambda do |target, _, _|
               {
                 "OTHER_SWIFT_FLAGS" => modulemap_args_for_target(target, prefix: "-Xcc"),
-                "OTHER_CFLAGS" => modulemap_args_for_target(target)
+                "OTHER_CFLAGS" => modulemap_args_for_target(target),
               }
             end
           )
@@ -62,7 +62,7 @@ module Pod
               {
                 "OTHER_LDFLAGS" => linker_flags_for(target),
                 "FRAMEWORK_SEARCH_PATHS" => "\"${PODS_CONFIGURATION_BUILD_DIR}/PackageFrameworks\"",
-                "LIBRARY_SEARCH_PATHS" => "\"${PODS_CONFIGURATION_BUILD_DIR}\""
+                "LIBRARY_SEARCH_PATHS" => "\"${PODS_CONFIGURATION_BUILD_DIR}\"",
               }
             end
           )

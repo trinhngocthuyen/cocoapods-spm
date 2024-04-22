@@ -40,7 +40,7 @@ module Pod
     def hook_options
       {
         :spm_resolver => @spm_resolver,
-        :analysis_result => @analysis_result
+        :analysis_result => @analysis_result,
       }
     end
 

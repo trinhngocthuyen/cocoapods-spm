@@ -16,7 +16,7 @@ module Pod
       def initialize
         @dsl_config = {
           :dont_prebuild_macros => false,
-          :dont_prebuild_macros_if_exist => true
+          :dont_prebuild_macros_if_exist => true,
         }
         @cli_config = {}
       end
