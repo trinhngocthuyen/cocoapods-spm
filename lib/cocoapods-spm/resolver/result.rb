@@ -2,26 +2,27 @@ module Pod
   module SPM
     class Resolver
       class Result
+        ATTRS = {
+          :spm_pkgs => [],
+          :spm_dependencies_by_target => {},
+          :spm_products => {},
+          :metadata_cache => {},
+        }.freeze
+
         class WritableResult < Result
-          attr_accessor :spm_pkgs, :spm_dependencies_by_target, :spm_products, :metadata_cache
+          ATTRS.each_key { |x| attr_accessor x }
 
           def to_read_only
-            Result.new(
-              spm_pkgs: spm_pkgs,
-              spm_dependencies_by_target: spm_dependencies_by_target,
-              spm_products: spm_products,
-              metadata_cache: metadata_cache
-            )
+            Result.new(ATTRS.to_h { |x| [x, instance_variable_get("@#{x}")] })
           end
         end
 
-        attr_reader :spm_pkgs, :spm_dependencies_by_target, :spm_products, :metadata_cache
+        ATTRS.each_key { |x| attr_reader x }
 
         def initialize(options = {})
-          @spm_pkgs = options[:spm_pkgs] || []
-          @spm_dependencies_by_target = options[:spm_dependencies_by_target] || {}
-          @spm_products = options[:spm_products] || {}
-          @metadata_cache = options[:metadata_cache] || {}
+          ATTRS.each do |k, v|
+            instance_variable_set("@#{k}", options[k] || v)
+          end
         end
 
         def metadata_of(name)
