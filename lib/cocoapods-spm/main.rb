@@ -1,5 +1,4 @@
 require "cocoapods-spm/config"
-require "cocoapods-spm/metadata"
 require "cocoapods-spm/executables"
 require "cocoapods-spm/def/target_definition"
 require "cocoapods-spm/def/podfile"

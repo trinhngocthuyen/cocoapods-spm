@@ -1,5 +1,5 @@
 require "cocoapods-spm/hooks/base"
-require "cocoapods-spm/metadata"
+require "cocoapods-spm/macro/metadata"
 
 module Pod
   module SPM
@@ -18,7 +18,7 @@ module Pod
           @macro_plugin_flag_by_config ||= begin
             hash = user_build_configurations.keys.to_h do |config|
               flags = macro_pods.keys.map do |name|
-                metadata = Metadata.for_pod(name)
+                metadata = MacroMetadata.for_pod(name)
                 impl_module_name = metadata.macro_impl_name
                 plugin_executable_path =
                   "${PODS_ROOT}/../.spm.pods/#{name}/.prebuilt/#{config.to_s.downcase}/" \
@@ -87,9 +87,8 @@ module Pod
         def modulemap_args_for_target(target, prefix: nil)
           @spm_resolver
             .result
-            .spm_products_for(target)
-            .reject { |p| p.headers_path.nil? }
-            .map { |p| "-fmodule-map-file=\"${GENERATED_MODULEMAP_DIR}/#{p.name}.modulemap\"" }
+            .spm_targets_for(target)
+            .filter_map(&:clang_modulemap_arg)
             .map { |v| prefix.nil? ? v : "#{prefix} #{v}" }
             .join(" ")
         end

@@ -6,20 +6,22 @@ module Pod
     class Resolver
       require "cocoapods-spm/resolver/result"
       require "cocoapods-spm/resolver/target_dep_resolver"
-      require "cocoapods-spm/resolver/product_dep_resolver"
+      require "cocoapods-spm/resolver/recursive_target_resolver"
 
       def initialize(podfile, aggregate_targets)
         @_result = Result::WritableResult.new
         @podfile = podfile
         @aggregate_targets = aggregate_targets
         @umbrella_pkg = nil
-        @target_dep_resolver = TargetDependencyResolver.new(podfile, aggregate_targets, @_result)
-        @product_dep_resolver = ProductDependencyResolver.new(podfile, @_result)
+        @resolvers = [
+          TargetDependencyResolver.new(podfile, aggregate_targets, @_result),
+          RecursiveTargetResolver.new(podfile, @_result),
+        ]
       end
 
       def resolve
         generate_umbrella_pkg
-        resolvers.each(&:resolve)
+        @resolvers.each(&:resolve)
         validate!
       end
 
@@ -28,10 +30,6 @@ module Pod
       end
 
       private
-
-      def resolvers
-        [@target_dep_resolver, @product_dep_resolver]
-      end
 
       def generate_umbrella_pkg
         @umbrella_pkg = Pod::SPM::UmbrellaPackage.new(@podfile).prepare
