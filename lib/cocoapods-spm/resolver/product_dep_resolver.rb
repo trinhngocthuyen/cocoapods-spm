@@ -73,7 +73,6 @@ module Pod
         end
 
         # TODO: To be refactored
-        # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
         def resolve_product_deps
           @result.spm_dependencies_by_target.values.flatten.uniq(&:product).each do |dep|
             next if dep.pkg.use_default_xcode_linking?
@@ -103,7 +102,6 @@ module Pod
             end
           end
         end
-        # rubocop:enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
 
         def verify_product_exists_in_pkg(pkg, name)
           return unless @result.metadata_of(pkg).products.find { |h| h["name"] == name }.nil?
@@ -130,7 +128,6 @@ module Pod
         end
 
         # TODO: To be refactored
-        # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
         def dep_hash_to_target_names(hash, pkg_name)
           type = ["byName", "target", "product"].find { |k| hash.key?(k) }
           name = hash[type][0] unless type.nil?
@@ -146,7 +143,6 @@ module Pod
 
           target_names_of_product(name, metadata).map { |t| [t, pkg_name] }
         end
-        # rubocop:enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
       end
     end
   end
