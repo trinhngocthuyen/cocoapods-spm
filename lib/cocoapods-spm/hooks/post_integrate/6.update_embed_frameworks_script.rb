@@ -18,9 +18,7 @@ module Pod
         private
 
         def framework_paths_for(target)
-          @spm_resolver.result.spm_products_for(target).select(&:dynamic?).map do |p|
-            "${BUILT_PRODUCTS_DIR}/PackageFrameworks/#{p.name}.framework"
-          end
+          @spm_resolver.result.spm_targets_for(target).select(&:dynamic?).map(&:built_framework_path).uniq
         end
 
         def update_embed_frameworks_script(target)

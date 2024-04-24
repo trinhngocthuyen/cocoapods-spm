@@ -1,4 +1,4 @@
-require "cocoapods-spm/metadata"
+require "cocoapods-spm/macro/metadata"
 
 module Pod
   module SPM
@@ -39,7 +39,7 @@ module Pod
 
         raw = Dir.chdir(macro_downloaded_dir) { `swift package dump-package` }
         metadata_path.write(raw)
-        @metadata = Metadata.from_s(raw)
+        @metadata = MacroMetadata.from_s(raw)
       end
 
       def prebuild_macro_impl
