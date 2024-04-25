@@ -1,10 +1,11 @@
 require "cocoapods-spm/config"
+require "cocoapods-spm/helpers/patch"
 
 module Pod
   class Podfile
+    include Mixin::PatchingBehavior
     attr_accessor :spm_resolver
 
-    alias origin_pod pod
     def config_cocoapods_spm(options)
       SPM::Config.instance.dsl_config = options
     end
@@ -13,7 +14,7 @@ module Pod
       @macro_pods ||= {}
     end
 
-    def pod(name = nil, *requirements)
+    patch_method :pod do |name = nil, *requirements|
       macro = requirements[0].delete(:macro) if requirements.first.is_a?(Hash)
       macro ||= {}
       unless macro.empty?

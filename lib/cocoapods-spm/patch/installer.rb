@@ -1,19 +1,19 @@
+require "cocoapods-spm/helpers/patch"
 require "cocoapods-spm/resolver"
 require "cocoapods-spm/macro/pod_installer"
 require "cocoapods-spm/hooks/base"
 
 module Pod
   class Installer
+    include Mixin::PatchingBehavior
     include SPM::Config::Mixin
 
-    alias origin_resolve_dependencies resolve_dependencies
-    def resolve_dependencies
+    patch_method :resolve_dependencies do
       origin_resolve_dependencies
       resolve_spm_dependencies
     end
 
-    alias origin_create_pod_installer create_pod_installer
-    def create_pod_installer(pod_name)
+    patch_method :create_pod_installer do |pod_name|
       if macro_pods.include?(pod_name)
         macro_pod_installer = MacroPodInstaller.new(
           sandbox,
@@ -28,8 +28,7 @@ module Pod
       end
     end
 
-    alias origin_integrate integrate
-    def integrate
+    patch_method :integrate do
       run_spm_pre_integrate_hooks
       origin_integrate
       run_spm_post_integrate_hooks
