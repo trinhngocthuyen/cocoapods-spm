@@ -44,6 +44,13 @@ module Pod
       def macro_impl_name
         targets.find(&:macro?)&.name
       end
+
+      def use_default_xcode_linking?
+        return @use_default_xcode_linking unless @use_default_xcode_linking.nil?
+
+        pkg = pod_config.podfile.spm_pkgs.find { |t| t.name == name }
+        @use_default_xcode_linking = pkg&.use_default_xcode_linking?
+      end
     end
   end
 end
