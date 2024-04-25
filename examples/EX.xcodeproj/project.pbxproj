@@ -11,6 +11,7 @@
 		62A74DC2B0AFD2567EAFA994 /* Pods_EXTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D2FBA36190C2B16ABA47F2B /* Pods_EXTests.framework */; };
 		F522B5652B280C89009730B4 /* SPMPackagePlayground.swift in Sources */ = {isa = PBXBuildFile; fileRef = F522B5642B280C89009730B4 /* SPMPackagePlayground.swift */; };
 		F5823AD12BB9575F0054FF0A /* EXTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5823AD02BB9575F0054FF0A /* EXTests.swift */; };
+		F58EA02E2BD9F41200867E1A /* StaticResourcesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58EA02D2BD9F41200867E1A /* StaticResourcesTests.swift */; };
 		F5A631132B1D912000A958CB /* EXApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A631122B1D912000A958CB /* EXApp.swift */; };
 		F5A631152B1D912000A958CB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A631142B1D912000A958CB /* ContentView.swift */; };
 		F5A631172B1D912200A958CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5A631162B1D912200A958CB /* Assets.xcassets */; };
@@ -39,6 +40,7 @@
 		F522B5642B280C89009730B4 /* SPMPackagePlayground.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPMPackagePlayground.swift; sourceTree = "<group>"; };
 		F5823ACE2BB9575F0054FF0A /* EXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EXTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5823AD02BB9575F0054FF0A /* EXTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EXTests.swift; sourceTree = "<group>"; };
+		F58EA02D2BD9F41200867E1A /* StaticResourcesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticResourcesTests.swift; sourceTree = "<group>"; };
 		F5A6310F2B1D912000A958CB /* EX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5A631122B1D912000A958CB /* EXApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EXApp.swift; sourceTree = "<group>"; };
 		F5A631142B1D912000A958CB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -92,6 +94,7 @@
 			isa = PBXGroup;
 			children = (
 				F5823AD02BB9575F0054FF0A /* EXTests.swift */,
+				F58EA02D2BD9F41200867E1A /* StaticResourcesTests.swift */,
 			);
 			path = EXTests;
 			sourceTree = "<group>";
@@ -168,7 +171,8 @@
 				F5A6310B2B1D912000A958CB /* Sources */,
 				F5A6310C2B1D912000A958CB /* Frameworks */,
 				F5A6310D2B1D912000A958CB /* Resources */,
-				CF33C89831174FB3D2C0CBFC /* [CP] Embed Pods Frameworks */,
+				8A4E6EE71A9C3D79C08EF0C0 /* [CP] Copy Pods Resources */,
+				7AB2BA055364CAD1367D0DA6 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -259,7 +263,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		CF33C89831174FB3D2C0CBFC /* [CP] Embed Pods Frameworks */ = {
+		7AB2BA055364CAD1367D0DA6 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -274,6 +278,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-EX/Pods-EX-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8A4E6EE71A9C3D79C08EF0C0 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-EX/Pods-EX-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-EX/Pods-EX-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-EX/Pods-EX-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E37306CEF5B45126A55EE583 /* [CP] Check Pods Manifest.lock */ = {
@@ -306,6 +327,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F5823AD12BB9575F0054FF0A /* EXTests.swift in Sources */,
+				F58EA02E2BD9F41200867E1A /* StaticResourcesTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,9 +1,12 @@
 require "cocoapods-spm/hooks/base"
+require "cocoapods-spm/hooks/helpers/update_script"
 
 module Pod
   module SPM
     class Hook
       class UpdateEmbedFrameworksScript < Hook
+        include UpdateScript::Mixin
+
         def run
           aggregate_targets.each do |target|
             next if framework_paths_for(target).empty?
@@ -23,15 +26,10 @@ module Pod
 
         def update_embed_frameworks_script(target)
           lines = framework_paths_for(target).map { |p| "install_framework \"#{p}\"" }
-          target.embed_frameworks_script_path.open("a") do |f|
-            f << "\n" << <<~SH
-              # --------------------------------------------------------
-              # Added by `cocoapods-spm` to embed SPM package frameworks
-              # --------------------------------------------------------
-              #{lines.join("\n")}
-              # --------------------------------------------------------
-            SH
-          end
+          update_script(
+            path: target.embed_frameworks_script_path,
+            insert: lines.join("\n")
+          )
         end
 
         def update_embed_frameworks_script_files_path(target, config)

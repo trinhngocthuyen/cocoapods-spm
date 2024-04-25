@@ -8,7 +8,13 @@ let package = Package(
   ],
   dependencies: [],
   targets: [
-    .target(name: "DebugKit", dependencies: ["NetworkLoggerFramework"]),
+    .target(
+      name: "DebugKit",
+      dependencies: ["NetworkLoggerFramework"],
+      resources: [
+        .copy("Resources/DebugKit.trace"),
+      ]
+    ),
     .binaryTarget(name: "NetworkLoggerFramework", path: "Frameworks/NetworkLogger.xcframework.zip"),
   ]
 )

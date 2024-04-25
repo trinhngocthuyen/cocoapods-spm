@@ -3,6 +3,8 @@ require "cocoapods-spm/swift/package/base"
 module Pod
   module Swift
     class PackageDescription
+      autoload :Resources, "cocoapods-spm/swift/package/resources"
+
       class Target < PackageDescriptionBaseObject
         def type
           raw["type"]
@@ -34,6 +36,10 @@ module Pod
           return nil if public_headers_path.nil?
 
           "-fmodule-map-file=\"${GENERATED_MODULEMAP_DIR}/#{name}.modulemap\""
+        end
+
+        def resources
+          raw.fetch("resources", []).flat_map { |h| Resources.new(h, parent: self) }
         end
 
         def linker_flags
