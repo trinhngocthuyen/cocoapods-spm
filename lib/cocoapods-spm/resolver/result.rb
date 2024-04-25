@@ -34,10 +34,13 @@ module Pod
           @spm_dependencies_by_target[target.to_s].to_a
         end
 
-        def spm_targets_for(target)
-          spm_dependencies_for(target).flat_map do |d|
+        def spm_targets_for(target, exclude_default_xcode_linking: true)
+          targets = spm_dependencies_for(target).flat_map do |d|
             project_pkgs.resolve_recursive_targets_of(d.pkg.name, d.product)
           end.uniq(&:name)
+          return targets.reject(&:use_default_xcode_linking?) if exclude_default_xcode_linking
+
+          targets
         end
 
         def linker_flags_for(target)

@@ -86,6 +86,10 @@ module Pod
             paths[0].basename.to_s unless paths.empty?
           end
         end
+
+        def use_default_xcode_linking?
+          root.use_default_xcode_linking?
+        end
       end
     end
   end

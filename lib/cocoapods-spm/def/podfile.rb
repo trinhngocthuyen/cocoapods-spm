@@ -28,6 +28,10 @@ module Pod
       current_target_definition.store_spm_pkg(name, options)
     end
 
+    def spm_pkgs
+      spm_pkgs_by_aggregate_target.values.flatten.uniq(&:name)
+    end
+
     def spm_pkgs_for(target)
       spm_pkgs_by_aggregate_target[target.to_s]
     end
