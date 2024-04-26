@@ -18,7 +18,7 @@ ci.install:
 	bundle install
 
 ex.install:
-	cd examples && make install
+	cd examples && make install COCOA_PODS_ENV=development
 
 ex.test:
 	make ex.test.static
@@ -29,4 +29,6 @@ ex.test.all:
 
 ex.test.%:
 	cd examples && \
-		make install test LINKAGE=$$(echo $@ | cut -d. -f3)
+		make install test \
+			LINKAGE=$$(echo $@ | cut -d. -f3) \
+			COCOA_PODS_ENV=development
