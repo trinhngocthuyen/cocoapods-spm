@@ -19,13 +19,7 @@ config_cocoapods_spm(
 def spm_pods
   spm_pkg "SamplePackageA",
           :git => "https://github.com/kalub92/SamplePackageA.git",
-          :branch => "withHyphenatedDependency",
-          :linkage => :static,
-          :linking => {
-            # Prefer adding products to the "Link Binary With Libraries" section
-            :use_default_xcode_linking => true,
-            :linker_flags => ["-ld_classic"]
-          }
+          :branch => "withHyphenatedDependency"
 end
 
 abstract_target 'Example' do
@@ -53,7 +47,7 @@ abstract_target 'Example' do
             :products => ["GoogleMaps", "GoogleMapsBase", "GoogleMapsCore"]
     spm_pkg "DebugKit", :path => "LocalPackages/debug-kit"
   end
-  
+
   target "EXTests" do
 
   end

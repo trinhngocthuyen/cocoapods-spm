@@ -3,6 +3,7 @@ import DebugKit
 import GoogleMaps
 import NetworkLogger
 import OpenTelemetrySdk
+import SamplePackageB_iOS
 import SnapKit
 import SwiftUIX
 import SwiftyBeaver
@@ -18,5 +19,6 @@ struct Foo {
     print(DebugKit.self) // DebugKit
     print(GMSAddress.self) // GoogleMaps
     print(NetworkLogger.self) // NetworkLogger
+    print(SampleStruct.self) // SamplePackageB_iOS
   }
 }

@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		2138825F8862C6CAD5DC2D77 /* Pods_Example_EXTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B06FF7C124A9FB88862FE493 /* Pods_Example_EXTests.framework */; };
 		7F511128CFB5D7F830D8C3F3 /* Pods_Example_EX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2499F50433151C5CBC103AF4 /* Pods_Example_EX.framework */; };
-		D67D657A2BEC34B90047D1E7 /* SamplePackageA in Frameworks */ = {isa = PBXBuildFile; productRef = D67D65792BEC34B90047D1E7 /* SamplePackageA */; };
-		D67D657C2BEC34B90047D1E7 /* SamplePackageAConfig in Frameworks */ = {isa = PBXBuildFile; productRef = D67D657B2BEC34B90047D1E7 /* SamplePackageAConfig */; };
 		F522B5652B280C89009730B4 /* SPMPackagePlayground.swift in Sources */ = {isa = PBXBuildFile; fileRef = F522B5642B280C89009730B4 /* SPMPackagePlayground.swift */; };
 		F5823AD12BB9575F0054FF0A /* EXTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5823AD02BB9575F0054FF0A /* EXTests.swift */; };
 		F58EA02E2BD9F41200867E1A /* StaticResourcesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58EA02D2BD9F41200867E1A /* StaticResourcesTests.swift */; };
@@ -69,9 +67,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D67D657C2BEC34B90047D1E7 /* SamplePackageAConfig in Frameworks */,
 				7F511128CFB5D7F830D8C3F3 /* Pods_Example_EX.framework in Frameworks */,
-				D67D657A2BEC34B90047D1E7 /* SamplePackageA in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -193,8 +189,6 @@
 			);
 			name = EX;
 			packageProductDependencies = (
-				D67D65792BEC34B90047D1E7 /* SamplePackageA */,
-				D67D657B2BEC34B90047D1E7 /* SamplePackageAConfig */,
 			);
 			productName = EX;
 			productReference = F5A6310F2B1D912000A958CB /* EX.app */;
@@ -229,7 +223,6 @@
 			);
 			mainGroup = F5A631062B1D912000A958CB;
 			packageReferences = (
-				D67D65782BEC34B90047D1E7 /* XCRemoteSwiftPackageReference "SamplePackageA.git" */,
 			);
 			productRefGroup = F5A631102B1D912000A958CB /* Products */;
 			projectDirPath = "";
@@ -645,30 +638,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		D67D65782BEC34B90047D1E7 /* XCRemoteSwiftPackageReference "SamplePackageA.git" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/kalub92/SamplePackageA.git";
-			requirement = {
-				branch = withHyphenatedDependency;
-				kind = branch;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		D67D65792BEC34B90047D1E7 /* SamplePackageA */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D67D65782BEC34B90047D1E7 /* XCRemoteSwiftPackageReference "SamplePackageA.git" */;
-			productName = SamplePackageA;
-		};
-		D67D657B2BEC34B90047D1E7 /* SamplePackageAConfig */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D67D65782BEC34B90047D1E7 /* XCRemoteSwiftPackageReference "SamplePackageA.git" */;
-			productName = SamplePackageAConfig;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = F5A631072B1D912000A958CB /* Project object */;
 }
