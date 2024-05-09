@@ -1,5 +1,15 @@
 # Demo for cocoapods-spm Integration
 
+## Run the Demo
+
+Run the following command:
+```
+make ex.install
+```
+to trigger pod install together with some prebuilt macros (Orcam, MacroCodableKit).
+
+Open the workspace with Xcode and build/test it.
+
 ## Highlights
 
 - Declare SPM packages in Podfile: [Podfile#L30-L36](/examples/Podfile#L30-L36)
