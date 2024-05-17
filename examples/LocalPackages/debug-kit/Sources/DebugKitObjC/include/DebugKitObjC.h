@@ -1,0 +1,1 @@
+void diagnose(void);

@@ -29,7 +29,13 @@ module Pod
         end
 
         def public_headers_path
-          raw["publicHeadersPath"]
+          raw["publicHeadersPath"] || implicit_public_headers
+        end
+
+        def implicit_public_headers
+          target_sources_path = raw["path"] || "Sources/#{name}"
+          path = root.src_dir / target_sources_path / "include"
+          path unless path.glob("*.h*").empty?
         end
 
         def clang_modulemap_arg
