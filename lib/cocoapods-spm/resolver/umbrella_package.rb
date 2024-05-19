@@ -56,10 +56,15 @@ module Pod
       end
 
       def create_symlinks_to_local_pkgs
-        @spm_pkgs.select(&:local?).each do |pkg|
-          dst_dir = spm_config.pkg_checkouts_dir / pkg.slug
-          dst_dir.delete if dst_dir.exist?
-          File.symlink(pkg.absolute_path, dst_dir)
+        local_spm_pkgs = @spm_pkgs.select(&:local?)
+        symlinks = local_spm_pkgs.to_h { |p| [p.slug, p.absolute_path] }
+        local_spm_pkgs.each do |pkg|
+          pkg_desc = Swift::PackageDescription.from_dir(pkg.absolute_path)
+          pkg_desc.dependencies.select(&:local?).each { |d| symlinks[d.slug] = d.path }
+        end
+
+        symlinks.each do |slug, src_dir|
+          IOUtils.symlink(src_dir, spm_config.pkg_checkouts_dir / slug)
         end
       end
     end

@@ -1,3 +1,5 @@
+require "cocoapods-spm/helpers/io"
+require "cocoapods-spm/helpers/patch"
 require "cocoapods-spm/config"
 require "cocoapods-spm/executables"
 require "cocoapods-spm/def/target_definition"
