@@ -38,17 +38,17 @@ module Pod
         @src_dir.glob("*").each do |dir|
           next if dir.glob("Package*.swift").empty?
 
-          raw = Dir.chdir(dir) { `swift package dump-package` }
-          pkg_desc = PackageDescription.from_s(raw)
-          write_data = lambda do |name|
-            @pkg_desc_cache[name] = pkg_desc
-            (@json_dir / "#{name}.json").write(raw) unless @json_dir.nil?
-          end
+          pkg_desc = PackageDescription.from_dir(dir)
+          name = pkg_desc.name
+          slug = dir.basename.to_s
+          @pkg_desc_cache[name] = pkg_desc
+          @pkg_desc_cache[slug] = pkg_desc
+          next if @json_dir.nil?
 
-          pkg_name = pkg_desc.name
-          pkg_slug = dir.basename.to_s
-          write_data.call(pkg_name)
-          write_data.call(pkg_slug) unless pkg_name == pkg_slug
+          json_path = @json_dir / "#{name}.json"
+          slug_json_path = @json_dir / "#{slug}.json"
+          json_path.write(pkg_desc.raw.to_json)
+          IOUtils.symlink(json_path, slug_json_path) unless name == slug
         end
       end
     end
