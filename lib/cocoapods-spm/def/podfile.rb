@@ -67,8 +67,7 @@ module Pod
         end
       HEREDOC
 
-      path = Pathname(".spm.pods/#{name}")
-      (path / ".prebuilt").mkpath
+      path = Pod::SPM::Config.instance.macro_root_dir / name
       (path / "Sources").mkpath
       (path / "#{name}.podspec").write(podspec_content)
       path

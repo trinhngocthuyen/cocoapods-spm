@@ -15,14 +15,15 @@ module Pod
         private
 
         def macro_plugin_flag_by_config
+          path_prefix = "${PODS_ROOT}/../#{spm_config.macro_prebuilt_root_dir}"
           @macro_plugin_flag_by_config ||= begin
             hash = user_build_configurations.keys.to_h do |config|
               flags = macro_pods.keys.map do |name|
                 metadata = MacroMetadata.for_pod(name)
                 impl_module_name = metadata.macro_impl_name
                 plugin_executable_path =
-                  "${PODS_ROOT}/../.spm.pods/#{name}/.prebuilt/#{config.to_s.downcase}/" \
-                  "#{impl_module_name}##{impl_module_name}"
+                  "#{path_prefix}/#{name}/" \
+                  "#{impl_module_name}-#{config.to_s.downcase}##{impl_module_name}"
                 "-load-plugin-executable \"#{plugin_executable_path}\""
               end.join(" ")
               [config, flags]

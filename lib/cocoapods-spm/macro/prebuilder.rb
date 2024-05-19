@@ -26,7 +26,7 @@ module Pod
       end
 
       def macro_prebuilt_dir
-        macro_dir / ".prebuilt"
+        spm_config.macro_prebuilt_root_dir / name
       end
 
       def metadata_path
@@ -47,7 +47,8 @@ module Pod
 
         config = spm_config.macro_config
         impl_module_name = @metadata.macro_impl_name
-        return if spm_config.dont_prebuild_macros_if_exist? && (macro_prebuilt_dir / config / impl_module_name).exist?
+        prebuilt_binary = macro_prebuilt_dir / "#{impl_module_name}-#{config}"
+        return if spm_config.dont_prebuild_macros_if_exist? && prebuilt_binary.exist?
 
         UI.section "Building macro implementation: #{impl_module_name} (#{config})...".green do
           Dir.chdir(macro_downloaded_dir) do
@@ -55,10 +56,10 @@ module Pod
           end
         end
 
-        (macro_prebuilt_dir / config).mkpath
+        prebuilt_binary.parent.mkpath
         FileUtils.copy_entry(
           macro_downloaded_dir / ".build" / config / impl_module_name,
-          macro_prebuilt_dir / config / impl_module_name
+          prebuilt_binary
         )
       end
     end

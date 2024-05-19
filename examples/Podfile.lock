@@ -11,8 +11,8 @@ PODS:
 DEPENDENCIES:
   - CommonUI (from `LocalPods/CommonUI`)
   - Logger (from `LocalPods/Logger`)
-  - MacroCodableKit (from `.spm.pods/MacroCodableKit`)
-  - Orcam (from `.spm.pods/Orcam`)
+  - MacroCodableKit (from `.spm.pods/macros/MacroCodableKit`)
+  - Orcam (from `.spm.pods/macros/Orcam`)
   - Services (from `LocalPods/Services`)
 
 EXTERNAL SOURCES:
@@ -22,10 +22,10 @@ EXTERNAL SOURCES:
     :path: LocalPods/Logger
   MacroCodableKit:
     :path: !ruby/object:Pathname
-    path: ".spm.pods/MacroCodableKit"
+    path: ".spm.pods/macros/MacroCodableKit"
   Orcam:
     :path: !ruby/object:Pathname
-    path: ".spm.pods/Orcam"
+    path: ".spm.pods/macros/Orcam"
   Services:
     :path: LocalPods/Services
 

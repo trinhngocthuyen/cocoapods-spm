@@ -58,11 +58,15 @@ module Pod
       end
 
       def macro_root_dir
-        root_dir # To be updated: rootdir / "macros"
+        @macro_root_dir ||= prepare_dir(root_dir / "macros")
       end
 
       def macro_downloaded_root_dir
         macro_root_dir / ".downloaded"
+      end
+
+      def macro_prebuilt_root_dir
+        macro_root_dir / ".prebuilt"
       end
 
       def macro_downloaded_sandbox
@@ -70,7 +74,7 @@ module Pod
       end
 
       def pkg_umbrella_dir
-        @pkg_umbrella_dir ||= prepare_dir(root_dir / ".umbrella")
+        @pkg_umbrella_dir ||= prepare_dir(pkg_root_dir / ".umbrella")
       end
 
       def pkg_checkouts_dir
