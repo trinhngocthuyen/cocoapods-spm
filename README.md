@@ -88,7 +88,7 @@ As follows are some common usages.
 **Fetching macro sources**
 
 ```sh
-bundle exec pod spm fetch --all
+bundle exec pod spm macro fetch --all
 ```
 The downloaded sources are put in the `.spm.pods/.downloaded` folder.
 
@@ -96,10 +96,10 @@ The downloaded sources are put in the `.spm.pods/.downloaded` folder.
 
 ```sh
 # Prebuild all macros
-bundle exec pod spm prebuild --all
+bundle exec pod spm macro prebuild --all
 
 # Prebuild some macros with the given config
-bundle exec pod spm prebuild --macros=Orcam --config=debug
+bundle exec pod spm macro prebuild --macros=Orcam --config=debug
 ```
 
 ## Troublshooting

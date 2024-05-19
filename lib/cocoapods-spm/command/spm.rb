@@ -1,5 +1,4 @@
-require "cocoapods-spm/command/prebuild"
-require "cocoapods-spm/command/fetch"
+require "cocoapods-spm/command/macro"
 
 module Pod
   class Command
