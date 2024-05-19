@@ -2,7 +2,7 @@
 	cd .. && make $@
 
 install:
-	[[ -z $${CI} ]] || sh scripts/prebuilt_macros.sh unzip
+	sh scripts/prebuilt_macros.sh unzip
 	bundle exec pod install --verbose
 
 spm.fetch:
