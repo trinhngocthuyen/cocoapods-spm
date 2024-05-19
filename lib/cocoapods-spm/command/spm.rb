@@ -1,4 +1,5 @@
 require "cocoapods-spm/command/macro"
+require "cocoapods-spm/command/clean"
 
 module Pod
   class Command
