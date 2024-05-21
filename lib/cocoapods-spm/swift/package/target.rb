@@ -94,7 +94,13 @@ module Pod
         def binary_basename
           return nil unless binary?
 
-          @binary_basename ||= xcframework.slices[0].path.basename.to_s
+          @binary_basename ||= begin
+            xcframework_dir ||= (root.artifacts_dir / name).glob("*.xcframework")[0]
+            xcframework_dir ||= root.src_dir / raw["path"] if raw.key?("path")
+            paths = xcframework_dir.glob("*/*.{a,framework}")
+            UI.warn "Cannot detect binary_basename for #{name}" if paths.empty?
+            paths[0].basename.to_s unless paths.empty?
+          end
         end
 
         def use_default_xcode_linking?

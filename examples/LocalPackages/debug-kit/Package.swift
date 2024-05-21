@@ -15,6 +15,7 @@ let package = Package(
       dependencies: [
         "DebugKitObjC",
         "NetworkLoggerFramework",
+        "NetworkInterceptorFramework",
         .product(name: "Swizzler", package: "core-utils"),
       ],
       resources: [
@@ -23,5 +24,6 @@ let package = Package(
     ),
     .target(name: "DebugKitObjC"),
     .binaryTarget(name: "NetworkLoggerFramework", path: "Frameworks/NetworkLogger.xcframework.zip"),
+    .binaryTarget(name: "NetworkInterceptorFramework", path: "Frameworks/NetworkInterceptor.xcframework"),
   ]
 )
