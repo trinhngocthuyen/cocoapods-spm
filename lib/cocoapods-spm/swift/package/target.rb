@@ -54,7 +54,7 @@ module Pod
 
           case binary_basename
           when /(\S+)\.framework/ then ["-framework \"#{$1}\""]
-          when /lib(\S+)\.(a|dylib)/ then ["-library \"#{$1}\""]
+          when /lib(\S+)\.(a|dylib)/ then ["-l\"#{$1}\""]
           when /(\S+\.(a|dylib))/ then ["\"${PODS_CONFIGURATION_BUILD_DIR}/#{$1}\""]
           else []
           end
