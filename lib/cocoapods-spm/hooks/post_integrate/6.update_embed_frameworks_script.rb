@@ -36,21 +36,28 @@ module Pod
           end
         end
 
+        def file_contains_line?(file_path, search_string)
+          File.foreach(file_path) do |line|
+            return true if line.include?(search_string)
+          end
+          false
+        end
+
         def update_embed_frameworks_script_files_path(target, config)
           input_paths = framework_paths_for(target)
-          output_paths = input_paths.map do |p|
+          output_paths = input_paths.sort.map do |p|
             "${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/#{File.basename(p)}"
           end
           target.embed_frameworks_script_input_files_path(config).open("a+") do |file|
-            input_paths.each do |line|
-              unless file.include?(line)
+            input_paths.uniq.each do |line|
+              unless file_contains_line?(file.path, line)
                 file << "\n" << line
               end
             end
           end
           target.embed_frameworks_script_output_files_path(config).open("a+") do |file|
-            output_paths.each do |line|
-              unless file.include?(line)
+            output_paths.uniq.each do |line|
+              unless file_contains_line?(file.path, line)
                 file << "\n" << line
               end
             end
