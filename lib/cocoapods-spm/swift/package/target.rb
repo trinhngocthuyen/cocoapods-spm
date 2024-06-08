@@ -28,18 +28,33 @@ module Pod
           @product_name || name
         end
 
+        def sources_path
+          @sources_path ||= begin
+            path = raw["path"] || "Sources/#{name}"
+            root.src_dir / path
+          end
+        end
+
         def public_headers_path
-          raw["publicHeadersPath"] || implicit_public_headers
+          res = sources_path / raw["publicHeadersPath"] if raw.key?("publicHeadersPath")
+          res = implicit_public_headers if res.nil?
+          res
         end
 
         def implicit_public_headers
-          target_sources_path = raw["path"] || "Sources/#{name}"
-          path = root.src_dir / target_sources_path / "include"
+          path = sources_path / "include"
           path unless path.glob("*.h*").empty?
         end
 
+        def use_generated_modulemap?
+          return false if public_headers_path.nil?
+
+          # If there exists module.modulemap, it'll be auto picked up during compilation
+          true if public_headers_path.glob("module.modulemap").empty?
+        end
+
         def clang_modulemap_arg
-          return nil if public_headers_path.nil?
+          return nil unless use_generated_modulemap?
 
           "-fmodule-map-file=\"${GENERATED_MODULEMAP_DIR}/#{name}.modulemap\""
         end
