@@ -45,7 +45,27 @@ module Pod
         end
 
         def resources
-          raw.fetch("resources", []).flat_map { |h| Resources.new(h, parent: self) }
+          res = raw.fetch("resources", []).flat_map { |h| Resources.new(h, parent: self) }
+          res = implicit_resources if res.empty?
+          res
+        end
+
+        def implicit_resources
+          target_sources_path = raw["path"] || "Sources/#{name}"
+          target_sources_path = root.src_dir / target_sources_path
+
+          # Refer to the following link for the implicit resources
+          # https://developer.apple.com/documentation/xcode/bundling-resources-with-a-swift-package#Add-resource-files
+          patterns = [
+            "*.xcassets",
+            "*.xib",
+            "*.storyboard",
+            "*.xcdatamodeld",
+            "*.lproj",
+          ]
+          return [] if patterns.all? { |p| target_sources_path.glob(p).empty? }
+
+          [Resources.new({}, parent: self)]
         end
 
         def linker_flags
