@@ -20,6 +20,10 @@ module Pod
         end
       end
 
+      def checkouts_dir
+        src_dir.parent
+      end
+
       def artifacts_dir
         spm_config.pkg_artifacts_dir / slug
       end

@@ -7,9 +7,7 @@ module Pod
       class UpdateSettings < Hook
         def run
           update_macro_plugin_flags
-          update_modulemap_flags
-          update_swift_include_paths
-          update_linker_flags
+          update_packages_flags
         end
 
         private
@@ -43,27 +41,20 @@ module Pod
           )
         end
 
-        def update_modulemap_flags
-          perform_settings_update(
-            update_targets: lambda do |target, _, _|
-              {
-                "OTHER_SWIFT_FLAGS" => modulemap_args_for_target(target, prefix: "-Xcc"),
-                "OTHER_CFLAGS" => modulemap_args_for_target(target),
-              }
-            end
-          )
-        end
-
-        def update_linker_flags
+        def update_packages_flags
           return if @spm_resolver.result.spm_pkgs.empty?
 
-          # For packages to work in the main target
           perform_settings_update(
             update_targets: lambda do |target, _, _|
               {
-                "OTHER_LDFLAGS" => linker_flags_for(target),
+                "SOURCE_PACKAGES_CHECKOUTS_DIR" => "${PODS_CONFIGURATION_BUILD_DIR}/../../../SourcePackages/checkouts",
                 "FRAMEWORK_SEARCH_PATHS" => "\"${PODS_CONFIGURATION_BUILD_DIR}/PackageFrameworks\"",
                 "LIBRARY_SEARCH_PATHS" => "\"${PODS_CONFIGURATION_BUILD_DIR}\"",
+                "SWIFT_INCLUDE_PATHS" => "$(PODS_CONFIGURATION_BUILD_DIR)",
+                "OTHER_SWIFT_FLAGS" => modulemap_args_for_target(target, prefix: "-Xcc"),
+                "OTHER_CFLAGS" => modulemap_args_for_target(target),
+                "HEADER_SEARCH_PATHS" => header_search_paths_for(target),
+                "OTHER_LDFLAGS" => linker_flags_for(target),
               }
             end
           )
@@ -75,22 +66,20 @@ module Pod
           @spm_resolver.result.linker_flags_for(target)
         end
 
-        def update_swift_include_paths
-          return if @spm_resolver.result.spm_pkgs.empty? && spm_config.all_macros.empty?
-
-          perform_settings_update(
-            update_targets: lambda do |_, _, _|
-              { "SWIFT_INCLUDE_PATHS" => "$(PODS_CONFIGURATION_BUILD_DIR)" }
-            end
-          )
-        end
-
         def modulemap_args_for_target(target, prefix: nil)
           @spm_resolver
             .result
             .spm_targets_for(target)
             .filter_map(&:clang_modulemap_arg)
             .map { |v| prefix.nil? ? v : "#{prefix} #{v}" }
+            .join(" ")
+        end
+
+        def header_search_paths_for(target)
+          @spm_resolver
+            .result
+            .spm_targets_for(target)
+            .filter_map(&:header_search_path_arg)
             .join(" ")
         end
       end

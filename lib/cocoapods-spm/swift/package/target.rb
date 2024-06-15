@@ -35,6 +35,13 @@ module Pod
           end
         end
 
+        def header_search_path_arg
+          return nil if public_headers_path.nil?
+
+          path = public_headers_path.to_s.sub(root.checkouts_dir.to_s, "${SOURCE_PACKAGES_CHECKOUTS_DIR}")
+          "\"#{path}\""
+        end
+
         def public_headers_path
           res = sources_path / raw["publicHeadersPath"] if raw.key?("publicHeadersPath")
           res = implicit_public_headers if res.nil?
