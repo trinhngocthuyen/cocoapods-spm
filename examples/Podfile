@@ -64,8 +64,8 @@ post_install do |installer|
   end
 
   if dont_use_macros?
-    File.open(".xcconfigs/__base__.xcconfig", "w") do |f|
-      f << "SWIFT_ACTIVE_COMPILATION_CONDITIONS = $(inherited) NO_MACROS"
-    end
+    path = Pathname.new(".xcconfigs/__base__.xcconfig")
+    path.parent.mkpath
+    path.write("SWIFT_ACTIVE_COMPILATION_CONDITIONS = $(inherited) NO_MACROS")
   end
 end
