@@ -1,19 +1,12 @@
-import MacroCodableKit
-
 import DebugKit
 import GoogleMaps
 import NetworkLogger
 import OpenTelemetrySdk
-import Orcam
 import SnapKit
 import SwiftUIX
 import SwiftyBeaver
 
-@AllOfCodable // MacroCodableKit
-@Init // Orcam
 struct Foo {
-  let x: Int
-
   func check() {
     print(AnyButtonStyle.self) // SwiftUIX
     print(SwiftyBeaver.self) // SwiftyBeaver
@@ -24,3 +17,14 @@ struct Foo {
     print(NetworkLogger.self) // NetworkLogger
   }
 }
+
+#if !NO_MACROS
+import Orcam
+import MacroCodableKit
+
+@AllOfCodable // MacroCodableKit
+@Init // Orcam
+struct FooMacro {
+  let x: Int
+}
+#endif

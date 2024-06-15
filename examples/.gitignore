@@ -33,3 +33,4 @@ fastlane/test_output
 
 .spm.pods/
 .logs/
+.xcconfigs/
