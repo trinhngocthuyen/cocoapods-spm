@@ -1,3 +1,5 @@
+-include .local/Makefile
+
 ensure.pre-commit:
 	which pre-commit &> /dev/null || pip install pre-commit
 

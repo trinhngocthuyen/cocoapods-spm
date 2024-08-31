@@ -8,10 +8,6 @@ puts "Using linkage: #{linkage}"
 plugin "cocoapods-spm"
 plugin "cocoapods-xcconfig-hooks"
 
-def dont_use_macros?
-  ENV["NO_MACROS"] == "true"
-end
-
 config_compact_spec(
   extra: ->(s) { s.ios.deployment_target = "16.0" }
 )
@@ -29,11 +25,11 @@ target "EX" do
   pod "Orcam", :macro => {
     :git => "https://github.com/trinhngocthuyen/orcam.git",
     :branch => "main"
-  } unless dont_use_macros?
+  }
   pod "MacroCodableKit", :macro => {
     :git => "https://github.com/mikhailmaslo/macro-codable-kit",
     :tag => "0.3.0"
-  } unless dont_use_macros?
+  }
 
   spm_pkg "SnapKit",
           :url => "https://github.com/SnapKit/SnapKit.git",
@@ -61,11 +57,5 @@ post_install do |installer|
     target.build_configurations.each do |config|
       config.build_settings.delete "IPHONEOS_DEPLOYMENT_TARGET"
     end
-  end
-
-  if dont_use_macros?
-    path = Pathname.new(".xcconfigs/__base__.xcconfig")
-    path.parent.mkpath
-    path.write("SWIFT_ACTIVE_COMPILATION_CONDITIONS = $(inherited) NO_MACROS")
   end
 end

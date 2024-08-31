@@ -1,11 +1,6 @@
 #!/bin/bash
 set -e
 
-prebuilt_if_needed() {
-    local empty_prebuilt_paths=$(find .spm.pods/*/.prebuilt -empty -type d -print)
-    [[ -z ${empty_prebuilt_paths} ]] || make spm.prebuild
-}
-
 prepare_simulator() {
     local runtime=$(xcrun simctl list runtimes | grep -o 'com.apple.CoreSimulator.SimRuntime.iOS-.*-.*' | tail -n 1)
     local device_type=com.apple.CoreSimulator.SimDeviceType.iPhone-15
@@ -25,7 +20,8 @@ xcodebuild_exec() {
     fi
 
     mkdir -p .logs
-    xcodebuild \
+    set -o pipefail && \
+        xcodebuild \
         -workspace EX.xcworkspace \
         -scheme EX \
         -config Debug \
@@ -36,6 +32,5 @@ xcodebuild_exec() {
         | tee .logs/xcodebuild.txt | ${log_formatter}
 }
 
-prebuilt_if_needed
 prepare_simulator
 xcodebuild_exec

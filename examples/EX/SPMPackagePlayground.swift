@@ -18,7 +18,6 @@ struct Foo {
   }
 }
 
-#if !NO_MACROS
 import Orcam
 import MacroCodableKit
 
@@ -27,4 +26,3 @@ import MacroCodableKit
 struct FooMacro {
   let x: Int
 }
-#endif
