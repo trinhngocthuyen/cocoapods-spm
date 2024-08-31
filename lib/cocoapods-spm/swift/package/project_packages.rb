@@ -21,7 +21,9 @@ module Pod
         until to_visit.empty?
           target = to_visit.pop
           res << target
-          to_visit += target.resolve_dependencies(@pkg_desc_cache)
+          # Exclude macros as they wont be linked to the project's binary
+          # https://github.com/trinhngocthuyen/cocoapods-spm/issues/107
+          to_visit += target.resolve_dependencies(@pkg_desc_cache).reject(&:macro?)
         end
         @recursive_targets_cache[product_name] = res.uniq(&:name)
       end
