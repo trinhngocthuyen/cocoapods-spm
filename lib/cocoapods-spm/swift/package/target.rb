@@ -50,7 +50,7 @@ module Pod
 
         def implicit_public_headers
           path = sources_path / "include"
-          path unless path.glob("*.h*").empty?
+          path unless path.glob("**/*.h*").empty?
         end
 
         def use_generated_modulemap?
