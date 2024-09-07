@@ -1,3 +1,4 @@
+require "cocoapods-spm/compatibility/all"
 require "cocoapods-spm/helpers/io"
 require "cocoapods-spm/helpers/patch"
 require "cocoapods-spm/config"
