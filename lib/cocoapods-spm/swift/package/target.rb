@@ -102,12 +102,13 @@ module Pod
           end
         end
 
-        def resolve_dependencies(pkg_desc_cache)
+        def resolve_dependencies(pkg_desc_cache, platform: nil)
           raw.fetch("dependencies", []).flat_map do |hash|
             type = ["byName", "target", "product"].find { |k| hash.key?(k) }
             if type.nil?
               raise Informative, "Unexpected dependency type. Must be either `byName`, `target`, or `product`."
             end
+            next [] unless match_platform?(hash[type][-1], platform)
 
             name = hash[type][0]
             pkg_name = hash.key?("product") ? hash["product"][1] : self.pkg_name
@@ -147,6 +148,15 @@ module Pod
 
         def use_default_xcode_linking?
           root.use_default_xcode_linking?
+        end
+
+        private
+
+        def match_platform?(condition, platform)
+          # Consider matching if there's no condition
+          return true if condition.nil? || !condition.key?("platformNames")
+
+          condition["platformNames"].include?(platform.to_s)
         end
       end
     end

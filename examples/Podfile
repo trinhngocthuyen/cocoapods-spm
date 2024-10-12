@@ -24,11 +24,11 @@ target "EX" do
 
   pod "Orcam", :macro => {
     :git => "https://github.com/trinhngocthuyen/orcam.git",
-    :branch => "main"
+    :branch => "main",
   }
   pod "MacroCodableKit", :macro => {
     :git => "https://github.com/mikhailmaslo/macro-codable-kit",
-    :tag => "0.3.0"
+    :tag => "0.3.0",
   }
 
   spm_pkg "SnapKit",
@@ -45,11 +45,14 @@ target "EX" do
           :git => "https://github.com/googlemaps/ios-maps-sdk.git",
           :version => "8.4.0",
           :products => ["GoogleMaps", "GoogleMapsBase", "GoogleMapsCore"]
+  spm_pkg "mqtt-nio",
+          :url => "https://github.com/swift-server-community/mqtt-nio.git",
+          :version => "2.11.0",
+          :products => ["MQTTNIO"]
   spm_pkg "DebugKit", :path => "LocalPackages/debug-kit"
 end
 
 target "EXTests" do
-
 end
 
 post_install do |installer|

@@ -49,6 +49,10 @@ module Pod
       end
     end
 
+    def platforms
+      @platforms ||= target_definition_list.map { |d| d.platform.name }.uniq || [:ios]
+    end
+
     private
 
     def prepare_macro_pod_dir(name, requirement)

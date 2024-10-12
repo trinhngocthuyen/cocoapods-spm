@@ -28,7 +28,9 @@ module Pod
           @result.spm_dependencies_by_target.values.flatten.uniq(&:product).each do |dep|
             next if dep.pkg.use_default_xcode_linking?
 
-            project_pkgs.resolve_recursive_targets_of(dep.pkg.name, dep.product)
+            @podfile.platforms.each do |platform|
+              project_pkgs.resolve_recursive_targets_of(dep.pkg.name, dep.product, platform: platform)
+            end
           end
         end
       end
