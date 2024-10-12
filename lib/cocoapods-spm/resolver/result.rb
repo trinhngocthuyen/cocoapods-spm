@@ -36,7 +36,7 @@ module Pod
 
         def spm_targets_for(target, exclude_default_xcode_linking: true)
           targets = spm_dependencies_for(target).flat_map do |d|
-            project_pkgs.resolve_recursive_targets_of(d.pkg.name, d.product)
+            project_pkgs.resolve_recursive_targets_of(d.pkg.name, d.product, platform: target.platform.name)
           end.uniq(&:name)
           return targets.reject(&:use_default_xcode_linking?) if exclude_default_xcode_linking
 

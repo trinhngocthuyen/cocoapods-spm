@@ -34,4 +34,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: dummy-checksum-to-prevent-merge-conflicts
 
-COCOAPODS: 1.14.3
+COCOAPODS: 1.15.2

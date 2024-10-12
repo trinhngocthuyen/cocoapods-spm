@@ -5,6 +5,7 @@ import OpenTelemetrySdk
 import SnapKit
 import SwiftUIX
 import SwiftyBeaver
+import MQTTNIO
 
 struct Foo {
   func check() {
@@ -15,6 +16,7 @@ struct Foo {
     print(DebugKit.self) // DebugKit
     print(GMSAddress.self) // GoogleMaps
     print(NetworkLogger.self) // NetworkLogger
+    print(MQTTClient.self) // MQTTClient
   }
 }
 
