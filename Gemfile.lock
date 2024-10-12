@@ -4,34 +4,27 @@ PATH
     cocoapods-spm (0.1.6)
       xcodeproj (>= 1.23.0)
 
-GEM
-  remote: https://rubygems.org/
+PATH
+  remote: .local/cocoapods-core
   specs:
-    CFPropertyList (3.0.6)
-      rexml
-    activesupport (7.1.2)
-      base64
-      bigdecimal
-      concurrent-ruby (~> 1.0, >= 1.0.2)
-      connection_pool (>= 2.2.5)
-      drb
-      i18n (>= 1.6, < 2)
-      minitest (>= 5.1)
-      mutex_m
-      tzinfo (~> 2.0)
-    addressable (2.8.5)
-      public_suffix (>= 2.0.2, < 6.0)
-    algoliasearch (1.27.5)
-      httpclient (~> 2.8, >= 2.8.3)
-      json (>= 1.5.1)
-    atomos (0.1.3)
-    base64 (0.2.0)
-    bigdecimal (3.1.4)
-    claide (1.1.0)
-    cocoapods (1.14.3)
+    cocoapods-core (1.15.2)
+      activesupport (>= 5.0, < 8)
+      addressable (~> 2.8)
+      algoliasearch (~> 1.0)
+      concurrent-ruby (~> 1.1)
+      fuzzy_match (~> 2.0.4)
+      nap (~> 1.0)
+      netrc (~> 0.11)
+      public_suffix (~> 4.0)
+      typhoeus (~> 1.0)
+
+PATH
+  remote: .local/cocoapods
+  specs:
+    cocoapods (1.15.2)
       addressable (~> 2.8)
       claide (>= 1.0.2, < 2.0)
-      cocoapods-core (= 1.14.3)
+      cocoapods-core (= 1.15.2)
       cocoapods-deintegrate (>= 1.0.3, < 2.0)
       cocoapods-downloader (>= 2.1, < 3.0)
       cocoapods-plugins (>= 1.0.0, < 2.0)
@@ -46,17 +39,33 @@ GEM
       nap (~> 1.0)
       ruby-macho (>= 2.3.0, < 3.0)
       xcodeproj (>= 1.23.0, < 2.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    CFPropertyList (3.0.6)
+      rexml
+    activesupport (7.1.4)
+      base64
+      bigdecimal
+      concurrent-ruby (~> 1.0, >= 1.0.2)
+      connection_pool (>= 2.2.5)
+      drb
+      i18n (>= 1.6, < 2)
+      minitest (>= 5.1)
+      mutex_m
+      tzinfo (~> 2.0)
+    addressable (2.8.7)
+      public_suffix (>= 2.0.2, < 7.0)
+    algoliasearch (1.27.5)
+      httpclient (~> 2.8, >= 2.8.3)
+      json (>= 1.5.1)
+    ast (2.4.2)
+    atomos (0.1.3)
+    base64 (0.2.0)
+    bigdecimal (3.1.8)
+    claide (1.1.0)
     cocoapods-compact-spec (0.0.3)
-    cocoapods-core (1.14.3)
-      activesupport (>= 5.0, < 8)
-      addressable (~> 2.8)
-      algoliasearch (~> 1.0)
-      concurrent-ruby (~> 1.1)
-      fuzzy_match (~> 2.0.4)
-      nap (~> 1.0)
-      netrc (~> 0.11)
-      public_suffix (~> 4.0)
-      typhoeus (~> 1.0)
     cocoapods-deintegrate (1.0.5)
     cocoapods-downloader (2.1)
     cocoapods-plugins (1.0.0)
@@ -69,35 +78,42 @@ GEM
     cocoapods-xcconfig-hooks (0.0.1)
     coderay (1.1.3)
     colored2 (3.1.2)
-    concurrent-ruby (1.2.2)
+    concurrent-ruby (1.3.4)
     connection_pool (2.4.1)
     diff-lcs (1.5.0)
-    drb (2.2.0)
-      ruby2_keywords
+    drb (2.2.1)
     escape (0.0.4)
     ethon (0.16.0)
       ffi (>= 1.15.0)
-    ffi (1.16.3)
+    ffi (1.17.0)
     fourflusher (2.3.1)
     fuzzy_match (2.0.4)
     gh_inspector (1.1.3)
     httpclient (2.8.3)
-    i18n (1.14.1)
+    i18n (1.14.6)
       concurrent-ruby (~> 1.0)
-    json (2.6.3)
+    json (2.7.2)
+    language_server-protocol (3.17.0.3)
     method_source (1.0.0)
-    minitest (5.20.0)
+    minitest (5.25.1)
     molinillo (0.8.0)
     mutex_m (0.2.0)
     nanaimo (0.3.0)
     nap (1.1.0)
     netrc (0.11.0)
+    parallel (1.26.3)
+    parser (3.3.5.0)
+      ast (~> 2.4.1)
+      racc
     pry (0.14.2)
       coderay (~> 1.1)
       method_source (~> 1.0)
     pry-nav (1.0.0)
       pry (>= 0.9.10, < 0.15)
     public_suffix (4.0.7)
+    racc (1.8.1)
+    rainbow (3.1.1)
+    regexp_parser (2.9.2)
     rexml (3.2.6)
     rspec (3.12.0)
       rspec-core (~> 3.12.0)
@@ -112,12 +128,25 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.12.0)
     rspec-support (3.12.1)
+    rubocop (1.66.1)
+      json (~> 2.3)
+      language_server-protocol (>= 3.17.0)
+      parallel (~> 1.10)
+      parser (>= 3.3.0.2)
+      rainbow (>= 2.2.2, < 4.0)
+      regexp_parser (>= 2.4, < 3.0)
+      rubocop-ast (>= 1.32.2, < 2.0)
+      ruby-progressbar (~> 1.7)
+      unicode-display_width (>= 2.4.0, < 3.0)
+    rubocop-ast (1.32.3)
+      parser (>= 3.3.1.0)
     ruby-macho (2.5.1)
-    ruby2_keywords (0.0.5)
+    ruby-progressbar (1.13.0)
     typhoeus (1.4.1)
       ethon (>= 0.9.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
+    unicode-display_width (2.6.0)
     xcodeproj (1.23.0)
       CFPropertyList (>= 2.3.3, < 4.0)
       atomos (~> 0.1.3)
@@ -133,12 +162,14 @@ PLATFORMS
 
 DEPENDENCIES
   bundler (> 1.3)
-  cocoapods
+  cocoapods!
   cocoapods-compact-spec
+  cocoapods-core!
   cocoapods-spm!
   cocoapods-xcconfig-hooks
   pry-nav
   rspec
+  rubocop
 
 BUNDLED WITH
-   2.2.3
+   2.5.21
