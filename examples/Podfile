@@ -17,8 +17,12 @@ config_cocoapods_spm(
   default_macro_config: "debug"
 )
 
-target "EX" do
+def shared_pods
   pod "Logger", :path => "LocalPods/Logger"
+end
+
+target "EX" do
+  shared_pods
   pod "CommonUI", :path => "LocalPods/CommonUI"
   pod "Services", :path => "LocalPods/Services"
 
@@ -53,6 +57,12 @@ target "EX" do
 end
 
 target "EXTests" do
+  # Nothing here
+end
+
+target "EXMac" do
+  platform :osx, "14.0"
+  shared_pods
 end
 
 post_install do |installer|

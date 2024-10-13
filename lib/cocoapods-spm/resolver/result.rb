@@ -31,7 +31,7 @@ module Pod
         end
 
         def spm_dependencies_for(target)
-          @spm_dependencies_by_target[target.to_s].to_a
+          @spm_dependencies_by_target[spec_name_of(target)].to_a
         end
 
         def spm_targets_for(target, exclude_default_xcode_linking: true)
@@ -48,6 +48,21 @@ module Pod
             spm_targets_for(target).flat_map(&:linker_flags) +
             spm_pkgs_for(target).flat_map(&:linker_flags)
           ).uniq
+        end
+
+        private
+
+        def spec_name_of(target)
+          # In case of multi-platforms, the target name might contains the platform (ex. Logger-iOS, Logger-macOS)
+          # We need to strip the platform suffix out
+          return target.name if @spm_dependencies_by_target.key?(target.name)
+          return target.root_spec.name if target.is_a?(Pod::PodTarget)
+          return target.name if target.is_a?(Pod::AggregateTarget)
+
+          cmps = target.name.split("-")
+          return cmps[...-1].join("-") if ["iOS", "macOS", "watchOS", "tvOS"].include?(cmps[-1])
+
+          target.name
         end
       end
     end

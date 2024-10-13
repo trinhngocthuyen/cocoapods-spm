@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3CBBF0361A9B21B0ED4C0B3A /* Pods_EXMac.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FDFEA181726FB1D99F91D92 /* Pods_EXMac.framework */; };
 		42F4BB64AE40494E13E5F852 /* Pods_EX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B1B48FBE5DFDD728F200CB3 /* Pods_EX.framework */; };
 		62A74DC2B0AFD2567EAFA994 /* Pods_EXTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D2FBA36190C2B16ABA47F2B /* Pods_EXTests.framework */; };
 		F522B5652B280C89009730B4 /* SPMPackagePlayground.swift in Sources */ = {isa = PBXBuildFile; fileRef = F522B5642B280C89009730B4 /* SPMPackagePlayground.swift */; };
@@ -18,6 +19,7 @@
 		F5A6311A2B1D912200A958CB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5A631192B1D912200A958CB /* Preview Assets.xcassets */; };
 		F5A631242B1D974400A958CB /* HomeVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A631232B1D974400A958CB /* HomeVM.swift */; };
 		F5A631262B1D976E00A958CB /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A631252B1D976E00A958CB /* HomeScreen.swift */; };
+		F5D6EB062CBB96D900E7A0F5 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D6EB052CBB96D900E7A0F5 /* main.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -30,13 +32,28 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		F5D6EB012CBB96D900E7A0F5 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		194A11CBD3F90CAD0A00700B /* Pods-EX.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EX.debug.xcconfig"; path = "Target Support Files/Pods-EX/Pods-EX.debug.xcconfig"; sourceTree = "<group>"; };
+		3799DE2887B000EFB51FA5E5 /* Pods-EXMac.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EXMac.debug.xcconfig"; path = "Target Support Files/Pods-EXMac/Pods-EXMac.debug.xcconfig"; sourceTree = "<group>"; };
+		3FDFEA181726FB1D99F91D92 /* Pods_EXMac.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EXMac.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		505183CBD64DF2DBD583FDBA /* Pods-EXTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EXTests.release.xcconfig"; path = "Target Support Files/Pods-EXTests/Pods-EXTests.release.xcconfig"; sourceTree = "<group>"; };
 		5B1B48FBE5DFDD728F200CB3 /* Pods_EX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C9FF68667E404D1C27C0EAF /* Pods-EX.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EX.release.xcconfig"; path = "Target Support Files/Pods-EX/Pods-EX.release.xcconfig"; sourceTree = "<group>"; };
 		6D2FBA36190C2B16ABA47F2B /* Pods_EXTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EXTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE11D2D9206A1BC5ABAC4260 /* Pods-EXTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EXTests.debug.xcconfig"; path = "Target Support Files/Pods-EXTests/Pods-EXTests.debug.xcconfig"; sourceTree = "<group>"; };
+		BE90D6878D0EDD7303A67EF2 /* Pods-EXMac.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EXMac.release.xcconfig"; path = "Target Support Files/Pods-EXMac/Pods-EXMac.release.xcconfig"; sourceTree = "<group>"; };
 		F522B5642B280C89009730B4 /* SPMPackagePlayground.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPMPackagePlayground.swift; sourceTree = "<group>"; };
 		F5823ACE2BB9575F0054FF0A /* EXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EXTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5823AD02BB9575F0054FF0A /* EXTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EXTests.swift; sourceTree = "<group>"; };
@@ -48,6 +65,8 @@
 		F5A631192B1D912200A958CB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		F5A631232B1D974400A958CB /* HomeVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVM.swift; sourceTree = "<group>"; };
 		F5A631252B1D976E00A958CB /* HomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreen.swift; sourceTree = "<group>"; };
+		F5D6EB032CBB96D900E7A0F5 /* EXMac */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = EXMac; sourceTree = BUILT_PRODUCTS_DIR; };
+		F5D6EB052CBB96D900E7A0F5 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +86,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F5D6EB002CBB96D900E7A0F5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3CBBF0361A9B21B0ED4C0B3A /* Pods_EXMac.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -77,6 +104,8 @@
 				6C9FF68667E404D1C27C0EAF /* Pods-EX.release.xcconfig */,
 				AE11D2D9206A1BC5ABAC4260 /* Pods-EXTests.debug.xcconfig */,
 				505183CBD64DF2DBD583FDBA /* Pods-EXTests.release.xcconfig */,
+				3799DE2887B000EFB51FA5E5 /* Pods-EXMac.debug.xcconfig */,
+				BE90D6878D0EDD7303A67EF2 /* Pods-EXMac.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -86,6 +115,7 @@
 			children = (
 				5B1B48FBE5DFDD728F200CB3 /* Pods_EX.framework */,
 				6D2FBA36190C2B16ABA47F2B /* Pods_EXTests.framework */,
+				3FDFEA181726FB1D99F91D92 /* Pods_EXMac.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -104,6 +134,7 @@
 			children = (
 				F5A631112B1D912000A958CB /* EX */,
 				F5823ACF2BB9575F0054FF0A /* EXTests */,
+				F5D6EB042CBB96D900E7A0F5 /* EXMac */,
 				F5A631102B1D912000A958CB /* Products */,
 				2E8C87ACA7C036EA3A50C3B6 /* Pods */,
 				86536583EAFEE08EDCBC7C5A /* Frameworks */,
@@ -115,6 +146,7 @@
 			children = (
 				F5A6310F2B1D912000A958CB /* EX.app */,
 				F5823ACE2BB9575F0054FF0A /* EXTests.xctest */,
+				F5D6EB032CBB96D900E7A0F5 /* EXMac */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -139,6 +171,14 @@
 				F5A631192B1D912200A958CB /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		F5D6EB042CBB96D900E7A0F5 /* EXMac */ = {
+			isa = PBXGroup;
+			children = (
+				F5D6EB052CBB96D900E7A0F5 /* main.swift */,
+			);
+			path = EXMac;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -183,6 +223,24 @@
 			productReference = F5A6310F2B1D912000A958CB /* EX.app */;
 			productType = "com.apple.product-type.application";
 		};
+		F5D6EB022CBB96D900E7A0F5 /* EXMac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F5D6EB072CBB96D900E7A0F5 /* Build configuration list for PBXNativeTarget "EXMac" */;
+			buildPhases = (
+				EF2B52DD3E93EFEA4A4C59FC /* [CP] Check Pods Manifest.lock */,
+				F5D6EAFF2CBB96D900E7A0F5 /* Sources */,
+				F5D6EB002CBB96D900E7A0F5 /* Frameworks */,
+				F5D6EB012CBB96D900E7A0F5 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = EXMac;
+			productName = EXMac;
+			productReference = F5D6EB032CBB96D900E7A0F5 /* EXMac */;
+			productType = "com.apple.product-type.tool";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -199,6 +257,9 @@
 					};
 					F5A6310E2B1D912000A958CB = {
 						CreatedOnToolsVersion = 15.0;
+					};
+					F5D6EB022CBB96D900E7A0F5 = {
+						CreatedOnToolsVersion = 15.3;
 					};
 				};
 			};
@@ -217,6 +278,7 @@
 			targets = (
 				F5A6310E2B1D912000A958CB /* EX */,
 				F5823ACD2BB9575F0054FF0A /* EXTests */,
+				F5D6EB022CBB96D900E7A0F5 /* EXMac */,
 			);
 		};
 /* End PBXProject section */
@@ -319,6 +381,28 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		EF2B52DD3E93EFEA4A4C59FC /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-EXMac-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -340,6 +424,14 @@
 				F5A631262B1D976E00A958CB /* HomeScreen.swift in Sources */,
 				F522B5652B280C89009730B4 /* SPMPackagePlayground.swift in Sources */,
 				F5A631242B1D974400A958CB /* HomeVM.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F5D6EAFF2CBB96D900E7A0F5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F5D6EB062CBB96D900E7A0F5 /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -573,6 +665,30 @@
 			};
 			name = Release;
 		};
+		F5D6EB082CBB96D900E7A0F5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3799DE2887B000EFB51FA5E5 /* Pods-EXMac.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		F5D6EB092CBB96D900E7A0F5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BE90D6878D0EDD7303A67EF2 /* Pods-EXMac.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -599,6 +715,15 @@
 			buildConfigurations = (
 				F5A6311E2B1D912200A958CB /* Debug */,
 				F5A6311F2B1D912200A958CB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F5D6EB072CBB96D900E7A0F5 /* Build configuration list for PBXNativeTarget "EXMac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F5D6EB082CBB96D900E7A0F5 /* Debug */,
+				F5D6EB092CBB96D900E7A0F5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

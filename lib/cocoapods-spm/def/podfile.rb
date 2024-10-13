@@ -50,7 +50,7 @@ module Pod
     end
 
     def platforms
-      @platforms ||= target_definition_list.map { |d| d.platform.name }.uniq || [:ios]
+      @platforms ||= target_definition_list.filter_map { |d| d.platform&.name }.uniq || [:ios]
     end
 
     private

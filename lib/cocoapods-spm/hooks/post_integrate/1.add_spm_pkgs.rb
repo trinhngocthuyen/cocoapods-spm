@@ -33,7 +33,7 @@ module Pod
 
         def add_spm_products_to_targets
           pods_project.targets.each do |target|
-            @spm_resolver.result.spm_dependencies_by_target[target.name].to_a.each do |dep|
+            @spm_resolver.result.spm_dependencies_for(target).each do |dep|
               pkg_ref = spm_pkg_refs[dep.pkg.name]
               target_dep_ref = pkg_ref.create_target_dependency_ref(dep.product)
               target.dependencies << target_dep_ref
