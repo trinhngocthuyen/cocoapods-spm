@@ -156,7 +156,9 @@ module Pod
           # Consider matching if there's no condition
           return true if condition.nil? || !condition.key?("platformNames")
 
-          condition["platformNames"].include?(platform.to_s)
+          # macos is called osx in Cocoapods.
+          platform_name = platform.to_s == 'osx' ? 'macos' : platform.to_s
+          condition["platformNames"].include?(platform_name)
         end
       end
     end
