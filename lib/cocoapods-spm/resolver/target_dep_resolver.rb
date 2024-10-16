@@ -35,21 +35,26 @@ module Pod
         def resolve_dependencies_for_aggregate_targets
           @aggregate_targets.each do |target|
             spm_dependencies = target.specs.flat_map(&:spm_dependencies)
-            @result.spm_dependencies_by_target[target.to_s] = merge_spm_dependencies(spm_dependencies)
+            @result.spm_dependencies_by_target[target.to_s] = merge_spm_dependencies(spm_dependencies, target.to_s)
           end
 
           @podfile.spm_pkgs_by_aggregate_target.each do |target, pkgs|
             existing = @result.spm_dependencies_by_target[target].to_a
             spm_dependencies = pkgs.flat_map(&:to_dependencies)
-            @result.spm_dependencies_by_target[target] = merge_spm_dependencies(existing + spm_dependencies)
+            @result.spm_dependencies_by_target[target] = merge_spm_dependencies(existing + spm_dependencies, target)
           end
         end
 
-        def merge_spm_dependencies(deps)
+        def merge_spm_dependencies(deps, target)
           deps_by_name = Hash.new { |h, k| h[k] = [] }
           deps.each { |d| deps_by_name[d.name] << d }
           deps_by_name.each do |name, ds|
             deps_by_name[name] = ds.uniq { |d| [d.name, d.product] }
+          end
+          deps_by_name = deps_by_name.reject do |_name, ds|
+            ds.any? do |d|
+              d.pkg&.should_exclude_from_target?(target)
+            end
           end
           deps_by_name.values.flatten
         end

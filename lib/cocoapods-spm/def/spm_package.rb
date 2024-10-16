@@ -55,6 +55,10 @@ module Pod
         @linking_opts.fetch(:use_default_xcode_linking, false)
       end
 
+      def should_exclude_from_target?(target_name)
+        @linking_opts.fetch(:exclude_from_targets, []).include?(target_name.delete_prefix('Pods-'))
+      end
+
       def linker_flags
         @linking_opts[:linker_flags] || []
       end
