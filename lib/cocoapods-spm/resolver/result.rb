@@ -31,7 +31,10 @@ module Pod
         end
 
         def spm_dependencies_for(target)
-          @spm_dependencies_by_target[spec_name_of(target)].to_a
+          filtered_dependencies = @spm_dependencies_by_target[spec_name_of(target)]&.reject do |dep|
+            dep.pkg&.should_exclude_from_target?(target.name)
+          end
+          filtered_dependencies.to_a
         end
 
         def spm_targets_for(target, exclude_default_xcode_linking: true)
