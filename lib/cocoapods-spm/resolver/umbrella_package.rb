@@ -5,7 +5,7 @@ module Pod
 
       def initialize(podfile)
         @podfile = podfile
-        @spm_pkgs = @podfile.target_definition_list.flat_map(&:spm_pkgs).uniq
+        @spm_pkgs = @podfile.target_definition_list.flat_map(&:spm_pkgs).uniq(&:name)
       end
 
       def prepare
