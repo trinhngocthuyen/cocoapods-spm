@@ -16,7 +16,7 @@ module Pod
         private
 
         def resolve_spm_pkgs
-          @result.spm_pkgs = @podfile.target_definition_list.flat_map(&:spm_pkgs).uniq
+          @result.spm_pkgs = @podfile.target_definition_list.flat_map(&:spm_pkgs).uniq(&:name)
         end
 
         def resolve_spm_dependencies_by_target
