@@ -47,7 +47,7 @@ module Pod
           perform_settings_update(
             update_targets: lambda do |target, _, _|
               {
-                "SOURCE_PACKAGES_CHECKOUTS_DIR" => "${PODS_CONFIGURATION_BUILD_DIR}/../../../SourcePackages/checkouts",
+                "SOURCE_PACKAGES_CHECKOUTS_DIR" => "${BUILD_ROOT}/../../SourcePackages/checkouts",
                 "FRAMEWORK_SEARCH_PATHS" => "\"${PODS_CONFIGURATION_BUILD_DIR}/PackageFrameworks\"",
                 "LIBRARY_SEARCH_PATHS" => "\"${PODS_CONFIGURATION_BUILD_DIR}\"",
                 "SWIFT_INCLUDE_PATHS" => "$(PODS_CONFIGURATION_BUILD_DIR)",
