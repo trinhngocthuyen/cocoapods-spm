@@ -1,7 +1,10 @@
+require "cocoapods-spm/macro/metadata"
+require_relative "config"
+
 module Pod
   module SPM
     class MacroFetcher
-      include Config::Mixin
+      include MacroConfigMixin
 
       attr_reader :name
 
@@ -13,6 +16,7 @@ module Pod
       end
 
       def run
+        UI.puts "Fetching macro #{name}...".magenta
         download_macro_source
         macro_dir = spm_config.macro_root_dir / name
         macro_downloaded_dir = spm_config.macro_downloaded_root_dir / name
@@ -20,6 +24,17 @@ module Pod
           macro_downloaded_dir / "Sources" / name,
           macro_dir / "Sources" / name
         )
+        generate_metadata
+      end
+
+      private
+
+      def generate_metadata
+        raise "Package.swift not exist in #{macro_downloaded_dir}" \
+          unless (macro_downloaded_dir / "Package.swift").exist?
+
+        raw = Dir.chdir(macro_downloaded_dir) { `swift package dump-package` }
+        metadata_path.write(raw)
       end
 
       def download_macro_source
