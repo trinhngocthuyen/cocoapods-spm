@@ -35,11 +35,15 @@ module Pod
           end
         end
 
-        def header_search_path_arg
-          return nil if public_headers_path.nil?
+        def public_headers_path_expr
+          @public_headers_path_expr ||= public_headers_path.to_s.sub(
+            root.checkouts_dir.to_s,
+            "${SOURCE_PACKAGES_CHECKOUTS_DIR}"
+          )
+        end
 
-          path = public_headers_path.to_s.sub(root.checkouts_dir.to_s, "${SOURCE_PACKAGES_CHECKOUTS_DIR}")
-          "\"#{path}\""
+        def header_search_path_arg
+          "\"#{public_headers_path_expr}\"" unless public_headers_path.nil?
         end
 
         def public_headers_path
@@ -53,17 +57,18 @@ module Pod
           path unless path.glob("**/*.h*").empty?
         end
 
-        def use_generated_modulemap?
-          return false if public_headers_path.nil?
+        def modulemap_path
+          @modulemap_path ||= public_headers_path&.glob("*.modulemap")&.first
+        end
 
-          # If there exists module.modulemap, it'll be auto picked up during compilation
-          true if public_headers_path.glob("module.modulemap").empty?
+        def clang_modulemap_path_expr
+          return "#{public_headers_path_expr}/#{modulemap_path.basename}" unless modulemap_path.nil?
+
+          "${GENERATED_MODULEMAP_DIR}/#{name}.modulemap" unless binary?
         end
 
         def clang_modulemap_arg
-          return nil unless use_generated_modulemap?
-
-          "-fmodule-map-file=\"${GENERATED_MODULEMAP_DIR}/#{name}.modulemap\""
+          "-fmodule-map-file=\"#{clang_modulemap_path_expr}\"" unless clang_modulemap_path_expr.nil?
         end
 
         def resources
