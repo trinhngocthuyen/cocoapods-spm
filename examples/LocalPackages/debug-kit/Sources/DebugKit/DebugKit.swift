@@ -2,8 +2,8 @@ import DebugKitObjC
 import NetworkInterceptor
 import NetworkLogger
 
-public struct DebugKit {
-  init() {
+@objc public class DebugKit: NSObject {
+  override init() {
     print(NetworkLogger.self)
     print(NetworkInterceptor.self)
     diagnose()

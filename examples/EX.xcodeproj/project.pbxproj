@@ -10,7 +10,8 @@
 		3CBBF0361A9B21B0ED4C0B3A /* Pods_EXMac.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FDFEA181726FB1D99F91D92 /* Pods_EXMac.framework */; };
 		42F4BB64AE40494E13E5F852 /* Pods_EX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B1B48FBE5DFDD728F200CB3 /* Pods_EX.framework */; };
 		62A74DC2B0AFD2567EAFA994 /* Pods_EXTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D2FBA36190C2B16ABA47F2B /* Pods_EXTests.framework */; };
-		F522B5652B280C89009730B4 /* SPMPackagePlayground.swift in Sources */ = {isa = PBXBuildFile; fileRef = F522B5642B280C89009730B4 /* SPMPackagePlayground.swift */; };
+		F522B5652B280C89009730B4 /* SPMPlayground.swift in Sources */ = {isa = PBXBuildFile; fileRef = F522B5642B280C89009730B4 /* SPMPlayground.swift */; };
+		F562D0B02CEF838800FB1C05 /* SPMPlaygroundObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = F562D0AF2CEF838800FB1C05 /* SPMPlaygroundObjC.m */; };
 		F5823AD12BB9575F0054FF0A /* EXTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5823AD02BB9575F0054FF0A /* EXTests.swift */; };
 		F58EA02E2BD9F41200867E1A /* StaticResourcesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58EA02D2BD9F41200867E1A /* StaticResourcesTests.swift */; };
 		F5A631132B1D912000A958CB /* EXApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A631122B1D912000A958CB /* EXApp.swift */; };
@@ -54,7 +55,9 @@
 		6D2FBA36190C2B16ABA47F2B /* Pods_EXTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EXTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE11D2D9206A1BC5ABAC4260 /* Pods-EXTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EXTests.debug.xcconfig"; path = "Target Support Files/Pods-EXTests/Pods-EXTests.debug.xcconfig"; sourceTree = "<group>"; };
 		BE90D6878D0EDD7303A67EF2 /* Pods-EXMac.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EXMac.release.xcconfig"; path = "Target Support Files/Pods-EXMac/Pods-EXMac.release.xcconfig"; sourceTree = "<group>"; };
-		F522B5642B280C89009730B4 /* SPMPackagePlayground.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPMPackagePlayground.swift; sourceTree = "<group>"; };
+		F522B5642B280C89009730B4 /* SPMPlayground.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPMPlayground.swift; sourceTree = "<group>"; };
+		F562D0AE2CEF838700FB1C05 /* EX-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "EX-Bridging-Header.h"; sourceTree = "<group>"; };
+		F562D0AF2CEF838800FB1C05 /* SPMPlaygroundObjC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPMPlaygroundObjC.m; sourceTree = "<group>"; };
 		F5823ACE2BB9575F0054FF0A /* EXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EXTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5823AD02BB9575F0054FF0A /* EXTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EXTests.swift; sourceTree = "<group>"; };
 		F58EA02D2BD9F41200867E1A /* StaticResourcesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticResourcesTests.swift; sourceTree = "<group>"; };
@@ -154,7 +157,9 @@
 		F5A631112B1D912000A958CB /* EX */ = {
 			isa = PBXGroup;
 			children = (
-				F522B5642B280C89009730B4 /* SPMPackagePlayground.swift */,
+				F562D0AE2CEF838700FB1C05 /* EX-Bridging-Header.h */,
+				F562D0AF2CEF838800FB1C05 /* SPMPlaygroundObjC.m */,
+				F522B5642B280C89009730B4 /* SPMPlayground.swift */,
 				F5A631122B1D912000A958CB /* EXApp.swift */,
 				F5A631142B1D912000A958CB /* ContentView.swift */,
 				F5A631162B1D912200A958CB /* Assets.xcassets */,
@@ -257,6 +262,7 @@
 					};
 					F5A6310E2B1D912000A958CB = {
 						CreatedOnToolsVersion = 15.0;
+						LastSwiftMigration = 1530;
 					};
 					F5D6EB022CBB96D900E7A0F5 = {
 						CreatedOnToolsVersion = 15.3;
@@ -421,8 +427,9 @@
 			files = (
 				F5A631152B1D912000A958CB /* ContentView.swift in Sources */,
 				F5A631132B1D912000A958CB /* EXApp.swift in Sources */,
+				F562D0B02CEF838800FB1C05 /* SPMPlaygroundObjC.m in Sources */,
 				F5A631262B1D976E00A958CB /* HomeScreen.swift in Sources */,
-				F522B5652B280C89009730B4 /* SPMPackagePlayground.swift in Sources */,
+				F522B5652B280C89009730B4 /* SPMPlayground.swift in Sources */,
 				F5A631242B1D974400A958CB /* HomeVM.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -607,6 +614,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"EX/Preview Content\"";
@@ -628,6 +636,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.thuyen.EX;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "EX/EX-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -639,6 +649,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"EX/Preview Content\"";
@@ -660,6 +671,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.thuyen.EX;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "EX/EX-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
