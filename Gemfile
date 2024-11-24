@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 gemspec
 
-CP_VERSION = "1.15.2".freeze
+CP_VERSION = "1.16.2".freeze
 
 def use_local_cocoapods?
   ENV.fetch("COCOAPODS_LOCAL", "true") == "true"
