@@ -2,6 +2,8 @@ name: integration-test
 on:
   issue_comment:
     types: [created, edited]
+  pull_request:
+    types: [labeled]
 
 permissions:
   contents: read
@@ -16,7 +18,8 @@ jobs:
       github.event.issue.pull_request && (
         github.event.comment.body == '/integration-test' ||
         github.event.comment.body == '/integration-test static' ||
-        github.event.comment.body == '/integration-test all'
+        github.event.comment.body == '/integration-test all' ||
+        contains(github.event.pull_request.labels.*.name, 'test:integration')
       )
     steps:
       - name: Checkout PR
