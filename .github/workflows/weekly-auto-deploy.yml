@@ -1,0 +1,44 @@
+name: weekly-auto-deploy
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * 0' # 12AM, Sunday (UTC)
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          echo "VERSION=$(cat VERSION)" >> $GITHUB_ENV
+        shell: bash
+      - uses: actions/github-script@v7
+        env:
+          VERSION: ${{ env.VERSION }}
+        with:
+          github-token: ${{ secrets.GH_TOKEN }}
+          script: |
+            const { VERSION } = process.env;
+            const title = VERSION;
+            const milestones = await github.rest.issues.listMilestones({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            });
+            const milestone = milestones.data.find(m => m.title === title);
+            if (!milestone) {
+              console.error(`Milestone '${title}' not found.`);
+              return;
+            }
+            console.log(`There are ${milestone.closed_issues} associated PRs/issues`);
+            if (milestone.closed_issues <= 0) {
+              console.log('No associated PRs/issues -> Do nothing');
+              return;
+            }
+            console.log('Will trigger deploy workflow...');
+            await github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: ".github/workflows/deploy.yml",
+              ref: "main",
+              inputs: {"deploy-stable": true}
+            });
