@@ -5,3 +5,12 @@ private struct _ScrollView {
     ScrollView {}.dismissDisabled(false)
   }
 }
+
+import Orcam
+import MacroCodableKit
+
+@AllOfCodable // MacroCodableKit
+@Init // Orcam
+struct FooMacro {
+  let x: Int
+}

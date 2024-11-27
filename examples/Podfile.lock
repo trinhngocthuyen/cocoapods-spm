@@ -1,5 +1,7 @@
 PODS:
-  - CommonUI (0.0.1)
+  - CommonUI (0.0.1):
+    - MacroCodableKit
+    - Orcam
   - Logger (0.0.1)
   - MacroCodableKit (0.0.1)
   - Orcam (0.0.1)
@@ -26,7 +28,7 @@ EXTERNAL SOURCES:
     :path: LocalPods/Services
 
 SPEC CHECKSUMS:
-  CommonUI: 324efdfd5ca3ba7d6db37604ff86d760171398a2
+  CommonUI: 90679c43fb06ad1f1de5ff4278ceadb3503a8340
   Logger: 43a9cc3dc5f479042eb238d8680aaa0d6afd3ad2
   MacroCodableKit: 29a3a48508c673918521ef5db6f1485db2ca75d0
   Orcam: 288b7e3fc07e33706ceab2f226e4177e99847143

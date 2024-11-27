@@ -30,6 +30,14 @@ module Pod
         @analysis_result.targets
       end
 
+      def pod_target_subprojects
+        @context.pod_target_subprojects
+      end
+
+      def projects_to_integrate
+        [pods_project] + pod_target_subprojects
+      end
+
       def user_build_configurations
         @user_build_configurations ||= (pod_targets + aggregate_targets)[0].user_build_configurations
       end

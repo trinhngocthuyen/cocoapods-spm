@@ -1,4 +1,8 @@
-platform :ios, "16.0"
+is_generate_multiple_pod_projects = true
+install! 'cocoapods', :generate_multiple_pod_projects => is_generate_multiple_pod_projects
+
+ios_deployment_target = "16.0"
+platform :ios, ios_deployment_target
 linkage = (ENV["LINKAGE"] || :static).to_sym
 use_frameworks! :linkage => linkage
 puts "Using linkage: #{linkage}"
@@ -9,7 +13,7 @@ plugin "cocoapods-spm"
 plugin "cocoapods-xcconfig-hooks"
 
 config_compact_spec(
-  extra: ->(s) { s.ios.deployment_target = "16.0" }
+  extra: ->(s) { s.ios.deployment_target = ios_deployment_target }
 )
 
 config_cocoapods_spm(
@@ -68,7 +72,14 @@ end
 post_install do |installer|
   installer.pods_project.targets.each do |target|
     target.build_configurations.each do |config|
-      config.build_settings.delete "IPHONEOS_DEPLOYMENT_TARGET"
+      config.build_settings["IPHONEOS_DEPLOYMENT_TARGET"] = ios_deployment_target
+    end
+  end
+  installer.pod_target_subprojects.each do |pod_target_subproject|
+    pod_target_subproject.root_object.targets.each do |target|
+      target.build_configurations.each do |config|
+        config.build_settings["IPHONEOS_DEPLOYMENT_TARGET"] = ios_deployment_target
+      end
     end
   end
 end
