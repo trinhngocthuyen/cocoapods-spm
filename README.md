@@ -64,14 +64,22 @@ By integrating macros as prebuilt binaries, the additional build time should be 
 
 #### Integrating macros as prebuilt binaries
 
-In Podfile, simply use the `:macro` option when declaring a pod.
+In Podfile, simply config the cocoapods-spm plugin and use the `:macro` option when declaring a pod.
 
 ```rb
+# cocoapods-spm 插件配置
+config_cocoapods_spm(
+  dont_prebuild_macros: false,
+  default_macro_config: "debug"
+)
+
 pod "MacroCodableKit", :macro => {
   :git => "https://github.com/mikhailmaslo/macro-codable-kit",
   :tag => "0.3.0"
 }
 ```
+
+The `dont_prebuild_macros` option as `true` means: do not prebuild macros (if not exist) during pod installation. We can prebuild them using the CLI. With this option as `false`, the prebuild will be triggered upon pod installation. Check out the sample config at [Podfile#L12-L15](/examples/Podfile#L12-L15)
 
 When running pod install, the plugin prebuilds the declared macros (if not prebuilt before) from their sources.
 
