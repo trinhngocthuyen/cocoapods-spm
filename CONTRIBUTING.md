@@ -12,9 +12,14 @@ The following section describes the development workflow when contributing to th
 
 **Step 1. Clone the project**
 
+```sh
+git clone https://github.com/trinhngocthuyen/cocoapods-spm.git && cd cocoapods-spm/
+```
+
 **Step 2. Install dependencies**
 
 ```sh
+python3 -m venv dev && source dev/bin/activate
 make install
 ```
 
