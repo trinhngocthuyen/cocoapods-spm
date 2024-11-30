@@ -1,7 +1,7 @@
 name: Feature Request
 description: Request a feature (if something can be improved, to make the plugin better)
 title: "[Feature Request] <title>"
-labels: ["feature request"]
+labels: ["feature-request"]
 body:
   - type: textarea
     attributes:
