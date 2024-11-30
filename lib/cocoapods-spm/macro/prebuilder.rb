@@ -32,8 +32,13 @@ module Pod
         end
 
         prebuilt_binary.parent.mkpath
+        macro_downloaded_build_config_dir = macro_downloaded_dir / ".build" / config
+        macro_build_binary_file_path = macro_downloaded_build_config_dir / impl_module_name
+        unless macro_build_binary_file_path.exist?
+          macro_build_binary_file_path = macro_downloaded_build_config_dir / "#{impl_module_name}-tool"
+        end
         FileUtils.copy_entry(
-          macro_downloaded_dir / ".build" / config / impl_module_name,
+          macro_build_binary_file_path,
           prebuilt_binary
         )
       end
