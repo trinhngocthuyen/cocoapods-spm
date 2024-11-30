@@ -1,17 +1,18 @@
-is_generate_multiple_pod_projects = true
-install! 'cocoapods', :generate_multiple_pod_projects => is_generate_multiple_pod_projects
-
-ios_deployment_target = "16.0"
-platform :ios, ios_deployment_target
-linkage = (ENV["LINKAGE"] || :static).to_sym
-use_frameworks! :linkage => linkage
-puts "Using linkage: #{linkage}"
-
+# --------------------------------------------------
+# Base configs
+# --------------------------------------------------
 @checksum = "dummy-checksum-to-prevent-merge-conflicts"
+ios_deployment_target = "16.0"
 
+platform :ios, ios_deployment_target
+use_frameworks! :linkage => (ENV["LINKAGE"] || :static).to_sym
+install! "cocoapods", :generate_multiple_pod_projects => true
+
+# --------------------------------------------------
+# Plugin configs
+# --------------------------------------------------
 plugin "cocoapods-spm"
 plugin "cocoapods-xcconfig-hooks"
-
 config_compact_spec(
   extra: ->(s) { s.ios.deployment_target = ios_deployment_target }
 )
@@ -21,11 +22,15 @@ config_cocoapods_spm(
   default_macro_config: "debug"
 )
 
+# --------------------------------------------------
+# Pods config
+# --------------------------------------------------
+
 def shared_pods
   pod "Logger", :path => "LocalPods/Logger"
 end
 
-target "EX" do
+target "EX" do # rubocop:disable Metrics/BlockLength
   shared_pods
   pod "CommonUI", :path => "LocalPods/CommonUI"
   pod "Services", :path => "LocalPods/Services"
@@ -70,16 +75,9 @@ target "EXMac" do
 end
 
 post_install do |installer|
-  installer.pods_project.targets.each do |target|
+  installer.native_targets.each do |target|
     target.build_configurations.each do |config|
       config.build_settings["IPHONEOS_DEPLOYMENT_TARGET"] = ios_deployment_target
-    end
-  end
-  installer.pod_target_subprojects.each do |pod_target_subproject|
-    pod_target_subproject.root_object.targets.each do |target|
-      target.build_configurations.each do |config|
-        config.build_settings["IPHONEOS_DEPLOYMENT_TARGET"] = ios_deployment_target
-      end
     end
   end
 end

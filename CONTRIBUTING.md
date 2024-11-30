@@ -19,7 +19,6 @@ git clone https://github.com/trinhngocthuyen/cocoapods-spm.git && cd cocoapods-s
 **Step 2. Install dependencies**
 
 ```sh
-python3 -m venv dev && source dev/bin/activate
 make install
 ```
 
