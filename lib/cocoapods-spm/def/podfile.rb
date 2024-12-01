@@ -7,7 +7,7 @@ module Pod
     attr_accessor :spm_resolver
 
     def config_cocoapods_spm(options)
-      SPM::Config.instance.dsl_config = options
+      SPM::Config.instance.dsl_config.merge!(options)
     end
 
     def macro_pods

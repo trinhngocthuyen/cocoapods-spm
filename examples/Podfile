@@ -18,7 +18,6 @@ config_compact_spec(
 )
 
 config_cocoapods_spm(
-  dont_prebuild_macros: true,
   default_macro_config: "debug"
 )
 

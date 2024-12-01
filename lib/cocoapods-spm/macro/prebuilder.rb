@@ -23,10 +23,13 @@ module Pod
         config = spm_config.macro_config
         impl_module_name = metadata.macro_impl_name
         prebuilt_binary = macro_prebuilt_dir / "#{impl_module_name}-#{config}"
-        return if spm_config.dont_prebuild_macros_if_exist? && prebuilt_binary.exist?
+        if spm_config.dont_prebuild_macros_if_exist? && prebuilt_binary.exist?
+          return UI.message "Macro binary exists at #{prebuilt_binary} -> Skip prebuilding macro"
+        end
 
         UI.section "Building macro implementation: #{impl_module_name} (#{config})...".green do
           Dir.chdir(macro_downloaded_dir) do
+            swift! ["--version"]
             swift! ["build", "-c", config, "--product", impl_module_name]
           end
         end

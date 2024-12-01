@@ -1,3 +1,4 @@
+require "pry" if ENV["COCOAPODS_IMPORT_PRY"] == "true"
 require "cocoapods-spm/compatibility/all"
 require "cocoapods-spm/helpers/io"
 require "cocoapods-spm/helpers/patch"

@@ -27,7 +27,7 @@ module Pod
       end
 
       def install_macro_pod!
-        fetcher.run
+        fetcher.run unless fetcher.metadata_path.exist?
         prebuilder.run
       end
     end
