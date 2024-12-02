@@ -42,6 +42,7 @@ target "EX" do # rubocop:disable Metrics/BlockLength
     :git => "https://github.com/mikhailmaslo/macro-codable-kit",
     :tag => "0.3.0",
   }
+  pod "Wizard", :macro => {:path => "LocalPackages/ex-macros"}
 
   spm_pkg "SnapKit",
           :url => "https://github.com/SnapKit/SnapKit.git",

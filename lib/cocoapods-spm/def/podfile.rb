@@ -56,7 +56,7 @@ module Pod
     private
 
     def prepare_macro_pod_dir(name, requirement)
-      link = requirement[:git]
+      link = requirement[:git] || "N/A"
       podspec_content = <<~HEREDOC
         Pod::Spec.new do |s|
           s.name = "#{name}"
