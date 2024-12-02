@@ -3,7 +3,7 @@
 
 install:
 	sh scripts/prebuilt_macros.sh unzip
-	bundle exec pod install --verbose
+	bundle exec pod install --verbose --ansi
 
 spm.fetch:
 	bundle exec pod spm macro fetch --all --verbose

@@ -1,3 +1,4 @@
+require "cocoapods-spm/helpers/io"
 require "cocoapods-spm/macro/metadata"
 require_relative "config"
 
@@ -16,8 +17,7 @@ module Pod
       end
 
       def run
-        UI.puts "Fetching macro #{name}...".magenta
-        download_macro_source
+        prepare_macro_source
         macro_dir = spm_config.macro_root_dir / name
         macro_downloaded_dir = spm_config.macro_downloaded_root_dir / name
         FileUtils.copy_entry(
@@ -29,6 +29,10 @@ module Pod
 
       private
 
+      def local?
+        local_macro_pod?(name)
+      end
+
       def generate_metadata
         raise "Package.swift not exist in #{macro_downloaded_dir}" \
           unless (macro_downloaded_dir / "Package.swift").exist?
@@ -37,7 +41,23 @@ module Pod
         metadata_path.write(raw)
       end
 
+      def prepare_macro_source
+        if local?
+          symlink_local_macro_source
+        else
+          download_macro_source
+        end
+      end
+
+      def symlink_local_macro_source
+        UI.message "Creating symlink to local macro source: #{name}..."
+        # For local macro pod, just need to copy local pod dir to downloaded sandbox,
+        # or create a symlink .spm.pods/macros/.downloaded/FOO -> LocalPods/FOO
+        IOUtils.symlink(local_macro_pod_dir(name), macro_downloaded_dir)
+      end
+
       def download_macro_source
+        UI.puts "Downloading source for macro: #{name}...".magenta
         @specs_by_platform ||= @podfile.root_target_definitions.to_h do |definition|
           spec = Pod::Spec.from_file(spm_config.macro_root_dir / name / "#{name}.podspec")
           [definition.platform, [spec]]

@@ -4,7 +4,7 @@ import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 import MacroToolkit
 
-enum HexMacroError: Error {
+enum HexColorMacroError: Error {
   case notFoundHex
 }
 
@@ -14,7 +14,7 @@ public struct HexToUIColorMacro: ExpressionMacro {
     in context: some MacroExpansionContext
   ) throws -> ExprSyntax {
     guard let arg = node.argumentList.first, let hex = Expr(arg.expression).asIntegerLiteral?.value else {
-      throw HexMacroError.notFoundHex
+      throw HexColorMacroError.notFoundHex
     }
     return """
     UIColor(

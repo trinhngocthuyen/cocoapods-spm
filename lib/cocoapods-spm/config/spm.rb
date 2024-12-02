@@ -9,6 +9,17 @@ module Pod
         def macro_pods
           pod_config.podfile.macro_pods
         end
+
+        def local_macro_pod?(name)
+          !local_macro_pod_dir(name).nil?
+        end
+
+        def local_macro_pod_dir(name)
+          opts = macro_pods.fetch(name, {})
+          return Path(opts[:podspec]).dirname if opts.key?(:podspec)
+
+          Pathname(opts[:path]) if opts.key?(:path)
+        end
       end
 
       attr_accessor :dsl_config, :cli_config
