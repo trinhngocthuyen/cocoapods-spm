@@ -7,10 +7,16 @@ private struct _ScrollView {
 }
 
 import Orcam
+import Wizard
 import MacroCodableKit
 
 @AllOfCodable // MacroCodableKit
 @Init // Orcam
 struct FooMacro {
   let x: Int
+
+  func check() {
+    let color = #uiColor(0xff0000)
+    print("color: \(color)")
+  }
 }
