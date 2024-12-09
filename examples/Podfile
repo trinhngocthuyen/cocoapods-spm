@@ -63,6 +63,10 @@ target "EX" do # rubocop:disable Metrics/BlockLength
           :version => "2.11.0",
           :products => ["MQTTNIO"]
   spm_pkg "DebugKit", :path => "LocalPackages/debug-kit"
+  spm_pkg "swift-async-dns-resolver",
+          :git => "https://github.com/apple/swift-async-dns-resolver.git",
+          :tag => "0.4.0",
+          :products => ["AsyncDNSResolver"]
 end
 
 target "EXTests" do

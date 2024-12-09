@@ -6,6 +6,7 @@ import SnapKit
 import SwiftUIX
 import SwiftyBeaver
 import MQTTNIO
+import AsyncDNSResolver
 
 struct Foo {
   func check() {
@@ -17,6 +18,7 @@ struct Foo {
     print(GMSAddress.self) // GoogleMaps
     print(NetworkLogger.self) // NetworkLogger
     print(MQTTClient.self) // MQTTClient
+    print(AsyncDNSResolver.self) // AsyncDNSResolver
   }
 }
 
