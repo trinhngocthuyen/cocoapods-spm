@@ -27,6 +27,7 @@ config_cocoapods_spm(
 
 def shared_pods
   pod "Logger", :path => "LocalPods/Logger"
+  pod "Wizard", :macro => { :path => "LocalPackages/ex-macros" }
 end
 
 target "EX" do # rubocop:disable Metrics/BlockLength
@@ -42,7 +43,6 @@ target "EX" do # rubocop:disable Metrics/BlockLength
     :git => "https://github.com/mikhailmaslo/macro-codable-kit",
     :tag => "0.3.0",
   }
-  pod "Wizard", :macro => {:path => "LocalPackages/ex-macros"}
 
   spm_pkg "SnapKit",
           :url => "https://github.com/SnapKit/SnapKit.git",
@@ -77,7 +77,7 @@ end
 post_install do |installer|
   installer.native_targets.each do |target|
     target.build_configurations.each do |config|
-      config.build_settings["IPHONEOS_DEPLOYMENT_TARGET"] = ios_deployment_target
+      # Custom build settings goes here
     end
   end
 end
