@@ -17,7 +17,7 @@ module Pod
           @macro_plugin_flag_by_config ||= begin
             hash = user_build_configurations.keys.to_h do |config|
               flags = macro_pods.keys.map do |name|
-                metadata = MacroMetadata.for_pod(name)
+                metadata = macro_metadata_for_pod(name)
                 impl_module_name = metadata.macro_impl_name
                 plugin_executable_path =
                   "#{path_prefix}/#{name}/" \

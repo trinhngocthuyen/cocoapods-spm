@@ -63,7 +63,7 @@ module Pod
           return target.name if target.is_a?(Pod::AggregateTarget)
 
           cmps = target.name.split("-")
-          return cmps[...-1].join("-") if ["iOS", "macOS", "watchOS", "tvOS"].include?(cmps[-1])
+          return cmps[...-1].join("-") if ["iOS", "macOS", "watchOS", "tvOS", "visionOS"].include?(cmps[-1])
 
           target.name
         end

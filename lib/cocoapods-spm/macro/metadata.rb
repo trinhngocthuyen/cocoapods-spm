@@ -12,6 +12,22 @@ module Pod
         end
         from_file(path)
       end
+
+      def platforms
+        raw["platforms"].to_h { |ds| [ds["platformName"], ds["version"]] }
+      end
+
+      def platform_build_settings
+        ds = {
+          "ios" => "IPHONEOS_DEPLOYMENT_TARGET",
+          "macos" => "MACOSX_DEPLOYMENT_TARGET",
+          "tvos" => "TVOS_DEPLOYMENT_TARGET",
+          "watchos" => "WATCHOS_DEPLOYMENT_TARGET",
+          "visionos" => "XROS_DEPLOYMENT_TARGET",
+          "driverkit" => "DRIVERKIT_DEPLOYMENT_TARGET",
+        }
+        platforms.transform_keys { |k| ds[k] }.reject { |k, _| k.nil? }
+      end
     end
   end
 end

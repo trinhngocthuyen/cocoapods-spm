@@ -1,11 +1,13 @@
 require "cocoapods-spm/config"
 require "cocoapods-spm/def/podfile"
 require "cocoapods-spm/def/spec"
+require "cocoapods-spm/macro/metadata"
 
 module Pod
   module SPM
     class Hook
       include Config::Mixin
+      include Installer::InstallerMixin
 
       def initialize(context, options = {})
         @context = context
@@ -32,10 +34,6 @@ module Pod
 
       def pod_target_subprojects
         @context.pod_target_subprojects
-      end
-
-      def projects_to_integrate
-        [pods_project] + pod_target_subprojects
       end
 
       def user_build_configurations
@@ -93,6 +91,19 @@ module Pod
             proc.call(update_aggregate_targets, target, setting, config)
           end
         end
+      end
+
+      def macro_metadata_for_pod(name)
+        return nil unless spm_config.all_macros.include?(name)
+
+        @macro_metadata_cache ||= {}
+        @macro_metadata_cache[name] = MacroMetadata.for_pod(name) unless @macro_metadata_cache.key?(name)
+        @macro_metadata_cache[name]
+      end
+
+      def pod_name_of_target(name)
+        target = @analysis_result.pod_targets.find { |x| x.name == name }
+        target.nil? ? name : target.pod_name
       end
     end
   end
