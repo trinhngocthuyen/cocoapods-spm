@@ -5,16 +5,14 @@
 ## Linking strategy
 
 Typically, this plugin offers two ways of handling linking libraries/frameworks of a package.
-- Based on xcconfig settings
-- Xcode's default linking
+- Based on xcconfig settings. This is the default linking
+- **[DEPRECATED]** Xcode's default linking
 
 ### Based on xcconfig settings
 
 We rely on xcconfig settings to provide all linker flags for a package's libraries/frameworks. This aligns with how CocoaPods is currently linking pod targets. This strategy is going to be how the plugin handles linking in the long term.
 
-⚠️ DISCLAIMER: Because the plugin is still in active development, this way of linking may not work in some corner cases, especially with C++/Objective-C libraries/frameworks. You may try the Xcode's default linking in the following section as a workaround. And please submit a bug report if you encounter such an issue.
-
-### Xcode's default linking
+### **[DEPRECATED]** Xcode's default linking
 
 With this strategy, a product of a package is added to the *"Link Binary With Libraries"* section of a dependent target.
 
