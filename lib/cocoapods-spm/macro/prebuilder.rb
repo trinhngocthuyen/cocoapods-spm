@@ -28,14 +28,23 @@ module Pod
         end
 
         UI.section "Building macro implementation: #{impl_module_name} (#{config})...".green do
-          Dir.chdir(macro_downloaded_dir) do
-            swift! ["--version"]
-            swift! ["build", "-c", config, "--product", impl_module_name]
-          end
+          swift! ["--version"]
+          swift! [
+            "build",
+            "-c", config,
+            "--product", impl_module_name,
+            "--package-path", macro_downloaded_dir,
+            "--scratch-path", macro_scratch_dir,
+          ]
+          # Workaround: When building a macro, the debug.yaml under the scratch dir contains some corrupted info,
+          # causing the following failure when building the next macro:
+          #     No target named 'OrcamImpl-debug.exe' in build description
+          # Idk what this file is for, but deleting it helps
+          macro_scratch_dir.glob("*.yaml").each { |p| p.delete if p.exist? }
         end
 
         prebuilt_binary.parent.mkpath
-        macro_downloaded_build_config_dir = macro_downloaded_dir / ".build" / config
+        macro_downloaded_build_config_dir = macro_scratch_dir / config
         macro_build_binary_file_path = macro_downloaded_build_config_dir / impl_module_name
         unless macro_build_binary_file_path.exist?
           macro_build_binary_file_path = macro_downloaded_build_config_dir / "#{impl_module_name}-tool"
