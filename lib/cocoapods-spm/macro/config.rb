@@ -11,6 +11,14 @@ module Pod
         @macro_dir ||= spm_config.macro_root_dir / name
       end
 
+      def macro_scratch_dir
+        @macro_scratch_dir ||= begin
+          dir = spm_config.macro_root_dir / ".build"
+          dir.mkpath
+          dir
+        end
+      end
+
       def macro_prebuilt_dir
         spm_config.macro_prebuilt_root_dir / name
       end
