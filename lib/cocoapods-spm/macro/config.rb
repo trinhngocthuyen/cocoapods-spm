@@ -2,6 +2,7 @@ module Pod
   module SPM
     module MacroConfigMixin
       include Config::Mixin
+      include PathMixn
 
       def macro_downloaded_dir
         spm_config.macro_downloaded_root_dir / name
@@ -12,11 +13,7 @@ module Pod
       end
 
       def macro_scratch_dir
-        @macro_scratch_dir ||= begin
-          dir = spm_config.macro_root_dir / ".build"
-          dir.mkpath
-          dir
-        end
+        @macro_scratch_dir ||= prepare_dir(spm_config.macro_root_dir / ".build")
       end
 
       def macro_prebuilt_dir

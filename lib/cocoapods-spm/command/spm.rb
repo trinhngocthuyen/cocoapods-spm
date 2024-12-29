@@ -5,6 +5,7 @@ module Pod
   class Command
     class Spm < Command
       include SPM::Config::Mixin
+      include ProjectDirectory
 
       self.summary = "Working with SPM"
       self.abstract_command = true

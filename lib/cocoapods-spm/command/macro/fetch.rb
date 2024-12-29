@@ -22,6 +22,7 @@ module Pod
           end
 
           def run
+            verify_podfile_exists!
             spm_config.macros.each do |name|
               SPM::MacroFetcher.new(name: name, can_cache: true).run
             end

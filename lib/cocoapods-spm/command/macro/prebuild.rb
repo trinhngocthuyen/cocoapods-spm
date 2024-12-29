@@ -26,6 +26,7 @@ module Pod
           end
 
           def run
+            verify_podfile_exists!
             spm_config.macros.each do |name|
               SPM::MacroPrebuilder.new(name: name).run
             end
