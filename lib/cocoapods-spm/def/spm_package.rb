@@ -22,6 +22,7 @@ module Pod
         @relative_path = relative_path_from(options)
         @requirement = requirement_from(options)
         @linking_opts = options[:linking] || {}
+        validate!
       end
 
       def slug
@@ -85,6 +86,16 @@ module Pod
       end
 
       private
+
+      def validate!
+        if use_default_xcode_linking? # rubocop:disable Style/GuardClause
+          UI.warn <<~HEREDOC
+            The option :use_default_xcode_linking in the following declaration is deprecated:
+            #{@_options}
+            You are recommended to omit this option in `spm_pkg`.
+          HEREDOC
+        end
+      end
 
       def requirement_from(options)
         return if @relative_path
