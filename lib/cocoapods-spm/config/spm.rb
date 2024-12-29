@@ -1,6 +1,10 @@
+require "cocoapods-spm/helpers/path"
+
 module Pod
   module SPM
     class Config
+      include PathMixn
+
       module SPMConfigMixin
         def spm_config
           Config.instance
@@ -61,7 +65,7 @@ module Pod
       end
 
       def root_dir
-        @root_dir ||= Pathname(".spm.pods")
+        @root_dir ||= prepare_dir(Pod::Config.instance.installation_root / ".spm.pods")
       end
 
       def pkg_root_dir
@@ -98,13 +102,6 @@ module Pod
 
       def pkg_metadata_dir
         @pkg_metadata_dir ||= prepare_dir(pkg_root_dir / "metadata")
-      end
-
-      private
-
-      def prepare_dir(dir)
-        dir.mkpath
-        dir
       end
     end
   end

@@ -1,3 +1,5 @@
+require "cocoapods-spm/helpers/path"
+
 module Pod
   module SPM
     class Config
