@@ -13,7 +13,8 @@ module Pod
         private
 
         def macro_plugin_flag_by_config
-          path_prefix = "${PODS_ROOT}/../#{spm_config.macro_prebuilt_root_dir}"
+          prebuild_root_dir = spm_config.macro_prebuilt_root_dir.relative_path_from(pod_config.installation_root)
+          path_prefix = "${PODS_ROOT}/../#{prebuild_root_dir}"
           @macro_plugin_flag_by_config ||= begin
             hash = user_build_configurations.keys.to_h do |config|
               flags = macro_pods.keys.map do |name|
