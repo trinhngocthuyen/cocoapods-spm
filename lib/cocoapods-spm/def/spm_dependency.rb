@@ -15,10 +15,14 @@ module Pod
       end
 
       def inspect
-        "#<#{self.class} #{name}/#{product} pkg=#{pkg}>"
+        "#<#{self.class} #{full_name} pkg=#{pkg}>"
       end
 
       alias to_s inspect
+
+      def full_name
+        "#{@name}/#{@product}"
+      end
     end
   end
 end
