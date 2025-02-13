@@ -50,6 +50,8 @@ The `spm_pkg` method to declare the package being used. This method's usage is p
 spm_pkg "Orcam", :url => "https://github.com/trinhngocthuyen/orcam.git", :branch => "main"
 ```
 
+Check out this doc for the spm_pkg syntax: [declaring packages](/docs/declaring_packages.md).
+
 ### Using Swift Macros with cocoapods-spm
 
 There are two approaches when integrating a Swift macro to a project.
@@ -102,7 +104,7 @@ bundle exec pod spm macro prebuild --all
 bundle exec pod spm macro prebuild --macros=Orcam --config=debug
 ```
 
-## Troublshooting
+## Troubleshooting
 
 Refer to the [troubleshooting guidelines](/docs/troubleshooting.md) for details.
 
