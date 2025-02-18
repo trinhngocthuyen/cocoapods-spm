@@ -23,17 +23,23 @@ module Pod
           # https://developer.apple.com/documentation/packagedescription/package/dependency
           next ".package(path: \"#{pkg.absolute_path}\")" if pkg.local?
 
-          tail = case pkg.requirement[:kind]
-                 when "exactVersion"
-                   "exact: \"#{pkg.requirement[:version]}\""
-                 when "branch"
-                   "branch: \"#{pkg.requirement[:branch]}\""
-                 when "revision"
-                   "revision: \"#{pkg.requirement[:revision]}\""
-                 else
-                   # TODO: Handle this
-                   "todo: \"handle this\""
-                 end
+          tail =
+            case pkg.requirement[:kind]
+            when "exactVersion"
+              "exact: \"#{pkg.requirement[:version]}\""
+            when "branch"
+              "branch: \"#{pkg.requirement[:branch]}\""
+            when "revision"
+              "revision: \"#{pkg.requirement[:revision]}\""
+            when "upToNextMajorVersion"
+              ".upToNextMajor(from: \"#{pkg.requirement[:minimumVersion]}\")"
+            when "upToNextMinorVersion"
+              ".upToNextMinor(from: \"#{pkg.requirement[:minimumVersion]}\")"
+            when "versionRange"
+              "\"#{pkg.requirement[:minimumVersion]}\"..<\"#{pkg.requirement[:maximumVersion]}\""
+            else
+              raise Informative, "Unexpected pkg requirement: #{pkg.requirement}"
+            end
           ".package(url: \"#{pkg.url}\", #{tail})"
         end
 
