@@ -9,6 +9,7 @@ private struct _ScrollView {
 import Orcam
 import Wizard
 import MacroCodableKit
+import GoogleMaps
 
 @AllOfCodable // MacroCodableKit
 @Init // Orcam
@@ -18,5 +19,7 @@ struct FooMacro {
   func check() {
     let color = #uiColor(0xff0000)
     print("color: \(color)")
+
+    print(GMSAddress.self) // GoogleMaps
   }
 }

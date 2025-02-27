@@ -58,8 +58,8 @@ target "EX" do # rubocop:disable Metrics/BlockLength
           :products => ["OpenTelemetrySdk"]
   spm_pkg "GoogleMaps",
           :git => "https://github.com/googlemaps/ios-maps-sdk.git",
-          :version => "8.4.0",
-          :products => ["GoogleMaps", "GoogleMapsBase", "GoogleMapsCore"]
+          :version => "9.3.0",
+          :products => ["GoogleMaps"]
   spm_pkg "mqtt-nio",
           :url => "https://github.com/swift-server-community/mqtt-nio.git",
           :version => "2.11.0",
