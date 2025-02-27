@@ -77,11 +77,15 @@ module Pod
         end
 
         def header_search_paths_for(target)
-          @spm_resolver
+          paths =
+            @spm_resolver
             .result
             .spm_targets_for(target)
             .filter_map(&:header_search_path_arg)
-            .join(" ")
+          # For edge cases where implicit headers are missing out (eg. GoogleMaps),
+          # usually for packages depending on Objective-C xcframeworks
+          paths << '"${PODS_CONFIGURATION_BUILD_DIR}/include"'
+          paths.join(" ")
         end
       end
     end
