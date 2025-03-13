@@ -48,10 +48,11 @@ module Pod
           perform_settings_update(
             update_targets: lambda do |target, _, _|
               {
-                "SOURCE_PACKAGES_CHECKOUTS_DIR" => "${BUILD_ROOT}/../../SourcePackages/checkouts",
+                **derived_data_settings,
+                "SOURCE_PACKAGES_CHECKOUTS_DIR" => "${PROJECT_DERIVED_DATA_DIR}/SourcePackages/checkouts",
                 "FRAMEWORK_SEARCH_PATHS" => "\"${PODS_CONFIGURATION_BUILD_DIR}/PackageFrameworks\"",
                 "LIBRARY_SEARCH_PATHS" => "\"${PODS_CONFIGURATION_BUILD_DIR}\"",
-                "SWIFT_INCLUDE_PATHS" => "$(PODS_CONFIGURATION_BUILD_DIR)",
+                "SWIFT_INCLUDE_PATHS" => "${PODS_CONFIGURATION_BUILD_DIR}",
                 "OTHER_SWIFT_FLAGS" => modulemap_args_for_target(target, prefix: "-Xcc"),
                 "OTHER_CFLAGS" => modulemap_args_for_target(target),
                 "HEADER_SEARCH_PATHS" => header_search_paths_for(target),
@@ -59,6 +60,14 @@ module Pod
               }
             end
           )
+        end
+
+        def derived_data_settings
+          {
+            "BUILD_ROOT_TO_DERIVED_DATA_SUFFIX_archive" => "/../../..",
+            "BUILD_ROOT_TO_DERIVED_DATA_SUFFIX_install" => "/../../..",
+            "PROJECT_DERIVED_DATA_DIR" => "${BUILD_ROOT}/../..${BUILD_ROOT_TO_DERIVED_DATA_SUFFIX_${ACTION}}",
+          }
         end
 
         def linker_flags_for(target)
