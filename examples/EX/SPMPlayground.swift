@@ -1,6 +1,7 @@
 import DebugKit
 import GoogleMaps
 import NetworkLogger
+import NetworkInterceptor
 import OpenTelemetrySdk
 import SnapKit
 import SwiftUIX
@@ -16,6 +17,7 @@ struct Foo {
     print(DebugKit.self) // DebugKit
     print(GMSAddress.self) // GoogleMaps
     print(NetworkLogger.self) // NetworkLogger
+    print(NetworkInterceptor.self) // NetworkInterceptor
     print(MQTTClient.self) // MQTTClient
   }
 }

@@ -1,0 +1,102 @@
+{
+  "ABIRoot": {
+    "kind": "Root",
+    "name": "NetworkInterceptor",
+    "printedName": "NetworkInterceptor",
+    "children": [
+      {
+        "kind": "TypeDecl",
+        "name": "NetworkInterceptor",
+        "printedName": "NetworkInterceptor",
+        "children": [
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "NetworkInterceptor",
+                "printedName": "NetworkInterceptor.NetworkInterceptor",
+                "usr": "s:18NetworkInterceptorAAV"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "s:18NetworkInterceptorAAVABycfc",
+            "mangledName": "$s18NetworkInterceptorAAVABycfc",
+            "moduleName": "NetworkInterceptor",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "init_kind": "Designated"
+          },
+          {
+            "kind": "Function",
+            "name": "start",
+            "printedName": "start()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:18NetworkInterceptorAAV5startyyF",
+            "mangledName": "$s18NetworkInterceptorAAV5startyyF",
+            "moduleName": "NetworkInterceptor",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "stop",
+            "printedName": "stop()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:18NetworkInterceptorAAV4stopyyF",
+            "mangledName": "$s18NetworkInterceptorAAV4stopyyF",
+            "moduleName": "NetworkInterceptor",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "funcSelfKind": "NonMutating"
+          }
+        ],
+        "declKind": "Struct",
+        "usr": "s:18NetworkInterceptorAAV",
+        "mangledName": "$s18NetworkInterceptorAAV",
+        "moduleName": "NetworkInterceptor",
+        "declAttributes": [
+          "AccessControl"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          }
+        ]
+      }
+    ],
+    "json_format_version": 8
+  },
+  "ConstValues": []
+}

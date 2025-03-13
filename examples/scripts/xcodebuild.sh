@@ -26,7 +26,7 @@ xcodebuild_exec() {
         -scheme EX \
         -config Debug \
         -destination 'platform=iOS Simulator,name=EX' \
-        -derivedDataPath DerivedData \
+        -derivedDataPath build \
         ${XCODEBUILD_ACTION:-build} \
         CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO \
         | tee .logs/xcodebuild.txt | ${log_formatter}
