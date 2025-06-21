@@ -28,7 +28,9 @@ module Pod
         def resolve_dependencies_for_targets
           specs = @aggregate_targets.flat_map(&:specs).uniq
           specs.each do |spec|
-            @result.spm_dependencies_by_target[spec.name] = spec.spm_dependencies
+            deps = spec.spm_dependencies
+            deps += spec.root.spm_dependencies if spec.subspec?
+            @result.spm_dependencies_by_target[spec.name] = deps.uniq
           end
         end
 

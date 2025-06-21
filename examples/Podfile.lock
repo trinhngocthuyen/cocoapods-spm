@@ -8,6 +8,8 @@ PODS:
   - Orcam (0.0.1)
   - Services (0.0.1):
     - Logger
+  - Services/Tests (0.0.1):
+    - Logger
   - Wizard (0.0.1)
 
 DEPENDENCIES:
@@ -16,6 +18,7 @@ DEPENDENCIES:
   - MacroCodableKit (from `.spm.pods/macros/MacroCodableKit`)
   - Orcam (from `.spm.pods/macros/Orcam`)
   - Services (from `LocalPods/Services`)
+  - Services/Tests (from `LocalPods/Services`)
   - Wizard (from `.spm.pods/macros/Wizard`)
 
 EXTERNAL SOURCES:
@@ -37,7 +40,7 @@ SPEC CHECKSUMS:
   Logger: 43a9cc3dc5f479042eb238d8680aaa0d6afd3ad2
   MacroCodableKit: 29a3a48508c673918521ef5db6f1485db2ca75d0
   Orcam: 288b7e3fc07e33706ceab2f226e4177e99847143
-  Services: 5d4b4ce9877cac8bb44481806f754d0dd267a55b
+  Services: 8869b52b0b1b2832f26e687f8f037079e51fdca1
   Wizard: 65d0442d19c0c27999a0eea600e3d451caa260e5
 
 PODFILE CHECKSUM: dummy-checksum-to-prevent-merge-conflicts

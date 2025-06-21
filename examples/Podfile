@@ -33,7 +33,7 @@ end
 target "EX" do # rubocop:disable Metrics/BlockLength
   shared_pods
   pod "CommonUI", :path => "LocalPods/CommonUI"
-  pod "Services", :path => "LocalPods/Services"
+  pod "Services", :path => "LocalPods/Services", :testspecs => ["Tests"]
 
   pod "Orcam", :macro => {
     :git => "https://github.com/trinhngocthuyen/orcam.git",

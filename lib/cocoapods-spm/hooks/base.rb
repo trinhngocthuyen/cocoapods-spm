@@ -82,6 +82,15 @@ module Pod
             proc.call(update_targets, target, setting, config)
             proc.call(update_pod_targets, target, setting, config)
           end
+          next unless target.is_a?(PodTarget)
+
+          (target.test_specs + target.app_specs).each do |spec|
+            target_wrapper = Target::NonLibrary.new(underlying: target, spec: spec)
+            target.build_settings.each_key do |config|
+              setting = target.build_settings_for_spec(spec, :configuration => config)
+              proc.call(update_targets, target_wrapper, setting, config)
+            end
+          end
         end
 
         aggregate_targets.each do |target|
