@@ -71,7 +71,7 @@ module Pod
         end
 
         def linker_flags_for(target)
-          return [] if !target.is_a?(Pod::AggregateTarget) && target.build_as_static?
+          return [] if target.is_a?(Pod::PodTarget) && target.build_as_static?
 
           @spm_resolver.result.linker_flags_for(target)
         end
