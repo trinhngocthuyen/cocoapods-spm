@@ -18,6 +18,13 @@
   "testTargets" : [
     {
       "target" : {
+        "containerPath" : "container:Pods\/Services.xcodeproj",
+        "identifier" : "563D38F97F301F80D276D1E19FA50136",
+        "name" : "Services-Unit-Tests"
+      }
+    },
+    {
+      "target" : {
         "containerPath" : "container:EX.xcodeproj",
         "identifier" : "F5823ACD2BB9575F0054FF0A",
         "name" : "EXTests"

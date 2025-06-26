@@ -20,6 +20,20 @@
                ReferencedContainer = "container:EX.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "563D38F97F301F80D276D1E19FA50136"
+               BuildableName = "Services-Unit-Tests.xctest"
+               BlueprintName = "Services-Unit-Tests"
+               ReferencedContainer = "container:Pods/Services.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
