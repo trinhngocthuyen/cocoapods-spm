@@ -9,6 +9,10 @@ module Pod
       end
 
       def name
+        if underlying.is_a?(Xcodeproj::Project::Object::PBXNativeTarget) && underlying.test_target_type?
+          return underlying.name.sub(/-(Unit|UI)-/, "/")
+        end
+
         spec.name
       end
 

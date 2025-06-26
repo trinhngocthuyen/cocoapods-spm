@@ -31,6 +31,9 @@ module Pod
         end
 
         def spm_dependencies_for(target)
+          if target.is_a?(Xcodeproj::Project::Object::PBXNativeTarget) && target.test_target_type?
+            target = Target::NonLibrary.new(underlying: target)
+          end
           filtered_dependencies = @spm_dependencies_by_target[spec_name_of(target)]&.reject do |dep|
             dep.pkg&.should_exclude_from_target?(target.name)
           end
