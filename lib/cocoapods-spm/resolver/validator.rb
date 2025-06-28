@@ -17,11 +17,13 @@ module Pod
 
       def verify_products_exist
         @spm_dependencies_by_target.values.flatten.uniq.each do |d|
-          next if @project_pkgs.pkg_desc_of(d.pkg.name).products.any? { |p| p.name == d.product }
+          products = @project_pkgs.pkg_desc_of(d.pkg.name).products.map(&:name)
+          next if products.include?(d.product)
 
           raise Informative, <<~DESC
             There was an invalid dependency in Podfile or podspecs.
-            Package `#{d.pkg.name}` does not contain product `#{d.product}`
+            Package `#{d.pkg.name}` does not contain product `#{d.product}`.
+            Available products: #{products}
           DESC
         end
       end
