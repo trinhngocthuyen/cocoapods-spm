@@ -36,7 +36,7 @@ module Pod
 
         def resolve_dependencies_for_aggregate_targets
           @aggregate_targets.each do |target|
-            spm_dependencies = target.specs.flat_map(&:spm_dependencies)
+            spm_dependencies = target.specs.reject(&:test_specification?).flat_map(&:spm_dependencies)
             @result.spm_dependencies_by_target[target.to_s] = merge_spm_dependencies(spm_dependencies)
           end
 
