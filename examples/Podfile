@@ -68,7 +68,7 @@ target "EX" do # rubocop:disable Metrics/BlockLength
 end
 
 target "EXTests" do
-  # Nothing here
+  spm_pkg "CoreUtils", :path => "LocalPackages/core-utils", :products => ["TestKit"]
 end
 
 target "EXMac" do
