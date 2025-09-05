@@ -40,7 +40,7 @@ SPEC CHECKSUMS:
   Logger: 43a9cc3dc5f479042eb238d8680aaa0d6afd3ad2
   MacroCodableKit: 29a3a48508c673918521ef5db6f1485db2ca75d0
   Orcam: 288b7e3fc07e33706ceab2f226e4177e99847143
-  Services: 8869b52b0b1b2832f26e687f8f037079e51fdca1
+  Services: 51ccba5bceb00dc89e7049025a5005a82ec0eb94
   Wizard: 65d0442d19c0c27999a0eea600e3d451caa260e5
 
 PODFILE CHECKSUM: dummy-checksum-to-prevent-merge-conflicts
