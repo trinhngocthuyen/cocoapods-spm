@@ -7,8 +7,11 @@ module Pod
         def update_script(options = {})
           script_name = options[:name]
           content_by_target = options[:content_by_target]
+          targets = aggregate_targets + pod_targets.flat_map do |t|
+            t.test_specs.map { |s| Target::NonLibrary.new(underlying: t, spec: s) }
+          end
 
-          aggregate_targets.each do |target|
+          targets.each do |target|
             lines, input_paths, output_paths = content_by_target.call(target)
             next if input_paths.empty?
 
@@ -21,8 +24,9 @@ module Pod
             # Update input/output files
             user_build_configurations.each_key do |config|
               append_contents = lambda do |method_name, contents|
-                target.send(method_name, config).open("a") do |f|
-                  contents.each { |p| f << "\n" << p }
+                target.send(method_name, config).open("r+") do |f|
+                  existing = f.readlines(chomp: true)
+                  contents.each { |p| f << "\n" << p unless existing.include?(p) }
                 end
               end
               append_contents.call("#{script_name}_input_files_path", input_paths)

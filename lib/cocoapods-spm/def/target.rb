@@ -27,6 +27,19 @@ module Pod
         variant_prefix = underlying.spec_label(spec).sub("#{underlying.name}-", "")
         underlying.xcconfig_path("#{variant_prefix}.#{variant}")
       end
+
+      %w[
+        copy_resources_script_path
+        copy_resources_script_input_files_path
+        copy_resources_script_output_files_path
+        embed_frameworks_script_path
+        embed_frameworks_script_input_files_path
+        embed_frameworks_script_output_files_path
+      ].each do |name|
+        define_method(name) do |*_args|
+          underlying.send("#{name}_for_spec", spec)
+        end
+      end
     end
   end
 end
