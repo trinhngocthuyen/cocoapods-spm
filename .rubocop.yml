@@ -2,3 +2,9 @@ inherit_from: https://raw.githubusercontent.com/trinhngocthuyen/templates/main/c
 
 Metrics/ClassLength:
   Max: 500
+
+Layout/EmptyLineAfterGuardClause:
+  Enabled: false
+
+Style/RedundantReturn:
+  Enabled: false

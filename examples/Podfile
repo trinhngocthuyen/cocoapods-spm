@@ -61,6 +61,7 @@ target "EX" do # rubocop:disable Metrics/BlockLength
           :version => "2.11.0",
           :products => ["MQTTNIO"]
   spm_pkg "DebugKit", :path => "LocalPackages/debug-kit"
+  spm_pkg 'Firebase', :url => 'https://github.com/firebase/firebase-ios-sdk.git', :version => '12.3.0', :products => ["FirebaseAnalytics", "FirebaseAuth", "FirebaseFirestore", "FirebaseStorage", "FirebaseCrashlytics", "FirebaseAppCheck"]
 end
 
 target "EXTests" do
