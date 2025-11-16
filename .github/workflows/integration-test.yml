@@ -9,9 +9,12 @@ permissions:
   pull-requests: read
   statuses: write
 
+env:
+  DEVELOPER_DIR: /Applications/Xcode_16.2.app
+
 jobs:
   integration-test-static:
-    runs-on: macos-14
+    runs-on: macos-15
     if: >-
       github.event.issue.pull_request && (
         github.event.comment.body == '/integration-test' ||
@@ -34,7 +37,7 @@ jobs:
           exec: make ci.install ex.test.static
 
   integration-test-dynamic:
-    runs-on: macos-14
+    runs-on: macos-15
     if: >-
       github.event.issue.pull_request && (
         github.event.comment.body == '/integration-test dynamic' ||

@@ -2,6 +2,7 @@
 	cd .. && make $@
 
 install:
+	xcodebuild -version
 	sh scripts/prebuilt_macros.sh unzip
 	bundle exec pod install --verbose --ansi
 
