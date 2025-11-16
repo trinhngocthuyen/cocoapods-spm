@@ -6,6 +6,7 @@ import SnapKit
 import SwiftUIX
 import SwiftyBeaver
 import MQTTNIO
+import FirebaseFirestore
 
 struct Foo {
   func check() {
@@ -17,6 +18,7 @@ struct Foo {
     print(NetworkLogger.self) // NetworkLogger
     print(NetworkInterceptor.self) // NetworkInterceptor
     print(MQTTClient.self) // MQTTClient
+    print(Firestore.self) // FirebaseFirestore
   }
 }
 

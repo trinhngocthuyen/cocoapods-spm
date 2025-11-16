@@ -114,17 +114,12 @@ module Pod
               raise Informative, "Unexpected dependency type. Must be either `byName`, `target`, or `product`."
             end
             next [] unless match_platform?(hash[type][-1], platform)
-
-            name = hash[type][0]
-            pkg_name = hash.key?("product") ? hash["product"][1] : self.pkg_name
-            pkg_desc = pkg_desc_cache[pkg_name]
-            find_by_target = -> { pkg_desc.targets.select { |t| t.name == name } }
-            find_by_product = -> { pkg_desc.targets_of_product(name) }
-            next find_by_target.call if hash.key?("target")
-            next find_by_product.call if hash.key?("product")
-
-            # byName, could be either a target or a product
-            next find_by_target.call || find_by_product.call
+            next find_dependency_targets(
+              pkg_desc_cache,
+              hash[type][0],
+              pkg_name: hash.key?("product") ? hash["product"][1] : nil,
+              type: type
+            )
           end
         end
 
@@ -164,6 +159,25 @@ module Pod
           # macos is called osx in Cocoapods.
           platform_name = platform.to_s == 'osx' ? 'macos' : platform.to_s
           condition["platformNames"].include?(platform_name)
+        end
+
+        def find_dependency_targets(pkg_desc_cache, name, pkg_name: nil, type: nil)
+          pkg_desc = pkg_desc_cache[pkg_name || self.pkg_name]
+          find_by_target = lambda do
+            pkg_desc.targets.select { |t| t.name == name }
+          end
+
+          find_by_product = lambda do
+            pkg_desc.targets_of_product(name)
+          end
+
+          find_by_name = lambda do
+            pkg_desc_cache.values.flat_map(&:targets).select { |t| t.name == name }
+          end
+
+          return find_by_target.call if type == "target"
+          return find_by_product.call if type == "product"
+          return find_by_name.call
         end
       end
     end
