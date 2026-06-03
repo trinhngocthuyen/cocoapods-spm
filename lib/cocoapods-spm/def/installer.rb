@@ -6,7 +6,7 @@ module Pod
       end
 
       def projects_to_integrate
-        [pods_project] + pod_target_subprojects
+        ([pods_project] + pod_target_subprojects).compact
       end
     end
 
