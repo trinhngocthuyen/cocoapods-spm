@@ -26,7 +26,11 @@ module Pod
       end
 
       def slug
-        @slug ||= File.basename(@url || @relative_path, ".*")
+        @slug ||= if @url
+                    File.basename(@url, ".git")
+                  else
+                    File.basename(@relative_path)
+                  end
       end
 
       def absolute_path
